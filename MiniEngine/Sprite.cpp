@@ -13,25 +13,25 @@
 	Sprite::~Sprite()
 	{
 	}
-	void Sprite::InitTextures(const SpriteInitData& initData)
+	void Sprite::InitTextures(const SpriteInitData& m_initData)
 	{
 		//スプライトで使用するテクスチャを準備する。
-		if (initData.m_ddsFilePath[0] != nullptr) {
+		if (m_initData.m_ddsFilePath[0] != nullptr) {
 			//ddsファイルのパスが指定されてるのなら、ddsファイルからテクスチャを作成する。
 			int texNo = 0;
-			while (initData.m_ddsFilePath[texNo] && texNo < MAX_TEXTURE) {
+			while (m_initData.m_ddsFilePath[texNo] && texNo < MAX_TEXTURE) {
 				wchar_t wddsFilePath[1024];
-				mbstowcs(wddsFilePath, initData.m_ddsFilePath[texNo], 1023);
+				mbstowcs(wddsFilePath, m_initData.m_ddsFilePath[texNo], 1023);
 				m_textures[texNo].InitFromDDSFile(wddsFilePath);
 				texNo++;
 			}
 			m_numTexture = texNo;
 		}
-		else if (initData.m_textures[0] != nullptr) {
+		else if (m_initData.m_textures[0] != nullptr) {
 			//外部テクスチャを指定されている。
 			int texNo = 0;
-			while (initData.m_textures[texNo] != nullptr) {
-				m_textureExternal[texNo] = initData.m_textures[texNo];
+			while (m_initData.m_textures[texNo] != nullptr) {
+				m_textureExternal[texNo] = m_initData.m_textures[texNo];
 				texNo++;
 			}
 			m_numTexture = texNo;
@@ -42,19 +42,19 @@
 			std::abort();
 		}
 	}
-	void Sprite::InitShader(const SpriteInitData& initData)
+	void Sprite::InitShader(const SpriteInitData& m_initData)
 	{
-		if (initData.m_fxFilePath == nullptr) {
+		if (m_initData.m_fxFilePath == nullptr) {
 			MessageBoxA(nullptr, "fxファイルが指定されていません。", "エラー", MB_OK);
 			std::abort();
 		}
 		wchar_t fxFilePath[1024];
-		mbstowcs(fxFilePath, initData.m_fxFilePath, 1023);
+		mbstowcs(fxFilePath, m_initData.m_fxFilePath, 1023);
 		//シェーダーをロードする。
-		m_vs.LoadVS(fxFilePath, initData.m_vsEntryPointFunc);
-		m_ps.LoadPS(fxFilePath, initData.m_psEntryPoinFunc);
+		m_vs.LoadVS(fxFilePath, m_initData.m_vsEntryPointFunc);
+		m_ps.LoadPS(fxFilePath, m_initData.m_psEntryPoinFunc);
 	}
-	void Sprite::InitDescriptorHeap(const SpriteInitData& initData)
+	void Sprite::InitDescriptorHeap(const SpriteInitData& m_initData)
 	{
 		if (m_textureExternal[0] != nullptr) {
 			//外部のテクスチャが指定されている。
@@ -67,11 +67,11 @@
 				m_descriptorHeap.RegistShaderResource(texNo, m_textures[texNo]);
 			}
 		}
-		if (initData.m_expandShaderResoruceView != nullptr) {
+		if (m_initData.m_expandShaderResoruceView != nullptr) {
 			//拡張シェーダーリソースビュー。
 			m_descriptorHeap.RegistShaderResource(
 				EXPAND_SRV_REG__START_NO,
-				*initData.m_expandShaderResoruceView
+				*m_initData.m_expandShaderResoruceView
 			);
 		}
 		m_descriptorHeap.RegistConstantBuffer(0, m_constantBufferGPU);
@@ -81,7 +81,7 @@
 		}
 		m_descriptorHeap.Commit();
 	}
-	void Sprite::InitVertexBufferAndIndexBuffer(const SpriteInitData& initData)
+	void Sprite::InitVertexBufferAndIndexBuffer(const SpriteInitData& m_initData)
 	{
 		float halfW = m_size.x * 0.5f;
 		float halfH = m_size.y * 0.5f;
@@ -114,7 +114,7 @@
 		m_indexBuffer.Init(sizeof(indices), sizeof(indices[0]));
 		m_indexBuffer.Copy(indices);
 	}
-	void Sprite::InitPipelineState(const SpriteInitData& initData)
+	void Sprite::InitPipelineState(const SpriteInitData& m_initData)
 	{
 		// 頂点レイアウトを定義する。
 		D3D12_INPUT_ELEMENT_DESC inputElementDescs[] =
@@ -133,14 +133,14 @@
 		psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 		psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
 
-		if (initData.m_alphaBlendMode == AlphaBlendMode_Trans) {
+		if (m_initData.m_alphaBlendMode == AlphaBlendMode_Trans) {
 			//半透明合成のブレンドステートを作成する。
 			psoDesc.BlendState.RenderTarget[0].BlendEnable = true;
 			psoDesc.BlendState.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
 			psoDesc.BlendState.RenderTarget[0].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
 			psoDesc.BlendState.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
 		}
-		else if (initData.m_alphaBlendMode == AlphaBlendMode_Add) {
+		else if (m_initData.m_alphaBlendMode == AlphaBlendMode_Add) {
 			//加算合成。
 			psoDesc.BlendState.RenderTarget[0].BlendEnable = true;
 			psoDesc.BlendState.RenderTarget[0].SrcBlend = D3D12_BLEND_ONE;
@@ -161,30 +161,30 @@
 		psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
 		m_pipelineState.Init(psoDesc);
 	}
-	void Sprite::InitConstantBuffer(const SpriteInitData& initData)
+	void Sprite::InitConstantBuffer(const SpriteInitData& m_initData)
 	{
 		//定数バッファの初期化。
 		m_constantBufferGPU.Init(sizeof(m_constantBufferCPU), nullptr);
 		//ユーザー拡張の定数バッファが指定されている。
-		if (initData.m_expandConstantBuffer != nullptr){
-			m_userExpandConstantBufferCPU = initData.m_expandConstantBuffer;
+		if (m_initData.m_expandConstantBuffer != nullptr){
+			m_userExpandConstantBufferCPU = m_initData.m_expandConstantBuffer;
 			m_userExpandConstantBufferGPU.Init(
-				initData.m_expandConstantBufferSize, 
-				initData.m_expandConstantBuffer
+				m_initData.m_expandConstantBufferSize, 
+				m_initData.m_expandConstantBuffer
 			);
 		}
 	}
-	void Sprite::Init(const SpriteInitData& initData)
+	void Sprite::Init(const SpriteInitData& m_initData)
 	{
-		m_size.x = static_cast<float>(initData.m_width);
-		m_size.y = static_cast<float>(initData.m_height);
+		m_size.x = static_cast<float>(m_initData.m_width);
+		m_size.y = static_cast<float>(m_initData.m_height);
 
 		//テクスチャを初期化。
-		InitTextures(initData);
+		InitTextures(m_initData);
 		//頂点バッファとインデックスバッファを初期化。
-		InitVertexBufferAndIndexBuffer(initData);
+		InitVertexBufferAndIndexBuffer(m_initData);
 		//定数バッファを初期化。
-		InitConstantBuffer(initData);
+		InitConstantBuffer(m_initData);
 		
 		//ルートシグネチャの初期化。
 		m_rootSignature.Init(
@@ -194,11 +194,11 @@
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP);
 
 		//シェーダーを初期化。
-		InitShader(initData);
+		InitShader(m_initData);
 		//パイプラインステートの初期化。
-		InitPipelineState(initData);
+		InitPipelineState(m_initData);
 		//ディスクリプタヒープを初期化。
-		InitDescriptorHeap(initData);
+		InitDescriptorHeap(m_initData);
 
 		m_isInited = true;
 	}

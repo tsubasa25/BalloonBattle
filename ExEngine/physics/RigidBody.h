@@ -21,7 +21,7 @@ public:
 	/// 剛体を初期化。
 	/// </summary>
 	/// <param name="rbInfo">初期化データの情報</param>
-	void Init(RigidBodyInitData& initData);
+	void Init(RigidBodyInitData& m_initData);
 	/// <summary>
 	/// bulletPhysicsの剛体を取得。
 	/// </summary>

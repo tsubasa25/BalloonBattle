@@ -48,7 +48,7 @@ public:
 	/// 初期化。
 	/// </summary>
 	/// <param name="initData">初期化データ</param>
-	void Init(const SpriteInitData& initData);
+	void Init(const SpriteInitData& m_initData);
 	/// <summary>
 	/// 更新。
 	/// </summary>
@@ -81,31 +81,31 @@ private:
 	/// テクスチャを初期化。
 	/// </summary>
 	/// <param name="initData"></param>
-	void InitTextures(const SpriteInitData& initData);
+	void InitTextures(const SpriteInitData& m_initData);
 	/// <summary>
 	/// シェーダーを初期化。
 	/// </summary>
 	/// <param name="initData"></param>
-	void InitShader( const SpriteInitData& initData );
+	void InitShader( const SpriteInitData& m_initData );
 	/// <summary>
 	/// ディスクリプタヒープを初期化。
 	/// </summary>
 	/// <param name="initData"></param>
-	void InitDescriptorHeap(const SpriteInitData& initData);
+	void InitDescriptorHeap(const SpriteInitData& m_initData);
 	/// <summary>
 	/// 頂点バッファとインデックスバッファを初期化。
 	/// </summary>
 	/// <param name="initData"></param>
-	void InitVertexBufferAndIndexBuffer(const SpriteInitData& initData);
+	void InitVertexBufferAndIndexBuffer(const SpriteInitData& m_initData);
 	/// <summary>
 	/// パイプラインステートを初期化する。
 	/// </summary>
-	void InitPipelineState(const SpriteInitData& initData);
+	void InitPipelineState(const SpriteInitData& m_initData);
 	/// <summary>
 	/// 定数バッファを初期化。
 	/// </summary>
 	/// <param name="initData"></param>
-	void InitConstantBuffer(const SpriteInitData& initData);
+	void InitConstantBuffer(const SpriteInitData& m_initData);
 private:
 	IndexBuffer m_indexBuffer;			//インデックスバッファ。
 	VertexBuffer m_vertexBuffer;		//頂点バッファ。

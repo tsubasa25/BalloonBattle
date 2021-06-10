@@ -19,7 +19,7 @@ public:
 	/// <param name="sizeOfElement">エレメントのサイズ。</param>
 	/// <param name="numElement">エレメントの数。</param>
 	/// <param name="initData">初期データ。</param>
-	void Init(int sizeOfElement, int numElement, void* initData);
+	void Init(int sizeOfElement, int numElement, void* m_initData);
 	/// <summary>
 	/// 頂点バッファを使用して構造化バッファを初期化。
 	/// </summary>

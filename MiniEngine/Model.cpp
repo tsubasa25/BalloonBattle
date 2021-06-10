@@ -2,42 +2,42 @@
 #include "Model.h"
 #include "Material.h"
 
-void Model::Init(const ModelInitData& initData)
+void Model::Init(const ModelInitData& m_initData)
 {
 	MY_ASSERT(
-		initData.m_fxFilePath, 
+		m_initData.m_fxFilePath, 
 		"error : initData.m_fxFilePathが指定されていません。"
 	);
 	MY_ASSERT(
-		initData.m_tkmFilePath,
+		m_initData.m_tkmFilePath,
 		"error : initData.m_tkmFilePathが指定されていません。"
 	);
 	//内部のシェーダーをロードする処理が求めているのが
 	//wchar_t型の文字列なので、ここで変換しておく。
 	wchar_t wfxFilePath[256] = {L""};
-	if (initData.m_fxFilePath != nullptr) {
+	if (m_initData.m_fxFilePath != nullptr) {
 		//MessageBoxA(nullptr, "fxファイルパスが指定されていません。", "エラー", MB_OK);
 		//std::abort();
-		mbstowcs(wfxFilePath, initData.m_fxFilePath, 256);
+		mbstowcs(wfxFilePath, m_initData.m_fxFilePath, 256);
 	}
 	
-	if (initData.m_skeleton != nullptr) {
+	if (m_initData.m_skeleton != nullptr) {
 		//スケルトンが指定されている。
-		m_meshParts.BindSkeleton(*initData.m_skeleton);
+		m_meshParts.BindSkeleton(*m_initData.m_skeleton);
 	}
 	
-	m_modelUpAxis = initData.m_modelUpAxis;
+	m_modelUpAxis = m_initData.m_modelUpAxis;
 
-	m_tkmFile.Load(initData.m_tkmFilePath);
+	m_tkmFile.Load(m_initData.m_tkmFilePath);
 	m_meshParts.InitFromTkmFile(
 		m_tkmFile, 
 		wfxFilePath, 
-		initData.m_vsEntryPointFunc,
-		initData.m_vsSkinEntryPointFunc,
-		initData.m_psEntryPointFunc,
-		initData.m_expandConstantBuffer,
-		initData.m_expandConstantBufferSize,
-		initData.m_expandShaderResoruceView
+		m_initData.m_vsEntryPointFunc,
+		m_initData.m_vsSkinEntryPointFunc,
+		m_initData.m_psEntryPointFunc,
+		m_initData.m_expandConstantBuffer,
+		m_initData.m_expandConstantBufferSize,
+		m_initData.m_expandShaderResoruceView
 	);
 
 	UpdateWorldMatrix(g_vec3Zero, g_quatIdentity, g_vec3One);

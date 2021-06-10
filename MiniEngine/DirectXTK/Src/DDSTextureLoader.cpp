@@ -130,7 +130,7 @@ namespace
         _Out_ size_t& theight,
         _Out_ size_t& tdepth,
         _Out_ size_t& skipMip,
-        std::vector<D3D12_SUBRESOURCE_DATA>& initData)
+        std::vector<D3D12_SUBRESOURCE_DATA>& m_initData)
     {
         if (!bitData)
         {
@@ -146,7 +146,7 @@ namespace
         size_t RowBytes = 0;
         const uint8_t* pEndBits = bitData + bitSize;
 
-        initData.clear();
+        m_initData.clear();
 
         for (size_t p = 0; p < numberOfPlanes; ++p)
         {
@@ -184,7 +184,7 @@ namespace
 
                         AdjustPlaneResource(format, h, p, res);
 
-                        initData.emplace_back(res);
+                        m_initData.emplace_back(res);
                     }
                     else if (!j)
                     {
@@ -218,7 +218,7 @@ namespace
             }
         }
 
-        return initData.empty() ? E_FAIL : S_OK;
+        return m_initData.empty() ? E_FAIL : S_OK;
     }
 
     //--------------------------------------------------------------------------------------

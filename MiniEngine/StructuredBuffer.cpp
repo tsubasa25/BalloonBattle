@@ -13,7 +13,7 @@ StructuredBuffer::~StructuredBuffer()
 		}
 	}
 }
-void StructuredBuffer::Init(int sizeOfElement, int numElement, void* initData)
+void StructuredBuffer::Init(int sizeOfElement, int numElement, void* m_initData)
 {
 	m_sizeOfElement = sizeOfElement;
 	m_numElement = numElement;
@@ -39,8 +39,8 @@ void StructuredBuffer::Init(int sizeOfElement, int numElement, void* initData)
 			CD3DX12_RANGE readRange(0, 0);        //     intend to read from this resource on the CPU.
 			buffer->Map(0, &readRange, reinterpret_cast<void**>(&m_buffersOnCPU[bufferNo]));
 		}
-		if (initData != nullptr) {
-			memcpy(m_buffersOnCPU[bufferNo], initData, m_sizeOfElement * m_numElement);
+		if (m_initData != nullptr) {
+			memcpy(m_buffersOnCPU[bufferNo], m_initData, m_sizeOfElement * m_numElement);
 		}
 		
 		bufferNo++;

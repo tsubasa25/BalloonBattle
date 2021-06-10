@@ -2614,9 +2614,9 @@ inline Matrix Matrix::CreateShadow(const Vector3& lightDir, const Plane& plane)
 {
     using namespace DirectX;
     Matrix R;
-    XMVECTOR light = XMLoadFloat3(&lightDir);
+    XMVECTOR m_light = XMLoadFloat3(&lightDir);
     XMVECTOR planev = XMLoadFloat4(&plane);
-    XMStoreFloat4x4(&R, XMMatrixShadow(planev, light));
+    XMStoreFloat4x4(&R, XMMatrixShadow(planev, m_light));
     return R;
 }
 

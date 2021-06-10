@@ -734,11 +734,11 @@ HRESULT DirectX::CreateWICTextureFromMemoryEx(
     }
 
     std::unique_ptr<uint8_t[]> decodedData;
-    D3D12_SUBRESOURCE_DATA initData;
+    D3D12_SUBRESOURCE_DATA m_initData;
     hr = CreateTextureFromWIC(d3dDevice,
         frame.Get(), maxsize,
         resFlags, loadFlags,
-        texture, decodedData, initData);
+        texture, decodedData, m_initData);
 
     if (SUCCEEDED(hr))
     {
@@ -749,7 +749,7 @@ HRESULT DirectX::CreateWICTextureFromMemoryEx(
         resourceUpload.Upload(
             *texture,
             0,
-            &initData,
+            &m_initData,
             1);
 
         resourceUpload.Transition(
@@ -908,10 +908,10 @@ HRESULT DirectX::CreateWICTextureFromFileEx(
     }
 
     std::unique_ptr<uint8_t[]> decodedData;
-    D3D12_SUBRESOURCE_DATA initData;
+    D3D12_SUBRESOURCE_DATA m_initData;
     hr = CreateTextureFromWIC(d3dDevice, frame.Get(), maxsize,
         resFlags, loadFlags,
-        texture, decodedData, initData);
+        texture, decodedData, m_initData);
 
     if (SUCCEEDED(hr))
     {
@@ -920,7 +920,7 @@ HRESULT DirectX::CreateWICTextureFromFileEx(
         resourceUpload.Upload(
             *texture,
             0,
-            &initData,
+            &m_initData,
             1);
 
         resourceUpload.Transition(

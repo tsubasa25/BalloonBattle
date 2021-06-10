@@ -25,6 +25,7 @@ struct ModelInitData {
 	IShaderResource* m_expandShaderResoruceView = nullptr;			//ユーザー拡張のシェーダーリソース。
 	Skeleton* m_skeleton = nullptr;									//スケルトン。
 	EnModelUpAxis m_modelUpAxis = enModelUpAxisZ;					//モデルの上方向。
+	DXGI_FORMAT m_colorBufferFormat = DXGI_FORMAT_R8G8B8A8_UNORM;	//レンダリングするカラーバッファのフォーマット。
 };
 
 /// <summary>
@@ -38,7 +39,7 @@ public:
 	/// tkmファイルから初期化。
 	/// </summary>
 	/// <param name="initData">初期化データ</param>
-	void Init( const ModelInitData& initData );
+	void Init( const ModelInitData& m_initData );
 	/// <summary>
 	/// ワールド行列の更新。
 	/// </summary>
