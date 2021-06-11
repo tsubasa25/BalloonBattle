@@ -78,6 +78,14 @@ public:
 	{
 		return m_position;
 	}
+	float GetPositionX()
+	{
+		return m_position.x;
+	}
+	float GetPositionZ()
+	{
+		return m_position.z;
+	}
 	/**
 		 * @brief ƒ‚ƒfƒ‹‚Ì‰ñ“]‚ðŽæ“¾
 		 * @return ‰ñ“]

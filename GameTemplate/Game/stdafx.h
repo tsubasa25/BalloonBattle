@@ -8,3 +8,4 @@
 #include "PointLight.h"
 #include "SpotLight.h"
 #include "SkinModelRender.h"
+#include "FontRender.h"

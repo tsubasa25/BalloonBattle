@@ -55,8 +55,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
     Player* player0 = NewGO<Player>(0);
     player0->SetPlayerNum(0);
+    player0->SetPosition({ 100,0,0 });
     Player* player1 = NewGO<Player>(0);
     player1->SetPlayerNum(1);
+    player1->SetPosition({ -100,0,0 });
     
    
     
