@@ -59,6 +59,8 @@ public:
 		 * @param pos À•W
 		*/
 	void SetPosition(Vector3 pos);
+	void SetPositionX(float posX);
+	void SetPositionZ(float posZ);
 	/**
 		 * @brief ƒ‚ƒfƒ‹‚Ì‰ñ“]‚ğİ’è‚·‚é
 		 * @param qRot ‰ñ“]

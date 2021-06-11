@@ -19,17 +19,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     //ライトマネージャーのインスタンスを作成   
     LightManager::CreateInstance();
 
-    /*SkinModelRender* skinModelRender = NewGO<SkinModelRender>(0);
-    skinModelRender->Init("Assets/modelData/Ballon.tkm");
-    skinModelRender->SetPosition({ 0,500,-100 });
-    skinModelRender->SetScale({ 0.5,0.5, 0.5 });
-    SkinModelRender* unityChan = NewGO<SkinModelRender>(0);
-    unityChan->Init("Assets/modelData/unityChan.tkm");
-    unityChan->SetPosition({ 50,0,-100 });*/
+    
     SkinModelRender* Stage = NewGO<SkinModelRender>(0);
-    //Stage->Init("Assets/modelData/bg/bg.tkm");
+    
     Stage->Init("Assets/modelData/Stage.tkm");
-    //skinModelRender->SetScale({ 0.5,0.5, 0.5 });
+    
     DirectionLight* directionLight = nullptr;
     directionLight = NewGO<DirectionLight>(0);
     directionLight->SetColor({ 1,1,1 });
@@ -47,7 +41,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     spotLight->SetRange(1000);
     spotLight->SetAngleDeg(30);
     //skinModelRender->SetPosition({ Vector3::Zero });
-    g_camera3D->SetPosition({ 0.0f, 500.0f, 500.0f });
+    g_camera3D->SetPosition({ 0.0f, 700.0f, 1000.0f });
     g_camera3D->SetTarget({ 0,50,0 });
     Vector3 LightPos;
     LightPos.y += 50;

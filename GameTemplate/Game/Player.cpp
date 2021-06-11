@@ -19,7 +19,7 @@ bool Player::Start()
 void Player::Update()
 {
 	Move();
-	
+	Debug(GetPlayerNum());
 
 }
 
@@ -28,30 +28,45 @@ Vector3 Player::Decele(Vector3 speed)
 	Vector3 speedVec = speed;
 	
 	if (speed.Length() > 0.0f) {		
-		 return speedVec*=-0.02;
+		 return speedVec*-0.05;
 	}
 	else
 		return Vector3::Zero;
 }
 void Player::Move()
 {
-	if (GetPlayerNum() == 0) {
-		SetAccele({ g_pad[0]->GetLStickXF() * -0.4f,0,0 });
-		SetAccele({ 0,0,g_pad[0]->GetLStickYF() * -0.4f });		
-		Debug();
-	}
-	else if (GetPlayerNum() == 1) {
-		SetAccele({ g_pad[1]->GetLStickXF() * -0.4f,0,0 });
-		SetAccele({ 0,0,g_pad[1]->GetLStickYF() * -0.4f });
-	}	
+	
+	SetAccele({ g_pad[GetPlayerNum()]->GetLStickXF() * -1.4f,0,0 });
+	SetAccele({ 0,0,g_pad[GetPlayerNum()]->GetLStickYF() * -1.4f });
+	SetAccele(Decele(GetAccele()));
+
 	SetMoveSpeed(GetAccele());
-	SetMoveSpeed(Decele(GetMoveSpeed()));
 	m_skinModelRender->SetPosition(GetMoveSpeed());
+	if (m_skinModelRender->GetPositionX() > m_StageWidth || m_skinModelRender->GetPositionX() < -m_StageWidth)
+	{
+		SetAcceleX(0);
+		SetMoveSpeedX(0);
+		m_skinModelRender->SetPositionX(GetStageWidth());
+	}
+	
+	if (m_skinModelRender->GetPositionZ() > m_StageDepth || m_skinModelRender->GetPositionZ() < -m_StageDepth)
+	{		
+		SetAcceleZ(0);
+		SetMoveSpeedZ(0);
+		m_skinModelRender->SetPositionZ(GetStageDepth());
+	}
+	
 }
-void Player::Debug()
+void Player::Debug(int pNum)
 {	
-	m_PosX_font->SetPosition({ 500,100 });	
-	m_PosX_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionX())));
-	m_PosZ_font->SetPosition({ 500,0 });
+	if (pNum == 0) {
+		m_PosX_font->SetPosition({ -500,100 });
+		m_PosZ_font->SetPosition({ -500,0 });
+	}
+	else {
+		m_PosX_font->SetPosition({ 500,100 });
+		m_PosZ_font->SetPosition({ 500,0 });
+	}
+	m_PosX_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionX())));	
 	m_PosZ_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionZ())));
 }

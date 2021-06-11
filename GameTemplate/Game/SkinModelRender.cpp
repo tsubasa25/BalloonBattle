@@ -63,6 +63,16 @@ void SkinModelRender::SetPosition(Vector3 pos)
 
 	UpdateModel();
 }
+void SkinModelRender::SetPositionX(float posX)
+{
+	m_position.x = posX;
+	UpdateModel();
+}
+void SkinModelRender::SetPositionZ(float posZ)
+{
+	m_position.z = posZ;
+	UpdateModel();
+}
 
 void SkinModelRender::SetRotation(Quaternion qRot)
 {
