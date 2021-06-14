@@ -20,16 +20,19 @@ private:
 
 	const float m_StageWidth=700.0f;	
 	const float m_StageDepth=600.0f;
-public:
+	
+	
+	Player* m_enemy[3] = { nullptr,nullptr,nullptr };
+public:		
 	SkinModelRender* m_skinModelRender = nullptr;
-	Player* m_enemy = nullptr;
-
 	~Player();
 	bool Start();
 	void Update();
 
 	void SetPlayerNum(int num) { m_playerNum = num; }//プレイヤー番号を設定する
 	int GetPlayerNum() { return m_playerNum; }//プレイヤー番号を入手する
+
+	void SetEnemy(Player* enemy, int i) { m_enemy[i] = enemy; }
 
 	void SetPosition(Vector3 pos) { m_skinModelRender->SetPosition(pos); }
 	Vector3 GetPosition() { return m_skinModelRender->GetPosition(); }

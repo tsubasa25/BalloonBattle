@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "system/system.h"
 #include "Player.h"
+#include "GameScene.h"
+#include "BackGround.h"
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数
 ///////////////////////////////////////////////////////////////////
@@ -19,15 +21,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     //ライトマネージャーのインスタンスを作成   
     LightManager::CreateInstance();
 
-    
-    SkinModelRender* Stage = NewGO<SkinModelRender>(0);
-    
-    Stage->Init("Assets/modelData/Stage.tkm");
-    
-    DirectionLight* directionLight = nullptr;
-    directionLight = NewGO<DirectionLight>(0);
-    directionLight->SetColor({ 1,1,1 });
-    directionLight->SetDirection({ 0,-1,-1 });
+    NewGO<GameScene>(0);
+    NewGO<BackGround>(0);
+   
     PointLight* pointLight = nullptr;
     pointLight = NewGO<PointLight>(0);   
     pointLight->SetColor({ 10,0,10 });
@@ -40,23 +36,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     spotLight->SetPosition({ 0,50,50 });
     spotLight->SetRange(1000);
     spotLight->SetAngleDeg(30);
-    //skinModelRender->SetPosition({ Vector3::Zero });
+   
     g_camera3D->SetPosition({ 0.0f, 700.0f, 1000.0f });
     g_camera3D->SetTarget({ 0,50,0 });
-    Vector3 LightPos;
-    LightPos.y += 50;
-
-
-    Player* player0 = NewGO<Player>(0);
-    player0->SetPlayerNum(0);
-    player0->SetAccele({ 100,0,0 });
-    
-    Player* player1 = NewGO<Player>(0);
-    player1->SetPlayerNum(1);
-    player1->SetAccele({ -100,0,0 });
-
-    player0->m_enemy = player1;
-    player1->m_enemy = player0;
    
     
     //////////////////////////////////////
@@ -71,19 +53,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
         g_engine->BeginFrame();
         GameObjectManager::GetInstance()->ExecuteUpdate();
         GameObjectManager::GetInstance()->ExecuteRender(renderContext);
-        //Stage->Render(renderContext);
-        //skinModelRender->Render(renderContext);
-        //unityChan->Render(renderContext);
+       
         //////////////////////////////////////
         // ここから絵を描くコードを記述する
         //////////////////////////////////////
-        Vector3 position;
        
-        position.x -= g_pad[0]->GetRStickXF() * 2;
-        position.z -= g_pad[0]->GetRStickYF() * 2;
-        LightPos += position;
         
-        //skinModelRender->SetPosition({ LightPos });
         LightManager::GetInstance()->UpdateEyePos();
         //////////////////////////////////////
         // 絵を描くコードを書くのはここまで！！！
