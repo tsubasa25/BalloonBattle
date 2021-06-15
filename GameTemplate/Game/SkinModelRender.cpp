@@ -52,9 +52,8 @@ void SkinModelRender::UpdateModel()
 {
 	//モデルをアップデート
 	//for (auto& model : m_model) {
-		m_model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
-		m_skeleton.Update(m_model.GetWorldMatrix());
-	
+	m_model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
+	m_skeleton.Update(m_model.GetWorldMatrix());	
 }
 
 void SkinModelRender::SetPosition(Vector3 pos)

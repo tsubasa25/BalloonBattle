@@ -21,7 +21,8 @@ bool Player::Start()
 	else if (GetPlayerNum() == 3) {
 		m_skinModelRender->Init("Assets/modelData/Balloon3.tkm");
 	}
-	
+	//キャラコンの初期化
+	m_charaCon.Init(30.0f, 70.0f, m_position);
 	return true;
 }
 void Player::Update()
@@ -38,56 +39,61 @@ Vector3 Player::Decele(Vector3 speed)//減速
 	Vector3 speedVec = speed;
 	
 	if (speed.Length() > 0.0f) {		
-		 return speedVec*-0.05;
+		 return speedVec*-0.01;
 	}
 	else
 		return Vector3::Zero;
 }
 void Player::Move()//移動
 {	
-	SetMoveDirX({ g_pad[GetPlayerNum()]->GetLStickXF() * -1.1f });//ゲームパッドで入力した値を加算して入れる
-	SetMoveDirZ({ g_pad[GetPlayerNum()]->GetLStickYF() * -1.1f });
+	m_moveDir.x += g_pad[GetPlayerNum()]->GetLStickXF() * -0.5f;//ゲームパッドで入力した値を加算して入れる
+	m_moveDir.z += g_pad[GetPlayerNum()]->GetLStickYF() * -0.5f;
+
+	m_moveDir += Decele(m_moveDir);//MoveDirの小さくした逆ベクトルを代入する(減速処理)
+	if (m_charaCon.IsOnGround() == false) {
+		m_moveDir.y -= 1;
+	}
+	if (m_moveDir.y < -50) {
+		m_moveDir={ 0,50,0 };
+	}
+	m_position = m_charaCon.Execute(m_moveDir, 1.0f);
+	//m_position += m_moveDir;//ゲームパッドで入力した値と減速処理の値を加算合計する	
 	
-	SetMoveDir(Decele(GetMoveDir()));//MoveDirの小さくした逆ベクトルを代入する(減速処理)
-	SetAccele(GetMoveDir());//ゲームパッドで入力した値と減速処理の値を加算合計する	
-	
-	SetPosition(GetAccele());
+	SetPosition(m_position);//位置を設定する
 }
 
 void Player::HitWall()//壁にあたったとき
 {	
-	if (m_skinModelRender->GetPositionX() >= m_StageWidth)
-	{
-		SetAcceleX(GetStageWidth());
-		ResetMoveDirX(GetMoveDirX() * -1.0);
-		ResetMoveDirZ(GetMoveDirZ() * 1.0);
-
-		//m_skinModelRender->SetPositionX(GetStageWidth());
+	//Xベクトルの向きを逆にして反射したように見せる
+	if (m_skinModelRender->GetPositionX() >= STAGE_WIDTH&& m_skinModelRender->GetPositionZ() <= STAGE_HOLE && m_skinModelRender->GetPositionZ() >= -STAGE_HOLE)//右の壁にあたったとき
+	{}
+	else if (m_skinModelRender->GetPositionX() >= STAGE_WIDTH) {
+		m_position.x = STAGE_WIDTH;
+		m_moveDir.x *= -1;
 	}
-	if (m_skinModelRender->GetPositionX() <= -m_StageWidth)
+	if (m_skinModelRender->GetPositionX() <= -STAGE_WIDTH && m_skinModelRender->GetPositionZ() <= STAGE_HOLE && m_skinModelRender->GetPositionZ() >= -STAGE_HOLE)//左の壁にあたったとき
+	{}			
+	else if (m_skinModelRender->GetPositionX() <= -STAGE_WIDTH) {
+		m_position.x = -STAGE_WIDTH;
+		m_moveDir.x *= -1;
+	}
+	//Zベクトルの向きを逆にして反射したように見せる
+	if (m_skinModelRender->GetPositionZ() >= STAGE_DEPTH && m_skinModelRender->GetPositionX() <= STAGE_HOLE && m_skinModelRender->GetPositionX() >= -STAGE_HOLE)//
 	{
-		SetAcceleX(-GetStageWidth());
-		ResetMoveDirX(GetMoveDirX() * -1.0);
-		ResetMoveDirZ(GetMoveDirZ() * 1.0);
 		
-		//m_skinModelRender->SetPositionX(-GetStageWidth());
 	}
-
-	if (m_skinModelRender->GetPositionZ() >= m_StageDepth)
+	else if (m_skinModelRender->GetPositionZ() >= STAGE_DEPTH)//奥の壁にあたったとき
 	{
-		SetAcceleZ(GetStageDepth());
-		ResetMoveDirX(GetMoveDirX() * 1.0);
-		ResetMoveDirZ(GetMoveDirZ() * -1.0);
-		
-		//m_skinModelRender->SetPositionZ(GetStageDepth());
+		m_position.z = STAGE_DEPTH;		
+		m_moveDir.z *= -1;
 	}
-	if (m_skinModelRender->GetPositionZ() <= -m_StageDepth)
+	if (m_skinModelRender->GetPositionZ() <= -STAGE_DEPTH && m_skinModelRender->GetPositionX() <= STAGE_HOLE && m_skinModelRender->GetPositionX() >= -STAGE_HOLE)//
 	{
-		SetAcceleZ(-GetStageDepth());
-		ResetMoveDirX(GetMoveDirX() * 1.0);
-		ResetMoveDirZ(GetMoveDirZ() * -1.0);
-
-		//m_skinModelRender->SetPositionZ(-GetStageDepth());
+	}
+	else if (m_skinModelRender->GetPositionZ() <= -STAGE_DEPTH)//手前の壁にあたったとき
+	{
+		m_position.z = -STAGE_DEPTH;		
+		m_moveDir.z *= -1;
 	}	
 }
 
@@ -95,24 +101,21 @@ void Player::HitPlayer()
 {	
 	for (int i = 0; i < 3; i++)
 	{
-		Vector3 diff = GetPosition() - m_enemy[i]->GetPosition();
-		
-		if (diff.Length() < 70) {
-
-			Vector3 tmp = GetMoveDir();
+		Vector3 diff = GetPosition() - m_enemy[i]->GetPosition();//敵との距離を測る		
+		if (diff.Length() < 70) {//距離が近ければ
+			Vector3 tmp = GetMoveDir();			//相手と自分のベクトルを交換する
 			ResetMoveDir(m_enemy[i]->GetMoveDir());
 			m_enemy[i]->ResetMoveDir(tmp);
-		}
-		
+		}		
 	}	
 }
-void Player::Debug(int pNum)
+void Player::Debug(int pNum)//デバッグ用
 {
 	if (pNum == 0) {
 		m_PosX_font->SetPosition({ -500,100 });
 		m_PosZ_font->SetPosition({ -500,0 });
 	}
-	else {
+	else if(pNum==1){
 		m_PosX_font->SetPosition({ 500,100 });
 		m_PosZ_font->SetPosition({ 500,0 });
 	}
