@@ -74,6 +74,10 @@ public:
 	{
 		return m_position.x;
 	}
+	float GetPositionY()
+	{
+		return m_position.y;
+	}
 	float GetPositionZ()
 	{
 		return m_position.z;
