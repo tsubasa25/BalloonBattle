@@ -288,8 +288,10 @@
     <ClCompile Include="..\..\MiniEngine\tkFile\TkmFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\tkFile\TksFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\VertexBuffer.cpp" />
+    <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="FontRender.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -366,8 +368,10 @@
     <ClInclude Include="..\..\MiniEngine\tkFile\TkmFile.h" />
     <ClInclude Include="..\..\MiniEngine\tkFile\TksFile.h" />
     <ClInclude Include="..\..\MiniEngine\VertexBuffer.h" />
+    <ClInclude Include="BackGround.h" />
     <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="FontRender.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="LightManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
