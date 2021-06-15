@@ -37,9 +37,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     spotLight->SetRange(1000);
     spotLight->SetAngleDeg(30);
    
-    g_camera3D->SetPosition({ 0.0f, 700.0f, 1000.0f });
+    g_camera3D->SetPosition({ 0.0f, 1000.0f, 1500.0f });
     g_camera3D->SetTarget({ 0,50,0 });
-   
     
     //////////////////////////////////////
     // 初期化を行うコードを書くのはここまで！！！

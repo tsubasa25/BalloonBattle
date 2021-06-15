@@ -11,7 +11,7 @@ bool GameScene::Start()
     {
         player[i] = NewGO<Player>(0);
         player[i]->SetPlayerNum(i);//プレイヤー番号を設定
-        player[i]->SetAccele({ GetIniPos(i) });//初期位置を設定  
+        player[i]->SetIniPosition({ GetIniPos(i) });//初期位置を設定
     }
     for (int i = 0; i < 4; i++)//敵を入れる
     {

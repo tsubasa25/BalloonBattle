@@ -15,17 +15,7 @@ public:
 	*/
 	void UpdateModel();
 
-	//ライトの情報とカメラの位置
-	//struct LigDatas
-	//{
-	//	DirLigData directionLight;
-	//	PointLigData pointLight;
-	//	SpotLigData spotLight;
-	//	Vector3 eyePos;
-	//};
-	//LigDatas m_ligData;//ライトのデータ
-	//int m_size = sizeof(m_ligData);	//ライトのデータのサイズ
-
+	
 	void Render(RenderContext& rc)override;
 	/**
 		 * @brief モデルの描画
@@ -104,6 +94,15 @@ public:
 	Vector3 GetScale()
 	{
 		return m_scale;
+	}
+	/**
+		 * @brief モデルを取得
+		 * @param model ビューポート番号(カメラ番号)
+		 * @return 番号から取得したモデルへの参照
+		*/
+	Model& GetModel()
+	{
+		return m_model;
 	}
 private:
 	
