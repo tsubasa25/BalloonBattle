@@ -24,6 +24,9 @@ public:
 	{
 		RemoveRigidBoby();
 	}
+
+
+	void SizeUpdate(float radius, float height);
 	/*!
 		* @brief	初期化。
 		*@param[in]	radius		カプセルコライダーの半径。

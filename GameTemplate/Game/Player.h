@@ -1,9 +1,11 @@
 #pragma once
+#include<vector>
 namespace
 {
 	const int STAGE_WIDTH = 750;
 	const int STAGE_DEPTH = 750;
 	const int STAGE_HOLE = 350;
+	const float INI_BULLOON_SIZE = 70;
 }
 class Player:public IGameObject
 {
@@ -11,10 +13,12 @@ private:
 	
 	Vector3 m_scale = { Vector3::Zero };
 	int m_playerNum = 0;//プレイヤー番号
-
+	int m_stock = 1;//ストック
+	int m_playerCount = 4;
 	FontRender* m_PosX_font = NewGO<FontRender>(0);//デバッグ用
 	FontRender* m_PosY_font = NewGO<FontRender>(0);
 	FontRender* m_PosZ_font = NewGO<FontRender>(0);
+	FontRender* m_Size_font = NewGO<FontRender>(0);
 
 	Vector3 m_position = { Vector3::Zero };
 	Vector3 m_iniPos= { Vector3::Zero };
@@ -24,9 +28,12 @@ private:
 	CharacterController m_charaCon;//プレイヤーのキャラコン
 
 	SkinModelRender* m_skinModelRender = nullptr;
-	Player* m_enemy[3] = { nullptr,nullptr,nullptr };
-public:		
 	
+
+	float m_bulloonSize = 70;
+public:		
+	std::vector<Player*> m_enemy;
+	std::vector<Player*>::iterator it;
 	~Player();
 	bool Start();
 	void Update();
