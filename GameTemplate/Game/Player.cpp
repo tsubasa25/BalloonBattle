@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "GameScene.h"
 Player::~Player()
 {
 	DeleteGO(m_skinModelRender);
@@ -50,13 +51,17 @@ void Player::Move()//移動
 	m_moveDir.z += g_pad[GetPlayerNum()]->GetLStickYF() * -0.5f;
 
 	m_moveDir += Decele(m_moveDir);//MoveDirの小さくした逆ベクトルを代入する(減速処理)
+	m_position = m_charaCon.Execute(m_moveDir, 1.0f);
 	if (m_charaCon.IsOnGround() == false) {
 		m_moveDir.y -= 1;
 	}
 	if (m_moveDir.y < -50) {
-		m_moveDir={ 0,50,0 };
+		m_moveDir = (m_iniPos-m_position);
+		m_position = m_charaCon.Execute(m_moveDir, 1.0f);
+		
+		m_moveDir = { Vector3::Zero };
 	}
-	m_position = m_charaCon.Execute(m_moveDir, 1.0f);
+	
 	//m_position += m_moveDir;//ゲームパッドで入力した値と減速処理の値を加算合計する	
 	
 	SetPosition(m_position);//位置を設定する
@@ -113,6 +118,7 @@ void Player::Debug(int pNum)//デバッグ用
 {
 	if (pNum == 0) {
 		m_PosX_font->SetPosition({ -500,100 });
+		m_PosY_font->SetPosition({ -500,50 });
 		m_PosZ_font->SetPosition({ -500,0 });
 	}
 	else if(pNum==1){
@@ -120,6 +126,7 @@ void Player::Debug(int pNum)//デバッグ用
 		m_PosZ_font->SetPosition({ 500,0 });
 	}
 	m_PosX_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionX())));
+	m_PosY_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionY())));
 	m_PosZ_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionZ())));
 	if (g_pad[0]->IsPress(enButtonA)) {
 		m_skinModelRender->SetPositionX(0);

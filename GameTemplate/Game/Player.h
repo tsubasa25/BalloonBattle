@@ -13,9 +13,11 @@ private:
 	int m_playerNum = 0;//プレイヤー番号
 
 	FontRender* m_PosX_font = NewGO<FontRender>(0);//デバッグ用
+	FontRender* m_PosY_font = NewGO<FontRender>(0);
 	FontRender* m_PosZ_font = NewGO<FontRender>(0);
 
 	Vector3 m_position = { Vector3::Zero };
+	Vector3 m_iniPos= { Vector3::Zero };
 	Vector3 m_decele = { Vector3::Zero };
 	Vector3 m_moveDir = { Vector3::Zero };
 
@@ -34,7 +36,7 @@ public:
 
 	void SetEnemy(Player* enemy, int i) { m_enemy[i] = enemy; }//敵情報を設定する
 
-	void SetIniPosition(Vector3 pos) { m_position = pos; }
+	void SetIniPosition(Vector3 pos) { m_position = pos; m_iniPos = pos; }//初期位置を設定
 	void SetPosition(Vector3 pos) { m_skinModelRender->SetPosition(pos); }
 	Vector3 GetPosition() { return m_skinModelRender->GetPosition(); }
 
