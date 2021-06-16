@@ -162,7 +162,7 @@ float3 CalcPhongSpecular(float3 lightDirection, float3 lightColor, float3 worldP
     t = max(0.0f, t);
 
     // 鏡面反射の強さを絞る
-    t = pow(t, 5.0f);
+    t = pow(t, 1.5f);
 
     // 鏡面反射光を求める
     return lightColor * t;

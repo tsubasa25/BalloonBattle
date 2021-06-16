@@ -18,11 +18,10 @@ bool GameScene::Start()
         for (int j = 0; j < 4; j++)
         {
             if (player[i]->GetPlayerNum() != player[j]->GetPlayerNum()) {//©•ª‚ğ“ü‚ê‚È‚¢‚æ‚¤‚É‚·‚é
-                player[i]->SetEnemy(player[j], m_enemyNum);//“Gî•ñ‚ğ“ü‚ê‚é
-                m_enemyNum++;
+                player[i]->m_enemy.push_back(player[j]);//“Gî•ñ‚ğ“ü‚ê‚é 
             }
         }
-        m_enemyNum = 0;
+        //m_enemyNum = 0;
     }
     
 	return true;

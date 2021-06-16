@@ -106,7 +106,13 @@ namespace {
 	};
 }
 
-
+void CharacterController::SizeUpdate(float radius, float height)
+{
+	//ƒRƒŠƒWƒ‡ƒ“ì¬B
+	m_radius = radius;
+	m_height = height;
+	m_collider.Init(radius, height);
+}
 void CharacterController::Init(float radius, float height, const Vector3& position)
 {
 	m_position = position;
