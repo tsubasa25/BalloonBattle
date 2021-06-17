@@ -26,7 +26,7 @@ public:
 	}
 	
 	//Œü‚«î•ñ‚ðŽæ“¾‚·‚é
-	Vector3 GetDirection() { m_dirLigData->direction; }
+	Vector3 GetDirection() { return m_dirLigData->direction; }
 
 	//F‚ðÝ’è‚·‚é
 	void SetColor(Vector3 Color) { m_dirLigData->color = Color; }
