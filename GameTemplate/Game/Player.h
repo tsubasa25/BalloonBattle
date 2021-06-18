@@ -14,7 +14,7 @@ private:
 	Vector3 m_scale = { Vector3::Zero };
 	int m_playerNum = 0;//プレイヤー番号
 	int m_stock = 3;//ストック
-	int m_playerCount = 4;
+	//int m_playerCount = 4;
 	FontRender* m_PosX_font = NewGO<FontRender>(0);//デバッグ用
 	FontRender* m_PosY_font = NewGO<FontRender>(0);
 	FontRender* m_PosZ_font = NewGO<FontRender>(0);
@@ -71,5 +71,6 @@ public:
 	Vector3 ReboundSpeed();//モデルの法線から反射する方向を求めて移動方向を決定する
 
 	void Debug(int pNum);//デバッグ用
+	int m_oldStock = m_stock;
 };
 

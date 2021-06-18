@@ -26,6 +26,18 @@ bool Player::Start()
 	else if (GetPlayerNum() == 3) {
 		m_skinModelRender->Init("Assets/modelData/Balloon3.tkm");
 	}
+	if (GetPlayerNum() == 4) {
+		m_skinModelRender->Init("Assets/modelData/Balloon0.tkm");
+	}
+	else if (GetPlayerNum() == 5) {
+		m_skinModelRender->Init("Assets/modelData/Balloon1.tkm");
+	}
+	else if (GetPlayerNum() == 6) {
+		m_skinModelRender->Init("Assets/modelData/Balloon2.tkm");
+	}
+	else if (GetPlayerNum() == 7) {
+		m_skinModelRender->Init("Assets/modelData/Balloon3.tkm");
+	}
 	//キャラコンの初期化
 	m_charaCon.Init((m_bulloonSize/2) , m_bulloonSize, m_position);
 	//m_charaCon.Init(100, m_bulloonSize, m_position);
@@ -56,9 +68,9 @@ Vector3 Player::Decele(Vector3 speed)//減速
 }
 void Player::Move()//移動
 {	
-	m_moveSpeed.x += g_pad[GetPlayerNum()]->GetLStickXF() * -0.5f;//ゲームパッドで入力した値を加算して入れる
-	m_moveSpeed.z += g_pad[GetPlayerNum()]->GetLStickYF() * -0.5f;
-
+	m_moveSpeed.x += g_pad[GetPlayerNum()]->GetLStickXF() * 0.5f;//ゲームパッドで入力した値を加算して入れる
+	m_moveSpeed.z += g_pad[GetPlayerNum()]->GetLStickYF() * 0.5f;
+	
 	m_moveSpeed += Decele(m_moveSpeed);//MoveDirの小さくした逆ベクトルを代入する(減速処理)
 	m_position = m_charaCon.Execute(m_moveSpeed, 1.0f);//ポジションを決定
 	if (m_charaCon.IsOnGround() == false) {//地面についていなかったら
@@ -115,7 +127,7 @@ void Player::HitPlayer()
 		if (diff.Length() < (m_bulloonSize/2+m_enemy[i]->m_bulloonSize/2)+1) {		//距離が近ければ
 			m_enemyHit = true;						//敵とあたったとみなす
 			Vector3 tmp = m_enemy[i]->GetMoveSpeed();//敵の勢いを保存する
-			m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -3);//相手に自分の勢いを渡す
+			m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -2);//相手に自分の勢いを渡す
 			
 			if (m_moveSpeed.Length() < m_enemy[i]->m_mass) {//自分の勢いより、相手の質量が大きければ跳ね返される
 				m_moveSpeed = ReboundSpeed();//自分は跳ね返される
@@ -123,7 +135,7 @@ void Player::HitPlayer()
 			}
 			else {
 				//m_moveSpeed *= 1 / m_enemy[i]->m_mass;
-				m_moveSpeed = tmp * 3;
+				m_moveSpeed = tmp * 2;
 			}
 		}	
 		else {//敵との距離が遠ければなにもしない
@@ -178,4 +190,17 @@ void Player::Debug(int pNum)//デバッグ用
 		m_bulloonSize -= 1;
 		m_mass = m_bulloonSize / MASS_DIVISOR;
 	}	
+	if (m_playerNum == 0) {
+		Vector3 diff=Vector3::Zero;
+		diff=m_position - m_enemy[0]->m_position;
+		diff.Normalize();
+		m_enemy[0]->m_moveSpeed += diff*0.3;
+		if (m_stock != m_oldStock) {
+			m_oldStock--;
+			m_enemy[0]->m_moveSpeed = (m_enemy[0]->m_iniPos - m_enemy[0]->m_position);//初期座標にとばす
+			m_enemy[0]->m_position = m_enemy[0]->m_charaCon.Execute(m_enemy[0]->m_moveSpeed, 1.0f);
+
+			m_enemy[0]->m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
+		}
+	}
 }

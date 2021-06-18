@@ -32,7 +32,7 @@ enum EnButton{
 */
 class GamePad {
 public:
-	static const int CONNECT_PAD_MAX = 4;		//接続可能なパッドの最大数。
+	static const int CONNECT_PAD_MAX = 8;		//接続可能なパッドの最大数。
 	/*!
 		*@brief	パッドステート。
 		*/

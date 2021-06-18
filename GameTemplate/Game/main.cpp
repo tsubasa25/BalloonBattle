@@ -19,12 +19,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     GameObjectManager::CreateInstance();
     PhysicsWorld::CreateInstance();
     //ライトマネージャーのインスタンスを作成   
-    LightManager::CreateInstance();
-
-    NewGO<GameScene>(0);
+    LightManager::CreateInstance();    
+    GameScene*gameScene=NewGO<GameScene>(0);
     NewGO<BackGround>(0);    
     
-    g_camera3D->SetPosition({ 0.0f, 1500.0f, 500.0f });
+    g_camera3D->SetPosition({ 0.0f, 1500.0f, -700.0f });
     g_camera3D->SetTarget({ 0,10,0 });
     
     //////////////////////////////////////
