@@ -22,23 +22,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     LightManager::CreateInstance();
 
     NewGO<GameScene>(0);
-    NewGO<BackGround>(0);
-   
-    PointLight* pointLight = nullptr;
-    pointLight = NewGO<PointLight>(0);   
-    pointLight->SetColor({ 10,0,10 });
-    pointLight->SetRange(200);
-    pointLight->SetPosition({ Vector3::Zero });
-    SpotLight* spotLight = nullptr;
-    spotLight = NewGO<SpotLight>(0);
-    spotLight->SetColor({ 10,0,0 });
-    spotLight->SetDirection({ 1,0,0 });
-    spotLight->SetPosition({ 0,50,50 });
-    spotLight->SetRange(1000);
-    spotLight->SetAngleDeg(30);
-   
-    g_camera3D->SetPosition({ 0.0f, 1000.0f, 1500.0f });
-    g_camera3D->SetTarget({ 0,50,0 });
+    NewGO<BackGround>(0);    
+    
+    g_camera3D->SetPosition({ 0.0f, 1500.0f, 500.0f });
+    g_camera3D->SetTarget({ 0,10,0 });
     
     //////////////////////////////////////
     // 初期化を行うコードを書くのはここまで！！！

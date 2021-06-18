@@ -3,9 +3,9 @@
 namespace
 {
 	const int STAGE_WIDTH = 750;
-	const int STAGE_DEPTH = 750;
-	const int STAGE_HOLE = 350;
-	const float INI_BULLOON_SIZE = 70;
+	const int STAGE_DEPTH = 750;	
+	const int INI_BULLOON_SIZE = 70;//風船の大きさの初期値
+	const int MASS_DIVISOR = 20;//風船の大きさから質量を出すときの割る値
 }
 class Player:public IGameObject
 {
@@ -13,25 +13,28 @@ private:
 	
 	Vector3 m_scale = { Vector3::Zero };
 	int m_playerNum = 0;//プレイヤー番号
-	int m_stock = 1;//ストック
+	int m_stock = 3;//ストック
 	int m_playerCount = 4;
 	FontRender* m_PosX_font = NewGO<FontRender>(0);//デバッグ用
 	FontRender* m_PosY_font = NewGO<FontRender>(0);
 	FontRender* m_PosZ_font = NewGO<FontRender>(0);
 	FontRender* m_Size_font = NewGO<FontRender>(0);
-
+	PointLight* pointLight = NewGO<PointLight>(0);	
+	
 	Vector3 m_position = { Vector3::Zero };
 	Vector3 m_iniPos= { Vector3::Zero };
 	Vector3 m_decele = { Vector3::Zero };
-	Vector3 m_moveDir = { Vector3::Zero };
+	Vector3 m_moveSpeed = { Vector3::Zero };
 
 	CharacterController m_charaCon;//プレイヤーのキャラコン
 
 	SkinModelRender* m_skinModelRender = nullptr;
 	
 
-	float m_bulloonSize = 70;
-public:		
+	float m_bulloonSize = INI_BULLOON_SIZE;//風船の大きさ(幅)
+	bool m_enemyHit = false;//敵とあたったとき	
+	float m_mass=m_bulloonSize/ MASS_DIVISOR;//質量(大きさの20分の1)
+public:
 	std::vector<Player*> m_enemy;
 	std::vector<Player*>::iterator it;
 	~Player();
@@ -55,9 +58,9 @@ public:
 	float GetStageWidth() { return STAGE_WIDTH; }//ステージの横幅
 	float GetStageDepth() { return STAGE_DEPTH; }//ステージの縦幅
 
-	void SetMoveDir(Vector3 dir) { m_moveDir += dir; }//コントローラー入力の値を加算合計する
-	void ResetMoveDir(Vector3 dir) { m_moveDir = dir; }//再設定する
-	Vector3 GetMoveDir() { return m_moveDir; }
+	void SetMoveSpeed(Vector3 dir) { m_moveSpeed += dir; }//コントローラー入力の値を加算合計する
+	void ResetMoveSpeed(Vector3 dir) { m_moveSpeed = dir; }//再設定する
+	Vector3 GetMoveSpeed() { return m_moveSpeed; }
 	
 	void Move();//移動関数
 
@@ -65,6 +68,8 @@ public:
 
 	void HitPlayer();//プレイヤーに合ったとき
 	
+	Vector3 ReboundSpeed();//モデルの法線から反射する方向を求めて移動方向を決定する
+
 	void Debug(int pNum);//デバッグ用
 };
 

@@ -3,8 +3,8 @@
 */
 
 #include "stdafx.h"
-#include "CharacterController.h"
 
+#include "CharacterController.h"
 
 namespace {
 	void Vector3CopyFrom(Vector3& vDst, btVector3& vSrc)
@@ -16,7 +16,7 @@ namespace {
 	//衝突したときに呼ばれる関数オブジェクト(地面用)
 	struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 	{
-		bool isHit = false;									//衝突フラグ。
+		bool isHit = false;									//衝突フラグ。		
 		Vector3 hitPos = Vector3(0.0f, -FLT_MAX, 0.0f);		//衝突点。
 		Vector3 startPos ;									//レイの始点。
 		Vector3 hitNormal;									//衝突点の法線。
@@ -42,7 +42,7 @@ namespace {
 				|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Ground //もしくはコリジョン属性が地面と指定されている。
 				) {
 				//衝突している。
-				isHit = true;
+				isHit = true;				
 				Vector3 hitPosTmp = *(Vector3*)&convexResult.m_hitPointLocal;
 				//衝突点の距離を求める。。
 				Vector3 vDist;
@@ -61,7 +61,7 @@ namespace {
 	//衝突したときに呼ばれる関数オブジェクト(壁用)
 	struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 	{
-		bool isHit = false;						//衝突フラグ。
+		bool isHit = false;						//衝突フラグ。		
 		Vector3 hitPos;							//衝突点。
 		Vector3 startPos;						//レイの始点。
 		float dist = FLT_MAX;					//衝突点までの距離。一番近い衝突点を求めるため。FLT_MAXは単精度の浮動小数点が取りうる最大の値。
@@ -85,7 +85,7 @@ namespace {
 			if (angle >= Math::PI * 0.3f		//地面の傾斜が54度以上なので壁とみなす。
 				|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
 				) {
-				isHit = true;
+				isHit = true;				
 				Vector3 hitPosTmp;
 				Vector3CopyFrom(hitPosTmp, convexResult.m_hitPointLocal);
 				
@@ -106,13 +106,6 @@ namespace {
 	};
 }
 
-void CharacterController::SizeUpdate(float radius, float height)
-{
-	//コリジョン作成。
-	m_radius = radius;
-	m_height = height;
-	m_collider.Init(radius, height);
-}
 void CharacterController::Init(float radius, float height, const Vector3& position)
 {
 	m_position = position;
@@ -200,6 +193,7 @@ const Vector3& CharacterController::Execute( Vector3& moveSpeed, float deltaTime
 				hitNormalXZ.Normalize();
 				//めり込みベクトルを壁の法線に射影する。
 				float fT0 = hitNormalXZ.Dot(vMerikomi);
+				
 				//押し戻し返すベクトルを求める。
 				//押し返すベクトルは壁の法線に射影されためり込みベクトル+半径。
 				Vector3 vOffset;
@@ -211,6 +205,8 @@ const Vector3& CharacterController::Execute( Vector3& moveSpeed, float deltaTime
 				currentDir.Subtract(nextPosition, m_position);
 				currentDir.y = 0.0f;
 				currentDir.Normalize();
+
+				
 				if (currentDir.Dot(originalXZDir) < 0.0f) {
 					//角に入った時のキャラクタの振動を防止するために、
 					//移動先が逆向きになったら移動をキャンセルする。
@@ -218,15 +214,18 @@ const Vector3& CharacterController::Execute( Vector3& moveSpeed, float deltaTime
 					nextPosition.z = m_position.z;
 					break;
 				}
+				m_isHit = true;
+				m_wallNormal = hitNormalXZ;
 			}
 			else {
+				m_isHit = false;				
 				//どことも当たらないので終わり。
-				break;
+				break;				
 			}
 			loopCount++;
-			if (loopCount == 5) {
+			if (loopCount >= 0) {//もとはloopCount==5////kinoto
 				break;
-			}
+			}					
 		}
 	}
 	//XZの移動は確定。
@@ -263,7 +262,10 @@ const Vector3& CharacterController::Execute( Vector3& moveSpeed, float deltaTime
 		}
 		else {
 			//地面上にいない場合は1m下を見る。
-			endPos.y -= 100.0f;
+			//endPos.y -= 100.0f;
+			//////////////////////kinoto
+			//段差から落下死たとき瞬間移動するので調整した
+			endPos.y -= 1.0f;
 		}
 		end.setOrigin(btVector3(endPos.x, endPos.y, endPos.z));
 		SweepResultGround callback;
@@ -303,6 +305,6 @@ const Vector3& CharacterController::Execute( Vector3& moveSpeed, float deltaTime
 */
 void CharacterController::RemoveRigidBoby()
 {
-	PhysicsWorld::GetInstance()->RemoveRigidBody(m_rigidBody);
+	PhysicsWorld::GetInstance()->RemoveRigidBody(m_rigidBody);	
 }
 

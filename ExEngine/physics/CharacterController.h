@@ -15,7 +15,8 @@
 	* 下記のサンプルプログラムを参考にしてください。\n
 	* Sample/Sample07
 	*/
-class CharacterController{
+class CharacterController
+{
 public:
 	CharacterController() {
 
@@ -24,9 +25,7 @@ public:
 	{
 		RemoveRigidBoby();
 	}
-
-
-	void SizeUpdate(float radius, float height);
+		
 	/*!
 		* @brief	初期化。
 		*@param[in]	radius		カプセルコライダーの半径。
@@ -41,6 +40,7 @@ public:
 		*@return 移動後のキャラクターの座標。
 		*/
 	const Vector3& Execute(Vector3& moveSpeed, float deltaTime);
+	
 	/*!
 		* @brief	座標を取得。
 		*/
@@ -88,6 +88,11 @@ public:
 	* @brief	剛体を物理エンジンから削除。。
 	*/
 	void RemoveRigidBoby();
+
+	///////////////////////////////////////////kinoto
+	const Vector3 GetWallNormal() { return m_wallNormal; }
+	const bool GetIsHitWall() { return m_isHit; }
+	///////////////////////////////////////////
 private:
 	bool				m_isInited = false;				//!<初期化済み？
 	Vector3 			m_position;						//!<座標。
@@ -97,4 +102,10 @@ private:
 	float				m_radius = 0.0f;				//!<カプセルコライダーの半径。
 	float				m_height = 0.0f;				//!<カプセルコライダーの高さ。
 	RigidBody			m_rigidBody;					//剛体。
+
+
+	
+	//////////////////////////kinoto	
+	bool  m_isHit = false;
+	Vector3 m_wallNormal = Vector3::Zero;
 };
