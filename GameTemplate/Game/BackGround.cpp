@@ -9,8 +9,8 @@ BackGround::~BackGround()
 bool BackGround::Start()
 {
     m_skinModelRender = NewGO<SkinModelRender>(0);
-
     m_skinModelRender->Init("Assets/modelData/Stage.tkm"); 
+
     //ステージのモデルの静的物理モデルを作成
     m_physicsStaticObject.CreateFromModel(m_skinModelRender->GetModel(), m_skinModelRender->GetModel().GetWorldMatrix());
 
@@ -18,6 +18,10 @@ bool BackGround::Start()
     m_directionLight = NewGO<DirectionLight>(0);
     m_directionLight->SetColor({ 0.7f,0.7f,0.7f });
     m_directionLight->SetDirection({ -2,-1,-1 });
+
+    //風車を表示
+   /* m_windTurbine = NewGO<WindTurbine>(0);*/
+
 	return true;
 }
 void BackGround::Update()
