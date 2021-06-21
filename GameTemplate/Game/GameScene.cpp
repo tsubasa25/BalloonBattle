@@ -29,7 +29,21 @@ bool GameScene::Start()
 }
 void GameScene::Update()
 {
-    /*if (g_pad[0]->IsPress(enButtonRB1)) {
-        PointLight*pointLight=NewGO<PointLight>
-    }*/
+    if (g_pad[0]->IsPress(enButtonRB1)&&aa==true) {
+        for (int i = 0; i < 10; i++) {
+            pointLight[i] = NewGO<PointLight>(0);
+            pointLight[i]->SetColor({ 10,0,0 });
+            pointLight[i]->SetPosition({ 0,10,0 });
+            pointLight[i]->SetRange(100);
+        }
+        aaNum = 0;
+        aa = false;
+    }
+    if (g_pad[0]->IsPress(enButtonLB1)&& aa==false) {
+        DeleteGO(pointLight[aaNum]);
+        aaNum++;
+        if (aaNum > 9) {
+            aa = true;
+        }
+    }
 }

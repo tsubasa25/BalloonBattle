@@ -91,20 +91,50 @@ public:
 
 	//ライトの数を設定する
 	void AddDirectionLigNum(int num) { m_ligData.dirctionLightNum = num + 1; }
-	void AddPointLigNum(int num) { m_ligData.pointLightNum=num+1; }
+
+	void AddPointLig(PointLigData* pointLigData) {
+		//ライトの数が最初に決めた数以上ならthrowする(いっぱい作るとふつうに起こる)
+		if (m_ligData.pointLightNum >= POINTLIGHT_NUMBER_MAX)
+		{
+			MessageBoxA(nullptr, "ポイントライトの数が最大数を超えています。\n", "エラー", MB_OK);
+		}
+		m_ligData.pointLight[GetPointLigNum()] = *pointLigData;
+		pointLigData->pointLigNum = GetPointLigNum();
+		m_ligData.pointLightNum= GetPointLigNum() +1;
+	}
+
 	void AddSpotLigNum(int num) { m_ligData.spotLightNum=num+1; }
 
 	void UpdateDirctionLight(int num) { m_ligData.dirctionLightNum = num; }
-	void UpdatePointLight(int num) { m_ligData.pointLightNum = num; }
+
+	void UpdatePointLight(int pointLigNum,PointLigData* pointLigData)
+	{
+		m_ligData.pointLight[pointLigNum] = *pointLigData;//
+	}
+
 	void UpdateSpotLight(int num) { m_ligData.spotLightNum = num; }
 
 	void RemovePointLight(int num)
 	{
-		for (int i = num; i < GetDirectionLigNum()-1; i++) {
-			m_ligData.pointLight[i] = m_ligData.pointLight[i + 1];
+		for (int i = num; i < GetPointLigNum()-1; i++) {
+			m_ligData.pointLight[i] = m_ligData.pointLight[i + 1];//データをずらす
+			m_ligData.pointLight[i].pointLigNum--;//自分が作られた番号もずらす
+		}
+		PointLightMinus();//ライトの数を減らす
+	}
+	/**
+	 * @brief ポイントライトの数のカウントをマイナスする
+	*/
+	void PointLightMinus()
+	{
+		m_ligData.pointLightNum--;
+
+		//ライトの数が0以下になる時はおかしくなっているのでthrowする(起こり得ないと信じたい)
+		if (m_ligData.pointLightNum < 0)
+		{
+			MessageBoxA(nullptr, "ポイントライトの数がマイナスになっています。\n", "エラー", MB_OK);
 		}
 	}
-
 	DirLigData* GetDirLigData() { return &m_ligData.directionLight[GetDirectionLigNum()]; }
 	PointLigData* GetPointLigData() { return &m_ligData.pointLight[GetPointLigNum()]; }
 	SpotLigData* GetSpotLigData() { return &m_ligData.spotLight[GetSpotLigNum()]; }
