@@ -21,6 +21,14 @@ public:
 		m_radius = radius;
 		m_height = height;
 	}
+	////////////////kinoto
+	void ReInit(float radius, float height)
+	{
+		m_radius = radius;
+		m_height = height;
+	}
+
+
 	/// <summary>
 	/// BulletPhysicsのコリジョン形状を取得。
 	/// </summary>

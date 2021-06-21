@@ -12,6 +12,7 @@ bool GameScene::Start()
         player[i] = NewGO<Player>(0);
         player[i]->SetPlayerNum(i);//プレイヤー番号を設定
         player[i]->SetIniPosition({ GetIniPos(i) });//初期位置を設定
+        player[i]->SetPlayerCount(m_playerCount);//プレイヤー人数を設定
     }
     for (int i = 0; i < m_playerCount; i++)//敵を入れる
     {

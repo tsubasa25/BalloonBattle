@@ -105,7 +105,26 @@ namespace {
 		}
 	};
 }
+void CharacterController::ReInit(float radius, float height,const Vector3& position)
+{
+	m_position = position;
+	//コリジョン作成。
+	m_radius = radius;
+	m_height = height;
+	m_collider.ReInit(radius, height);
+	//剛体を初期化。
+	RigidBodyInitData rbInfo;
+	rbInfo.collider = &m_collider;
+	rbInfo.mass = 0.0f;
+	m_rigidBody.Init(rbInfo);
+	btTransform& trans = m_rigidBody.GetBody()->getWorldTransform();
+	//剛体の位置を更新。
+	trans.setOrigin(btVector3(position.x, position.y + m_height * 0.5f + m_radius, position.z));
 
+	/*m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Character);
+	m_rigidBody.GetBody()->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);*/
+	
+}
 void CharacterController::Init(float radius, float height, const Vector3& position)
 {
 	m_position = position;
@@ -264,7 +283,7 @@ const Vector3& CharacterController::Execute( Vector3& moveSpeed, float deltaTime
 			//地面上にいない場合は1m下を見る。
 			//endPos.y -= 100.0f;
 			//////////////////////kinoto
-			//段差から落下死たとき瞬間移動するので調整した
+			//段差から落下したとき瞬間移動するので調整した
 			endPos.y -= 1.0f;
 		}
 		end.setOrigin(btVector3(endPos.x, endPos.y, endPos.z));

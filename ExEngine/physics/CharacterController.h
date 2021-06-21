@@ -92,6 +92,7 @@ public:
 	///////////////////////////////////////////kinoto
 	const Vector3 GetWallNormal() { return m_wallNormal; }
 	const bool GetIsHitWall() { return m_isHit; }
+	void  ReInit(float radius, float height, const Vector3& position);
 	///////////////////////////////////////////
 private:
 	bool				m_isInited = false;				//!<‰Šú‰»Ï‚ÝH

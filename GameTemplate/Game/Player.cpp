@@ -12,6 +12,10 @@ Player::~Player()
 }
 bool Player::Start()
 {
+	//デバッグ用
+	m_skinModelRenderArrow = NewGO<SkinModelRender>(0);
+	m_skinModelRenderArrow->Init("Assets/modelData/arrow.tkm");
+
 	m_skinModelRender = NewGO<SkinModelRender>(0);
 	m_skinModelRender->Init("Assets/modelData/unityChan.tkm");
 	if (GetPlayerNum() == 0) {
@@ -184,23 +188,45 @@ void Player::Debug(int pNum)//デバッグ用
 	if (g_pad[0]->IsPress(enButtonA)) {
 		m_bulloonSize += 1;	
 		m_mass = m_bulloonSize / MASS_DIVISOR;
-		//m_charaCon.Init((m_bulloonSize / 2), m_bulloonSize, m_position);
+		m_charaCon.ReInit((m_bulloonSize / 2), 70,m_position);
+		//m_moveSpeed.y = 0;
 	}
 	if (g_pad[0]->IsPress(enButtonB)) {
 		m_bulloonSize -= 1;
 		m_mass = m_bulloonSize / MASS_DIVISOR;
-	}	
-	if (m_playerNum == 0) {
-		Vector3 diff=Vector3::Zero;
-		diff=m_position - m_enemy[0]->m_position;
-		diff.Normalize();
-		m_enemy[0]->m_moveSpeed += diff*0.3;
-		if (m_stock != m_oldStock) {
-			m_oldStock--;
-			m_enemy[0]->m_moveSpeed = (m_enemy[0]->m_iniPos - m_enemy[0]->m_position);//初期座標にとばす
-			m_enemy[0]->m_position = m_enemy[0]->m_charaCon.Execute(m_enemy[0]->m_moveSpeed, 1.0f);
+		m_charaCon.ReInit((m_bulloonSize / 2), 70,m_position);
 
-			m_enemy[0]->m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
+	}	
+	if (m_playerCount >= 2) {//プレイヤーが二人以上なら
+		if (m_playerNum == 0) {//敵が自分めがけて突進してくる
+			Vector3 diff = Vector3::Zero;
+			diff = m_position - m_enemy[0]->m_position;
+			diff.Normalize();
+			m_enemy[0]->m_moveSpeed += diff * 0.3;
+			if (m_stock != m_oldStock) {
+				m_oldStock--;
+				m_enemy[0]->m_moveSpeed = (m_enemy[0]->m_iniPos - m_enemy[0]->m_position);//初期座標にとばす
+				m_enemy[0]->m_position = m_enemy[0]->m_charaCon.Execute(m_enemy[0]->m_moveSpeed, 1.0f);
+
+				m_enemy[0]->m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
+			}
 		}
 	}
+	//移動ベクトルを可視化する
+	Vector3 Dir = m_moveSpeed;
+	Dir.y = 0;
+	Dir.Normalize();//大きさを位置にする
+	float x = Dir.Dot(Vector3::AxisX);//X軸から何度ずれているかを入れる
+	
+	
+	m_Size_font->SetText(std::to_wstring(x));//画面にｘの値を出す（見やすくするため）
+
+	m_rot.SetRotationY(x);//ｘ度だけY軸を回す
+	m_skinModelRenderArrow->SetRotation(m_rot);//角度を設定する
+
+	m_skinModelRenderArrow->SetPosition(m_position);
+
+	m_arrowSize.x=m_arrowSize.z = m_moveSpeed.Length()/3;
+	m_skinModelRenderArrow->SetScale(m_arrowSize);
+	
 }

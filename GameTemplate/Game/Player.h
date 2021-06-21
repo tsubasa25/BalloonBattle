@@ -14,7 +14,7 @@ private:
 	Vector3 m_scale = { Vector3::Zero };
 	int m_playerNum = 0;//プレイヤー番号
 	int m_stock = 3;//ストック
-	//int m_playerCount = 4;
+	int m_playerCount = 0;
 	FontRender* m_PosX_font = NewGO<FontRender>(0);//デバッグ用
 	FontRender* m_PosY_font = NewGO<FontRender>(0);
 	FontRender* m_PosZ_font = NewGO<FontRender>(0);
@@ -44,6 +44,8 @@ public:
 	void SetPlayerNum(int num) { m_playerNum = num; }//プレイヤー番号を設定する
 	int GetPlayerNum() { return m_playerNum; }//プレイヤー番号を入手する
 
+	void SetPlayerCount(int num) { m_playerCount = num; }//プレイヤー人数を設定する
+
 	void SetEnemy(Player* enemy, int i) { m_enemy[i] = enemy; }//敵情報を設定する
 
 	void SetIniPosition(Vector3 pos) { m_position = pos; m_iniPos = pos; }//初期位置を設定
@@ -70,7 +72,14 @@ public:
 	
 	Vector3 ReboundSpeed();//モデルの法線から反射する方向を求めて移動方向を決定する
 
-	void Debug(int pNum);//デバッグ用
+
+	//デバッグ用
+	void Debug(int pNum);
 	int m_oldStock = m_stock;
+	SkinModelRender* m_skinModelRenderArrow = nullptr;
+	Quaternion m_rot;
+	Vector3 m_arrowSize = Vector3::One;
+	Vector3 m_oldPos = Vector3::Zero;
+
 };
 
