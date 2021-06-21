@@ -29,5 +29,7 @@ bool GameScene::Start()
 }
 void GameScene::Update()
 {
-
+    /*if (g_pad[0]->IsPress(enButtonRB1)) {
+        PointLight*pointLight=NewGO<PointLight>
+    }*/
 }

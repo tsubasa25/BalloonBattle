@@ -9,6 +9,9 @@ Player::~Player()
 	DeleteGO(m_PosZ_font);
 	DeleteGO(m_Size_font);
 	DeleteGO(pointLight);
+	if (m_IsArrowOn) {
+		DeleteGO(m_skinModelRenderArrow);
+	}
 }
 bool Player::Start()
 {
@@ -30,17 +33,17 @@ bool Player::Start()
 	else if (GetPlayerNum() == 3) {
 		m_skinModelRender->Init("Assets/modelData/Balloon3.tkm");
 	}
-	if (GetPlayerNum() == 4) {
-		m_skinModelRender->Init("Assets/modelData/Balloon0.tkm");
+	else if (GetPlayerNum() == 4) {
+		m_skinModelRender->Init("Assets/modelData/Balloon4.tkm");
 	}
 	else if (GetPlayerNum() == 5) {
-		m_skinModelRender->Init("Assets/modelData/Balloon1.tkm");
+		m_skinModelRender->Init("Assets/modelData/Balloon5.tkm");
 	}
 	else if (GetPlayerNum() == 6) {
-		m_skinModelRender->Init("Assets/modelData/Balloon2.tkm");
+		m_skinModelRender->Init("Assets/modelData/Balloon6.tkm");
 	}
 	else if (GetPlayerNum() == 7) {
-		m_skinModelRender->Init("Assets/modelData/Balloon3.tkm");
+		m_skinModelRender->Init("Assets/modelData/Balloon7.tkm");
 	}
 	//キャラコンの初期化
 	m_charaCon.Init((m_bulloonSize/2) , m_bulloonSize, m_position);
@@ -64,7 +67,8 @@ Vector3 Player::Decele(Vector3 speed)//減速
 	Vector3 speedVec = speed;
 	
 	if (speed.Length() > 0.0f) {		
-		 return speedVec*-0.02;
+		 //return speedVec*-0.02;
+		return speedVec * -m_bulloonSize / 3500;
 	}
 	else {
 		return Vector3::Zero;
@@ -128,18 +132,19 @@ void Player::HitPlayer()
 	{
 		Vector3 diff = GetPosition() - m_enemy[i]->GetPosition();//敵との距離を測る
 		diff.y = 0;									//高さを無視する
-		if (diff.Length() < (m_bulloonSize/2+m_enemy[i]->m_bulloonSize/2)+1) {		//距離が近ければ
+		//if (diff.Length() < (m_bulloonSize/2+m_enemy[i]->m_bulloonSize/2)+1) {//コリジョンがUpdateできたらこっち
+		if (diff.Length() < (m_bulloonSize+1)){//距離が近ければ
 			m_enemyHit = true;						//敵とあたったとみなす
 			Vector3 tmp = m_enemy[i]->GetMoveSpeed();//敵の勢いを保存する
-			m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -2);//相手に自分の勢いを渡す
+			//大きさに比例してふっとばしやすくなる
+			m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_bulloonSize/ (INI_BULLOON_SIZE/ REBOUND_POWER)));//相手に自分の勢いを渡す
 			
-			if (m_moveSpeed.Length() < m_enemy[i]->m_mass) {//自分の勢いより、相手の質量が大きければ跳ね返される
-				m_moveSpeed = ReboundSpeed();//自分は跳ね返される
-				m_enemy[i]->m_moveSpeed *= 1 / m_enemy[i]->m_mass;//敵はすこし押される
+			if (m_moveSpeed.Length() < m_enemy[i]->m_bulloonSize / MASS_DIVISOR) {//自分の勢いより、相手の質量が大きければ跳ね返される
+				m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_bulloonSize / (INI_BULLOON_SIZE * REBOUND_POWER)));//敵はすこし押される
+				m_moveSpeed = ReboundSpeed();//自分は跳ね返される				
 			}
-			else {
-				//m_moveSpeed *= 1 / m_enemy[i]->m_mass;
-				m_moveSpeed = tmp * 2;
+			else {				
+				m_moveSpeed = tmp * ((INI_BULLOON_SIZE* REBOUND_POWER) /m_bulloonSize);//自分は大きさに反比例してふっとばされやすくなる
 			}
 		}	
 		else {//敵との距離が遠ければなにもしない
@@ -184,49 +189,57 @@ void Player::Debug(int pNum)//デバッグ用
 	m_PosX_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionX())));
 	m_PosY_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionY())));
 	m_PosZ_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionZ())));
-	m_Size_font->SetText(std::to_wstring(int(m_bulloonSize)));
-	if (g_pad[0]->IsPress(enButtonA)) {
-		m_bulloonSize += 1;	
-		m_mass = m_bulloonSize / MASS_DIVISOR;
-		m_charaCon.ReInit((m_bulloonSize / 2), 70,m_position);
-		//m_moveSpeed.y = 0;
+	m_Size_font->SetText(std::to_wstring(int(m_bulloonSize)));	
+	if (g_pad[pNum]->IsPress(enButtonA)) {
+			m_bulloonSize += 1;			
+			//m_charaCon.ReInit((m_bulloonSize / 2), 70,m_position);
+			//m_moveSpeed.y = 0;
 	}
-	if (g_pad[0]->IsPress(enButtonB)) {
-		m_bulloonSize -= 1;
-		m_mass = m_bulloonSize / MASS_DIVISOR;
-		m_charaCon.ReInit((m_bulloonSize / 2), 70,m_position);
-
-	}	
+	if (g_pad[pNum]->IsPress(enButtonB)) {
+			m_bulloonSize -= 1;			
+			Vector3 Accele = m_moveSpeed;
+			Accele.Normalize();
+			m_moveSpeed += Accele;
+			//m_charaCon.ReInit((m_bulloonSize / 2), 70,m_position);
+	}
+	
+	
 	if (m_playerCount >= 2) {//プレイヤーが二人以上なら
-		if (m_playerNum == 0) {//敵が自分めがけて突進してくる
-			Vector3 diff = Vector3::Zero;
-			diff = m_position - m_enemy[0]->m_position;
-			diff.Normalize();
-			m_enemy[0]->m_moveSpeed += diff * 0.3;
-			if (m_stock != m_oldStock) {
-				m_oldStock--;
-				m_enemy[0]->m_moveSpeed = (m_enemy[0]->m_iniPos - m_enemy[0]->m_position);//初期座標にとばす
-				m_enemy[0]->m_position = m_enemy[0]->m_charaCon.Execute(m_enemy[0]->m_moveSpeed, 1.0f);
+		if (m_IsAIOn) {
+			if (m_playerNum == 0) {//敵が自分めがけて突進してくる
+				Vector3 diff = Vector3::Zero;
+				diff = m_position - m_enemy[0]->m_position;
+				diff.Normalize();
+				m_enemy[0]->m_moveSpeed += diff * 0.3;
+				if (m_stock != m_oldStock) {
+					m_oldStock--;
+					m_enemy[0]->m_moveSpeed = (m_enemy[0]->m_iniPos - m_enemy[0]->m_position);//初期座標にとばす
+					m_enemy[0]->m_position = m_enemy[0]->m_charaCon.Execute(m_enemy[0]->m_moveSpeed, 1.0f);
 
-				m_enemy[0]->m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
+					m_enemy[0]->m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
+				}
 			}
 		}
 	}
-	//移動ベクトルを可視化する
-	Vector3 Dir = m_moveSpeed;
-	Dir.y = 0;
-	Dir.Normalize();//大きさを位置にする
-	float x = Dir.Dot(Vector3::AxisX);//X軸から何度ずれているかを入れる
-	
-	
-	m_Size_font->SetText(std::to_wstring(x));//画面にｘの値を出す（見やすくするため）
+	if (m_IsArrowOn) {//矢印を表示するかどうか
+		//移動ベクトルを可視化する
+		Vector3 Dir = m_moveSpeed;
+		Dir.y = 0;
+		Dir.Normalize();//大きさを位置にする
+		float x = Dir.Dot(Vector3::AxisX);//X軸から何度ずれているかを入れる
+		Dir.z *= -1;
+		float angleX = acosf(x);//アークコサイン
+		if (Dir.z < 0) {
+			angleX *= -1;
+		}
+		angleX -= 0.5 * 3.14159;
 
-	m_rot.SetRotationY(x);//ｘ度だけY軸を回す
-	m_skinModelRenderArrow->SetRotation(m_rot);//角度を設定する
+		m_rot.SetRotationY(angleX);//ｘ度だけY軸を回す
+		m_skinModelRenderArrow->SetRotation(m_rot);//角度を設定する
 
-	m_skinModelRenderArrow->SetPosition(m_position);
+		m_skinModelRenderArrow->SetPosition(m_position);
 
-	m_arrowSize.x=m_arrowSize.z = m_moveSpeed.Length()/3;
-	m_skinModelRenderArrow->SetScale(m_arrowSize);
-	
+		m_arrowSize.x = m_arrowSize.z = m_moveSpeed.Length() / 3;
+		m_skinModelRenderArrow->SetScale(m_arrowSize);
+	}
 }

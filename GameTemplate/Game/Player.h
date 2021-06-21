@@ -6,6 +6,7 @@ namespace
 	const int STAGE_DEPTH = 750;	
 	const int INI_BULLOON_SIZE = 70;//風船の大きさの初期値
 	const int MASS_DIVISOR = 20;//風船の大きさから質量を出すときの割る値
+	const float REBOUND_POWER = 2;//敵と衝突したとき、勢いにかける値
 }
 class Player:public IGameObject
 {
@@ -32,8 +33,7 @@ private:
 	
 
 	float m_bulloonSize = INI_BULLOON_SIZE;//風船の大きさ(幅)
-	bool m_enemyHit = false;//敵とあたったとき	
-	float m_mass=m_bulloonSize/ MASS_DIVISOR;//質量(大きさの20分の1)
+	bool m_enemyHit = false;//敵とあたったとき		
 public:
 	std::vector<Player*> m_enemy;
 	std::vector<Player*>::iterator it;
@@ -76,6 +76,8 @@ public:
 	//デバッグ用
 	void Debug(int pNum);
 	int m_oldStock = m_stock;
+	bool m_IsArrowOn = true;//矢印を表示するか
+	bool m_IsAIOn = false;//敵が自分めがけて突進してくる
 	SkinModelRender* m_skinModelRenderArrow = nullptr;
 	Quaternion m_rot;
 	Vector3 m_arrowSize = Vector3::One;

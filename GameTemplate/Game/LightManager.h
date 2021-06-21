@@ -84,11 +84,12 @@ public:
 	*/
 	void UpdateEyePos() { m_ligData.eyePos = g_camera3D->GetPosition(); }
 
+	//ライトの数をおしえる
 	int GetDirectionLigNum() { return m_ligData.dirctionLightNum; }
 	int GetPointLigNum() { return m_ligData.pointLightNum; }
 	int GetSpotLigNum() { return m_ligData.spotLightNum; }
 
-
+	//ライトの数を設定する
 	void AddDirectionLigNum(int num) { m_ligData.dirctionLightNum = num + 1; }
 	void AddPointLigNum(int num) { m_ligData.pointLightNum=num+1; }
 	void AddSpotLigNum(int num) { m_ligData.spotLightNum=num+1; }
@@ -97,6 +98,12 @@ public:
 	void UpdatePointLight(int num) { m_ligData.pointLightNum = num; }
 	void UpdateSpotLight(int num) { m_ligData.spotLightNum = num; }
 
+	void RemovePointLight(int num)
+	{
+		for (int i = num; i < GetDirectionLigNum()-1; i++) {
+			m_ligData.pointLight[i] = m_ligData.pointLight[i + 1];
+		}
+	}
 
 	DirLigData* GetDirLigData() { return &m_ligData.directionLight[GetDirectionLigNum()]; }
 	PointLigData* GetPointLigData() { return &m_ligData.pointLight[GetPointLigNum()]; }

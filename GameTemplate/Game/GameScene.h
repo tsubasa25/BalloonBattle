@@ -7,7 +7,7 @@ public:
 	bool Start();
 	void Update();
 private:
-	int m_playerCount = 1;
+	int m_playerCount = 2;
 	
 	Player* player[8] = { nullptr,nullptr, nullptr, nullptr,nullptr,nullptr, nullptr, nullptr };
 	Vector3 m_iniPos[8] = { {-600,50,600} ,{600,50,600} ,{-600,50,-600} ,{600,50,-600},	{-400,50,400} ,{400,50,400} ,{-400,50,-400} ,{400,50,-400} };//èâä˙à íu
