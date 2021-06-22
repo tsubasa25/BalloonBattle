@@ -12,6 +12,9 @@ Player::~Player()
 	if (m_IsArrowOn) {
 		DeleteGO(m_skinModelRenderArrow);
 	}
+	GameScene* gameScene = FindGO<GameScene>("gameScene");
+	gameScene->SetIsAlive(m_playerNum, false);
+	gameScene->SetPlayerCount(gameScene->GetPlayerCount() - 1);
 }
 bool Player::Start()
 {

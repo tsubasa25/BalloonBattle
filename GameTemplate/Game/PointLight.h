@@ -2,7 +2,7 @@
 struct PointLigData
 {
 	Vector3 position;//位置
-	float pad;
+	float pointLigNum;//何番目に作ったか
 	Vector3 color;//色
 	float range;//半径
 };
@@ -17,6 +17,8 @@ class PointLight:public IGameObject
 public:
 	PointLight();
 	~PointLight();
+	int GetPointLigNum() { return m_pointLigData->pointLigNum; }
+	void SetPointLigNum(int num) { m_pointLigData->pointLigNum = num; }
 	/**
 		 * @brief ポイントライトのデータを取得
 		 * @return ポイントライトのデータ
