@@ -8,10 +8,10 @@
 class EffectEngine {
 	static EffectEngine* m_instance;	//唯一のインスタンス。
 	//3D用
-	EffekseerRenderer::RendererRef m_renderer[2];	//レンダラー。
-	Effekseer::RefPtr<EffekseerRenderer::SingleFrameMemoryPool> m_memoryPool[2];	//メモリプール。
-	Effekseer::RefPtr<EffekseerRenderer::CommandList> m_commandList[2];			//コマンドリスト。
-	Effekseer::ManagerRef m_manager[2];
+	EffekseerRenderer::RendererRef m_renderer;	//レンダラー。
+	Effekseer::RefPtr<EffekseerRenderer::SingleFrameMemoryPool> m_memoryPool;	//メモリプール。
+	Effekseer::RefPtr<EffekseerRenderer::CommandList> m_commandList;			//コマンドリスト。
+	Effekseer::ManagerRef m_manager;
 
 	//2D用
 	EffekseerRenderer::RendererRef m_2Drenderer;//2D用レンダラー。
@@ -59,7 +59,7 @@ public:
 	bool IsPlay(int handle) const
 	{
 		//NOTE:2つのエフェクトが別々に再生されることはないのでm_manager[0]の結果を返せば大丈夫?
-		return m_manager[0]->GetShown(handle);
+		return m_manager->GetShown(handle);
 	}
 
 	/// <summary>
@@ -95,7 +95,7 @@ public:
 		baseMat.Value[3][1] = mBase.m[3][1];
 		baseMat.Value[3][2] = mBase.m[3][2];
 
-		m_manager[0]->SetBaseMatrix(handle, baseMat);
+		m_manager->SetBaseMatrix(handle, baseMat);
 		
 	}
 
