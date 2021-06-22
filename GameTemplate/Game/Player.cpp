@@ -255,35 +255,75 @@ void Player::Debug(int pNum)//デバッグ用
 	}
 }
 
+//風船の空気関係
 void Player::Air()
 {
+	Vector3 speedToHorizontal = m_moveSpeed;	//水平方向へのスピード(y方向は0)
+	speedToHorizontal.y = 0;
+
+	//ブレーキと空気注入の処理
 	if (g_pad[GetPlayerNum()]->IsPress(enButtonB))
 	{
-		Vector3 speedToHorizontal = m_moveSpeed;	//水平方向へのスピード(y方向は0)
-		speedToHorizontal.y = 0;
-
 		if (speedToHorizontal.Length() > 0.0f)
 		{
+			//ブレーキをかける。
 			m_moveSpeed.x -= m_moveSpeed.x * BRAKE_POWER;
 			m_moveSpeed.z -= m_moveSpeed.z * BRAKE_POWER;
+			BleedAir(speedToHorizontal.Length() * BRAKE_POWER);
+
 		}
 		else
 		{
-			m_balloonSize += 1.0f;
+			//サイズを大きくする。
+			AddAir(0.5f);
 		}
 	}
-
+	
 	//プレイヤーがスティックを倒しているとき
 	if (g_pad[GetPlayerNum()]->GetLStickXF() != 0.0f
 		|| g_pad[GetPlayerNum()]->GetLStickYF() != 0.0f)
 	{
-		//Lスティックの傾きの大きさを得る。
+		//Lスティックの傾きの大きさに応じて、空気が抜ける。
 		Vector3 LStickTilt = {
 			(g_pad[GetPlayerNum()]->GetLStickXF()),
 			(g_pad[GetPlayerNum()]->GetLStickYF()),
 			0.0f
 		};
-		m_balloonSize -= LStickTilt.Length() * 0.1f;	//傾けている分、空気が抜けていく。
-	}
+		BleedAir(LStickTilt.Length() * 0.1f);
 
+		//Aボタンが押されたら、空気バースト！空気を噴射して一気に加速。
+		//処理の内容間違えた。直す。
+		if (g_pad[0]->IsTrigger(enButtonA))
+		{
+			Vector3 boostDir;
+			boostDir.x = g_pad[GetPlayerNum()]->GetLStickXF();
+			boostDir.z = g_pad[GetPlayerNum()]->GetLStickYF();
+			boostDir.y = 0.0f;
+			boostDir.Normalize();
+
+			boostDir.x *= 50.0f;
+			boostDir.z *= 50.0f;
+
+			m_moveSpeed.x = boostDir.x;
+			m_moveSpeed.z = boostDir.z;
+
+			//空気が一定量抜ける。
+			BleedAir(20.0f);
+		}
+	}
+}
+
+//airの値分、風船に空気を加える
+void Player::AddAir(float air)
+{ 
+	m_balloonSize += air; 
+	if (m_balloonSize > MAX_BALLOON_SIZE)	//最大サイズよりは大きくなれない。
+		m_balloonSize = MAX_BALLOON_SIZE;
+}
+//airの値分、風船の空気を抜く
+void  Player::BleedAir(float air)			
+{ 
+	m_balloonSize -= air; 
+	if (m_balloonSize < MIN_BALLOON_SIZE)	//最小サイズよりは小さくなれない。
+		m_balloonSize = MIN_BALLOON_SIZE;
 }
