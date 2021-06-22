@@ -18,6 +18,9 @@ private:
 	bool aa = true;
 	int aaNum = 0;
 	
+	//エフェクト実験用
+	Effect eff;
+
 
 public:
 	Vector3 GetIniPos(int i) { return m_iniPos[i]; }

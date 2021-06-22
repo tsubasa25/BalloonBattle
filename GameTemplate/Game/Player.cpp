@@ -136,7 +136,7 @@ void Player::HitPlayer()
 		Vector3 diff = GetPosition() - m_enemy[i]->GetPosition();//“G‚Æ‚Ì‹——£‚ð‘ª‚é
 		diff.y = 0;									//‚‚³‚ð–³Ž‹‚·‚é
 		//if (diff.Length() < (m_bulloonSize/2+m_enemy[i]->m_bulloonSize/2)+1) {//ƒRƒŠƒWƒ‡ƒ“‚ªUpdate‚Å‚«‚½‚ç‚±‚Á‚¿
-		if (diff.Length() < (m_bulloonSize+1)){//‹——£‚ª‹ß‚¯‚ê‚Î
+		if (diff.Length() < (m_bulloonSize+2)){//‹——£‚ª‹ß‚¯‚ê‚Î
 			m_enemyHit = true;						//“G‚Æ‚ ‚½‚Á‚½‚Æ‚Ý‚È‚·
 			Vector3 tmp = m_enemy[i]->GetMoveSpeed();//“G‚Ì¨‚¢‚ð•Û‘¶‚·‚é
 			//‘å‚«‚³‚É”ä—á‚µ‚Ä‚Ó‚Á‚Æ‚Î‚µ‚â‚·‚­‚È‚é

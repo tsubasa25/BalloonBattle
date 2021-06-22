@@ -48,6 +48,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
        
         
         LightManager::GetInstance()->UpdateEyePos();
+       
+        EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
+        EffectEngine::GetInstance()->Draw();
         //////////////////////////////////////
         // 絵を描くコードを書くのはここまで！！！
         //////////////////////////////////////
