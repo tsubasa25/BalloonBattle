@@ -13,7 +13,7 @@ EffectEngine::EffectEngine()
 	auto d3dDevice = g_graphicsEngine->GetD3DDevice();
 	auto commandQueue = g_graphicsEngine->GetCommandQueue();
 	// レンダラーを作成。
-	m_renderer[0] = ::EffekseerRendererDX12::Create(
+	m_renderer = ::EffekseerRendererDX12::Create(
 		d3dDevice,
 		commandQueue,
 		3,
@@ -35,24 +35,24 @@ EffectEngine::EffectEngine()
 	);
 
 	//メモリプールの作成。
-	m_memoryPool[0] = EffekseerRenderer::CreateSingleFrameMemoryPool(m_renderer[0]->GetGraphicsDevice());
+	m_memoryPool = EffekseerRenderer::CreateSingleFrameMemoryPool(m_renderer->GetGraphicsDevice());
 
 	m_2DmemoryPool = EffekseerRenderer::CreateSingleFrameMemoryPool(m_2Drenderer->GetGraphicsDevice());
 	// コマンドリストの作成
-	m_commandList[0] = EffekseerRenderer::CreateCommandList(m_renderer[0]->GetGraphicsDevice(), m_memoryPool[0]);
+	m_commandList = EffekseerRenderer::CreateCommandList(m_renderer->GetGraphicsDevice(), m_memoryPool);
 
 	m_2DcommandList = EffekseerRenderer::CreateCommandList(m_2Drenderer->GetGraphicsDevice(), m_2DmemoryPool);
 	// エフェクトマネージャーの作成。
-	m_manager[0] = ::Effekseer::Manager::Create(8000);
+	m_manager = ::Effekseer::Manager::Create(8000);
 
 	m_2Dmanager = ::Effekseer::Manager::Create(8000);
 
 	// 描画モジュールの設定。
-	m_manager[0]->SetSpriteRenderer(m_renderer[0]->CreateSpriteRenderer());
-	m_manager[0]->SetRibbonRenderer(m_renderer[0]->CreateRibbonRenderer());
-	m_manager[0]->SetRingRenderer(m_renderer[0]->CreateRingRenderer());
-	m_manager[0]->SetTrackRenderer(m_renderer[0]->CreateTrackRenderer());
-	m_manager[0]->SetModelRenderer(m_renderer[0]->CreateModelRenderer());
+	m_manager->SetSpriteRenderer(m_renderer->CreateSpriteRenderer());
+	m_manager->SetRibbonRenderer(m_renderer->CreateRibbonRenderer());
+	m_manager->SetRingRenderer(m_renderer->CreateRingRenderer());
+	m_manager->SetTrackRenderer(m_renderer->CreateTrackRenderer());
+	m_manager->SetModelRenderer(m_renderer->CreateModelRenderer());
 	
 	m_2Dmanager->SetSpriteRenderer(m_2Drenderer->CreateSpriteRenderer());
 	m_2Dmanager->SetRibbonRenderer(m_2Drenderer->CreateRibbonRenderer());
@@ -61,10 +61,10 @@ EffectEngine::EffectEngine()
 	m_2Dmanager->SetModelRenderer(m_2Drenderer->CreateModelRenderer());
 
 	// ローダーの設定。
-	m_manager[0]->SetTextureLoader(m_renderer[0]->CreateTextureLoader());
-	m_manager[0]->SetModelLoader(m_renderer[0]->CreateModelLoader());
-	m_manager[0]->SetMaterialLoader(m_renderer[0]->CreateMaterialLoader());
-	m_manager[0]->SetCurveLoader(Effekseer::MakeRefPtr<Effekseer::CurveLoader>());
+	m_manager->SetTextureLoader(m_renderer->CreateTextureLoader());
+	m_manager->SetModelLoader(m_renderer->CreateModelLoader());
+	m_manager->SetMaterialLoader(m_renderer->CreateMaterialLoader());
+	m_manager->SetCurveLoader(Effekseer::MakeRefPtr<Effekseer::CurveLoader>());
 
 	m_2Dmanager->SetTextureLoader(m_2Drenderer->CreateTextureLoader());
 	m_2Dmanager->SetModelLoader(m_2Drenderer->CreateModelLoader());
@@ -82,7 +82,7 @@ Effekseer::EffectRef EffectEngine::LoadEffect(const char16_t* filePath)
 	}
 	else {
 		//新規
-		effect = Effekseer::Effect::Create(m_manager[0], filePath);
+		effect = Effekseer::Effect::Create(m_manager, filePath);
 		m_effectMap.insert({ u16FilePath, effect });
 	}
 
@@ -92,12 +92,12 @@ int EffectEngine::Play(Effekseer::EffectRef effect)
 {
 	//NOTE:handleは作られたエフェクトが何番目かという感じだった。
 	//別々にPlayが呼ばれることはないので同じhandleを返してもおそらく大丈夫?
-	auto handle = m_manager[0]->Play(effect, 0, 0, 0);
+	auto handle = m_manager->Play(effect, 0, 0, 0);
 	return handle;
 }
 void EffectEngine::Stop(int effectHandle)
 {
-	m_manager[0]->StopEffect(effectHandle);
+	m_manager->StopEffect(effectHandle);
 }
 
 
@@ -105,22 +105,22 @@ void EffectEngine::Update(float deltaTime)
 {
 	//NOTE:カメラの番号を受け取り分岐。
 
-	m_memoryPool[0]->NewFrame();
+	m_memoryPool->NewFrame();
 
 	// Begin a command list
 	// コマンドリストを開始する。
-	EffekseerRendererDX12::BeginCommandList(m_commandList[0], g_graphicsEngine->GetCommandList());
-	m_renderer[0]->SetCommandList(m_commandList[0]);
+	EffekseerRendererDX12::BeginCommandList(m_commandList, g_graphicsEngine->GetCommandList());
+	m_renderer->SetCommandList(m_commandList);
 
-	m_manager[0]->Update();
+	m_manager->Update();
 
 	//レンダラーにカメラ行列を設定。
-	m_renderer[0]->SetCameraMatrix(*(const Effekseer::Matrix44*)&g_camera3D->GetViewMatrix());
+	m_renderer->SetCameraMatrix(*(const Effekseer::Matrix44*)&g_camera3D->GetViewMatrix());
 	
 	//レンダラーにプロジェクション行列を設定。
-	m_renderer[0]->SetProjectionMatrix(*(const Effekseer::Matrix44*)&g_camera3D->GetProjectionMatrix());
+	m_renderer->SetProjectionMatrix(*(const Effekseer::Matrix44*)&g_camera3D->GetProjectionMatrix());
 
-	m_renderer[0]->SetTime(deltaTime);
+	m_renderer->SetTime(deltaTime);
 }
 
 void EffectEngine::Draw(int cameraNum)
@@ -129,20 +129,20 @@ void EffectEngine::Draw(int cameraNum)
 
 	// Begin to rendering effects
 	// エフェクトの描画開始処理を行う。
-	m_renderer[0]->BeginRendering();
+	m_renderer->BeginRendering();
 
 	// Render effects
 	// エフェクトの描画を行う。
-	m_manager[0]->Draw();
+	m_manager->Draw();
 
 	// Finish to rendering effects
 	// エフェクトの描画終了処理を行う。
-	m_renderer[0]->EndRendering();
+	m_renderer->EndRendering();
 
 	// Finish a command list
 	// コマンドリストを終了する。
-	m_renderer[0]->SetCommandList(nullptr);
-	EffekseerRendererDX12::EndCommandList(m_commandList[0]);
+	m_renderer->SetCommandList(nullptr);
+	EffekseerRendererDX12::EndCommandList(m_commandList);
 }
 
 Effekseer::EffectRef EffectEngine::LoadEffect2D(const char16_t* filePath)
