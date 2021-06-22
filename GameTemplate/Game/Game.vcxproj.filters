@@ -54,6 +54,9 @@
     <Filter Include="ソース ファイル\prefab">
       <UniqueIdentifier>{59ab8903-6e35-4769-a8fb-c6d1631a4b1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ExEngine\effect">
+      <UniqueIdentifier>{0113c3df-3e35-4198-b4c1-9233dc2f02b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -253,6 +256,12 @@
     </ClCompile>
     <ClCompile Include="tklFile.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ExEngine\effect\Effect.cpp">
+      <Filter>ExEngine\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ExEngine\effect\EffectEngine.cpp">
+      <Filter>ExEngine\effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -478,8 +487,11 @@
     <ClInclude Include="tklFile.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ExEngine\effect\Effect.h">
+      <Filter>ExEngine\effect</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\ExEngine\effect\EffectEngine.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ExEngine\effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

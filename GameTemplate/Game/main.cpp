@@ -21,7 +21,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     //ライトマネージャーのインスタンスを作成   
     LightManager::CreateInstance();
 
-    //EffectEngine::CreateInstance();
+    EffectEngine::CreateInstance();
 
     GameScene*gameScene=NewGO<GameScene>(0,"gameScene");
     NewGO<BackGround>(0);    

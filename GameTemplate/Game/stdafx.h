@@ -15,5 +15,5 @@
 #include "SkinModelRender.h"
 #include "FontRender.h"
 #include "Level.h"
-#include "Effect.h"
-//#include "EffectEngine.h"
+#include "effect/Effect.h"
+#include "effect/EffectEngine.h"
