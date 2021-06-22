@@ -4,9 +4,12 @@ namespace
 {
 	const int STAGE_WIDTH = 750;
 	const int STAGE_DEPTH = 750;	
-	const int INI_BULLOON_SIZE = 70;//風船の大きさの初期値
+	const int INI_BALLOON_SIZE = 70;//風船の大きさの初期値
+	const int MAX_BALLOON_SIZE = 350;	//風船が大きくなれる最大サイズ
+	const int MIN_BALLOON_SIZE = 10;	//風船が小さくなれる最大サイズ
 	const int MASS_DIVISOR = 20;//風船の大きさから質量を出すときの割る値
 	const float REBOUND_POWER = 2;//敵と衝突したとき、勢いにかける値
+	const float BRAKE_POWER = 0.1;	//ブレーキを行った際にm_moveSpeedにかける値
 }
 class Player:public IGameObject
 {
@@ -32,7 +35,7 @@ private:
 	SkinModelRender* m_skinModelRender = nullptr;
 	
 
-	float m_bulloonSize = INI_BULLOON_SIZE;//風船の大きさ(幅)
+	float m_balloonSize = INI_BALLOON_SIZE;//風船の大きさ(幅)
 	bool m_enemyHit = false;//敵とあたったとき		
 public:
 	std::vector<Player*> m_enemy;
@@ -72,6 +75,7 @@ public:
 	
 	Vector3 ReboundSpeed();//モデルの法線から反射する方向を求めて移動方向を決定する
 
+	void Air();
 
 	//デバッグ用
 	void Debug(int pNum);

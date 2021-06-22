@@ -73,7 +73,7 @@ void GameScene::Update()
         }
     }
 
-    if (g_pad[0]->IsTrigger(enButtonY))
+    if (g_pad[0]->IsTrigger(enButtonLB2))
     {
         eff.Play();
         eff.SetPosition({ 0.0f,50.0f,0.0f });
