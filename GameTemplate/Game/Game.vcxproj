@@ -292,8 +292,10 @@
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapChipRender.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="SkinModelRender.cpp" />
@@ -307,6 +309,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="system\system.cpp" />
+    <ClCompile Include="tklFile.cpp" />
     <ClCompile Include="WindTurbine.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -373,13 +376,16 @@
     <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="LightManager.h" />
+    <ClInclude Include="MapChipRender.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="SkinModelRender.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
+    <ClInclude Include="tklFile.h" />
     <ClInclude Include="WindTurbine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

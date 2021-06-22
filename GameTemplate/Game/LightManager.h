@@ -98,9 +98,9 @@ public:
 		{
 			MessageBoxA(nullptr, "ポイントライトの数が最大数を超えています。\n", "エラー", MB_OK);
 		}
-		m_ligData.pointLight[GetPointLigNum()] = *pointLigData;
-		pointLigData->pointLigNum = GetPointLigNum();
-		m_ligData.pointLightNum= GetPointLigNum() +1;
+		m_ligData.pointLight[GetPointLigNum()] = *pointLigData;//データを格納する
+		pointLigData->pointLigNum = GetPointLigNum();//何番目に作られたか
+		m_ligData.pointLightNum= GetPointLigNum() +1;//ライトの総数を一つ増やす
 	}
 
 	void AddSpotLigNum(int num) { m_ligData.spotLightNum=num+1; }
@@ -116,7 +116,7 @@ public:
 
 	void RemovePointLight(int num)
 	{
-		for (int i = num; i < GetPointLigNum()-1; i++) {
+		for (int i = num+1; i < GetPointLigNum()-1; i++) {
 			m_ligData.pointLight[i] = m_ligData.pointLight[i + 1];//データをずらす
 			m_ligData.pointLight[i].pointLigNum--;//自分が作られた番号もずらす
 		}
