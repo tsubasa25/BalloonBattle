@@ -52,8 +52,8 @@ public:
 	void SetEnemy(Player* enemy, int i) { m_enemy[i] = enemy; }//“Gî•ñ‚ðÝ’è‚·‚é
 
 	void SetIniPosition(Vector3 pos) { m_position = pos; m_iniPos = pos; }//‰ŠúˆÊ’u‚ðÝ’è
-	void SetPosition(Vector3 pos) { m_skinModelRender->SetPosition(pos); }
-	Vector3 GetPosition() { return m_skinModelRender->GetPosition(); }
+	void SetPosition(Vector3 pos) { m_skinModelRender->SetPosition(pos); m_position = pos; }
+	Vector3 GetPosition() { return m_position; }
 
 	void SetScale(Vector3 scale) { m_skinModelRender->SetScale(scale); }//‘å‚«‚³
 	Vector3 GetScale() { return m_skinModelRender->GetScale(); }
