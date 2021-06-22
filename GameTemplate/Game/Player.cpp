@@ -131,6 +131,9 @@ void Player::HitWall()//壁にあたったとき
 	if (m_charaCon.GetIsHitWall() == true) {
 		HitPlayer();
 		if (m_enemyHit == false) {//敵ではなく壁にあっていれば
+			//空気が抜ける
+			//BleedAir(m_moveSpeed.Length());
+
 			//反射する方向を求める
 			m_moveSpeed = ReboundSpeed();
 		}
@@ -157,6 +160,8 @@ void Player::HitPlayer()
 			else {				
 				m_moveSpeed = tmp * ((INI_BALLOON_SIZE* REBOUND_POWER) /m_balloonSize);//自分は大きさに反比例してふっとばされやすくなる
 			}
+			//BleedAir(m_moveSpeed.Length());	//自分の空気が抜ける
+			//m_enemy[i]->BleedAir(m_moveSpeed.Length());//相手の空気も抜ける。
 		}	
 		else {//敵との距離が遠ければなにもしない
 			m_enemyHit = false;						//敵と合っていない
@@ -201,12 +206,12 @@ void Player::Debug(int pNum)//デバッグ用
 	m_PosY_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionY())));
 	m_PosZ_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionZ())));
 	m_Size_font->SetText(std::to_wstring(int(m_balloonSize)));	
-	if (g_pad[pNum]->IsPress(enButtonY)) {
+	if (g_pad[pNum]->IsPress(enButtonLB1)) {
 			m_balloonSize += 1;			
 			//m_charaCon.ReInit((m_bulloonSize / 2), 70,m_position);
 			//m_moveSpeed.y = 0;
 	}
-	if (g_pad[pNum]->IsPress(enButtonX)) {
+	if (g_pad[pNum]->IsPress(enButtonRB1)) {
 			m_balloonSize -= 1;			
 			Vector3 Accele = m_moveSpeed;
 			Accele.Normalize();
@@ -269,13 +274,12 @@ void Player::Air()
 			//ブレーキをかける。
 			m_moveSpeed.x -= m_moveSpeed.x * BRAKE_POWER;
 			m_moveSpeed.z -= m_moveSpeed.z * BRAKE_POWER;
-			BleedAir(speedToHorizontal.Length() * BRAKE_POWER);
-
+			BleedAir(speedToHorizontal.Length() * BRAKE_POWER);	//ブレーキのデメリットとして空気が抜ける
 		}
 		else
 		{
 			//サイズを大きくする。
-			AddAir(0.5f);
+			AddAir(1.0f);
 		}
 	}
 	
@@ -289,7 +293,7 @@ void Player::Air()
 			(g_pad[GetPlayerNum()]->GetLStickYF()),
 			0.0f
 		};
-		BleedAir(LStickTilt.Length() * 0.1f);
+		BleedAir(LStickTilt.Length() * 0.05f);
 
 		//Aボタンが押されたら、空気バースト！空気を噴射して一気に加速。
 		//処理の内容間違えた。直す。
@@ -301,8 +305,8 @@ void Player::Air()
 			boostDir.y = 0.0f;
 			boostDir.Normalize();
 
-			boostDir.x *= 50.0f;
-			boostDir.z *= 50.0f;
+			boostDir.x *= 70.0f;
+			boostDir.z *= 70.0f;
 
 			m_moveSpeed.x = boostDir.x;
 			m_moveSpeed.z = boostDir.z;
@@ -310,6 +314,12 @@ void Player::Air()
 			//空気が一定量抜ける。
 			BleedAir(20.0f);
 		}
+	}
+	if (g_pad[0]->IsTrigger(enButtonY))
+	{
+		m_moveSpeed.y = 30.0f;
+		//空気が一定量抜ける。
+		BleedAir(20.0f);
 	}
 }
 
