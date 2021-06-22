@@ -25,7 +25,13 @@ bool GameScene::Start()
             }
         }
     }
+
+    //エフェクト実験用
+    //eff = NewGO<Effect>(0);
+    eff.Init(u"Assets/effect/JetEff02.efk");
     
+
+
 	return true;
 }
 void GameScene::Update()
@@ -68,4 +74,12 @@ void GameScene::Update()
         }
     }
 
+    if (g_pad[0]->IsTrigger(enButtonLB2))
+    {
+        eff.Play();
+        eff.SetPosition({ 0.0f,50.0f,0.0f });
+        eff.SetScale({30.0f, 30.0f, 30.0f});
+        eff.Update();
+    }
+    
 }

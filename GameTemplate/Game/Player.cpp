@@ -49,7 +49,7 @@ bool Player::Start()
 		m_skinModelRender->Init("Assets/modelData/Balloon7.tkm");
 	}
 	//キャラコンの初期化
-	m_charaCon.Init((m_bulloonSize/2) , m_bulloonSize, m_position);
+	m_charaCon.Init((m_balloonSize/2) , m_balloonSize, m_position);
 	//m_charaCon.Init(100, m_bulloonSize, m_position);
 	pointLight->SetColor({ 10,10,10 });
 	pointLight->SetRange(200);
@@ -61,8 +61,9 @@ void Player::Update()
 	Move();
 	HitWall();
 	//HitPlayer();
+	Air();
 	Debug(GetPlayerNum());
-	SetScale({ m_bulloonSize / INI_BULLOON_SIZE,m_bulloonSize / INI_BULLOON_SIZE,m_bulloonSize / INI_BULLOON_SIZE, });	
+	SetScale({ m_balloonSize / INI_BALLOON_SIZE,m_balloonSize / INI_BALLOON_SIZE,m_balloonSize / INI_BALLOON_SIZE, });	
 }
 
 Vector3 Player::Decele(Vector3 speed)//減速
@@ -71,7 +72,7 @@ Vector3 Player::Decele(Vector3 speed)//減速
 	
 	if (speed.Length() > 0.0f) {		
 		 //return speedVec*-0.02;
-		return speedVec * -m_bulloonSize / 3500;
+		return speedVec * -m_balloonSize / 3500;
 	}
 	else {
 		return Vector3::Zero;
@@ -113,6 +114,13 @@ void Player::Move()//移動
 			DeleteGO(this);
 		}
 	}
+
+	//ほどんど動いていないとき、移動速度を0にする。
+	if (fabsf(m_moveSpeed.x) < 0.1f && fabsf(m_moveSpeed.z) < 0.1f)
+	{
+		m_moveSpeed.x = 0.0f;
+		m_moveSpeed.z = 0.0f;
+	}
 	
 	SetPosition(m_position);//位置を設定する
 	pointLight->SetPosition({ m_position });
@@ -136,18 +144,18 @@ void Player::HitPlayer()
 		Vector3 diff = GetPosition() - m_enemy[i]->GetPosition();//敵との距離を測る
 		diff.y = 0;									//高さを無視する
 		//if (diff.Length() < (m_bulloonSize/2+m_enemy[i]->m_bulloonSize/2)+1) {//コリジョンがUpdateできたらこっち
-		if (diff.Length() < (m_bulloonSize+1)){//距離が近ければ
+		if (diff.Length() < (m_balloonSize+2)){//距離が近ければ
 			m_enemyHit = true;						//敵とあたったとみなす
 			Vector3 tmp = m_enemy[i]->GetMoveSpeed();//敵の勢いを保存する
 			//大きさに比例してふっとばしやすくなる
-			m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_bulloonSize/ (INI_BULLOON_SIZE/ REBOUND_POWER)));//相手に自分の勢いを渡す
+			m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_balloonSize/ (INI_BALLOON_SIZE/ REBOUND_POWER)));//相手に自分の勢いを渡す
 			
-			if (m_moveSpeed.Length() < m_enemy[i]->m_bulloonSize / MASS_DIVISOR) {//自分の勢いより、相手の質量が大きければ跳ね返される
-				m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_bulloonSize / (INI_BULLOON_SIZE * REBOUND_POWER)));//敵はすこし押される
+			if (m_moveSpeed.Length() < m_enemy[i]->m_balloonSize / MASS_DIVISOR) {//自分の勢いより、相手の質量が大きければ跳ね返される
+				m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_balloonSize / (INI_BALLOON_SIZE * REBOUND_POWER)));//敵はすこし押される
 				m_moveSpeed = ReboundSpeed();//自分は跳ね返される				
 			}
 			else {				
-				m_moveSpeed = tmp * ((INI_BULLOON_SIZE* REBOUND_POWER) /m_bulloonSize);//自分は大きさに反比例してふっとばされやすくなる
+				m_moveSpeed = tmp * ((INI_BALLOON_SIZE* REBOUND_POWER) /m_balloonSize);//自分は大きさに反比例してふっとばされやすくなる
 			}
 		}	
 		else {//敵との距離が遠ければなにもしない
@@ -192,14 +200,14 @@ void Player::Debug(int pNum)//デバッグ用
 	m_PosX_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionX())));
 	m_PosY_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionY())));
 	m_PosZ_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionZ())));
-	m_Size_font->SetText(std::to_wstring(int(m_bulloonSize)));	
-	if (g_pad[pNum]->IsPress(enButtonA)) {
-			m_bulloonSize += 1;			
+	m_Size_font->SetText(std::to_wstring(int(m_balloonSize)));	
+	if (g_pad[pNum]->IsPress(enButtonY)) {
+			m_balloonSize += 1;			
 			//m_charaCon.ReInit((m_bulloonSize / 2), 70,m_position);
 			//m_moveSpeed.y = 0;
 	}
-	if (g_pad[pNum]->IsPress(enButtonB)) {
-			m_bulloonSize -= 1;			
+	if (g_pad[pNum]->IsPress(enButtonX)) {
+			m_balloonSize -= 1;			
 			Vector3 Accele = m_moveSpeed;
 			Accele.Normalize();
 			m_moveSpeed += Accele;
@@ -245,4 +253,37 @@ void Player::Debug(int pNum)//デバッグ用
 		m_arrowSize.x = m_arrowSize.z = m_moveSpeed.Length() / 3;
 		m_skinModelRenderArrow->SetScale(m_arrowSize);
 	}
+}
+
+void Player::Air()
+{
+	if (g_pad[GetPlayerNum()]->IsPress(enButtonB))
+	{
+		Vector3 speedToHorizontal = m_moveSpeed;	//水平方向へのスピード(y方向は0)
+		speedToHorizontal.y = 0;
+
+		if (speedToHorizontal.Length() > 0.0f)
+		{
+			m_moveSpeed.x -= m_moveSpeed.x * BRAKE_POWER;
+			m_moveSpeed.z -= m_moveSpeed.z * BRAKE_POWER;
+		}
+		else
+		{
+			m_balloonSize += 1.0f;
+		}
+	}
+
+	//プレイヤーがスティックを倒しているとき
+	if (g_pad[GetPlayerNum()]->GetLStickXF() != 0.0f
+		|| g_pad[GetPlayerNum()]->GetLStickYF() != 0.0f)
+	{
+		//Lスティックの傾きの大きさを得る。
+		Vector3 LStickTilt = {
+			(g_pad[GetPlayerNum()]->GetLStickXF()),
+			(g_pad[GetPlayerNum()]->GetLStickYF()),
+			0.0f
+		};
+		m_balloonSize -= LStickTilt.Length() * 0.1f;	//傾けている分、空気が抜けていく。
+	}
+
 }
