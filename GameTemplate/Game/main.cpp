@@ -19,7 +19,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     GameObjectManager::CreateInstance();
     PhysicsWorld::CreateInstance();
     //ライトマネージャーのインスタンスを作成   
-    LightManager::CreateInstance();    
+    LightManager::CreateInstance();
+
+    //EffectEngine::CreateInstance();
+
     GameScene*gameScene=NewGO<GameScene>(0,"gameScene");
     NewGO<BackGround>(0);    
     

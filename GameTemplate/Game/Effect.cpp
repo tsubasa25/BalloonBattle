@@ -7,7 +7,7 @@ Effect::~Effect()
 {
 
 }
-
+ 
 
 void Effect::Init(const char16_t* filePath)
 {
