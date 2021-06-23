@@ -27,7 +27,7 @@ void BalloonAir::Air()
 			brakeSpeed.y = 0;
 			brakeSpeed *= BRAKE_POWER;
 			brakeSpeed *= -1.0f;	//風船のm_moveSpeedに減算するので-1をかける。
-			m_parent->SetMoveSpeed(brakeSpeed);
+			m_parent->AddMoveSpeed(brakeSpeed);
 			BleedAir(speedToHorizontal.Length() * BRAKE_POWER);	//ブレーキのデメリットとして空気が抜ける
 		}
 		else
@@ -49,28 +49,27 @@ void BalloonAir::Air()
 		};
 		BleedAir(LStickTilt.Length() * 0.05f);
 
-		//Aボタンが押されたら、空気バースト！空気を噴射して一気に加速。
-		//処理の内容間違えた。直す。
+		//Aボタンが押されたら、空気を噴射して一気に加速。
 		if (g_pad[0]->IsPress(enButtonA))
 		{
 			Vector3 boostSpeed = m_parent->GetMoveSpeed();		
 			boostSpeed.y = 0.0f;
 
-			boostSpeed.x *= 0.2f;
-			boostSpeed.z *= 0.2f;
+			boostSpeed.x *= 0.1f;
+			boostSpeed.z *= 0.1f;
 
-			m_parent->SetMoveSpeed(boostSpeed);
+			m_parent->AddMoveSpeed(boostSpeed);
 
 			//空気が一定量抜ける。
-			BleedAir(0.5f);
+			BleedAir(AIR_COST_BOOST);
 		}
 	}
-	if (g_pad[0]->IsPress(enButtonY))
+	if (g_pad[m_parentNum]->IsPress(enButtonY))
 	{
+		m_parent->AddMoveSpeed({0.0f,1.0f,0.0f});
 		
-		m_parent->SetMoveSpeed({0.0f,1.0f,0.0f});
 		//空気が一定量抜ける。
-		BleedAir(0.5f);
+		BleedAir(AIR_COST_BOOST);
 	}
 }
 

@@ -67,9 +67,9 @@ bool Player::Start()
 void Player::Update()
 {
 	Move();
+	Tilt();
 	HitWall();
 	//HitPlayer();
-	//Air();
 	Debug(GetPlayerNum());
 	SetScale({ m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME, });	
 }
@@ -139,9 +139,6 @@ void Player::HitWall()//壁にあたったとき
 	if (m_charaCon.GetIsHitWall() == true) {
 		HitPlayer();
 		if (m_enemyHit == false) {//敵ではなく壁にあっていれば
-			//空気が抜ける
-			//BleedAir(m_moveSpeed.Length());
-
 			//反射する方向を求める
 			m_moveSpeed = ReboundSpeed();
 		}
@@ -168,8 +165,6 @@ void Player::HitPlayer()
 			else {				
 				m_moveSpeed = tmp * ((INI_AIR_VOLUME* REBOUND_POWER) /m_myAirVolume);//自分は大きさに反比例してふっとばされやすくなる
 			}
-			//BleedAir(m_moveSpeed.Length());	//自分の空気が抜ける
-			//m_enemy[i]->BleedAir(m_moveSpeed.Length());//相手の空気も抜ける。
 		}	
 		else {//敵との距離が遠ければなにもしない
 			m_enemyHit = false;						//敵と合っていない
@@ -268,80 +263,20 @@ void Player::Debug(int pNum)//デバッグ用
 	}
 }
 
-//風船の空気関係
-void Player::Air()
+void Player::Tilt()
 {
-	Vector3 speedToHorizontal = m_moveSpeed;	//水平方向へのスピード(y方向は0)
-	speedToHorizontal.y = 0;
+	Vector3 dir = m_moveSpeed;
+	dir.y = 0.0f;
+	dir.Normalize();
 
-	//ブレーキと空気注入の処理
-	if (g_pad[GetPlayerNum()]->IsPress(enButtonB))
-	{
-		if (speedToHorizontal.Length() > 0.0f)
-		{
-			//ブレーキをかける。
-			m_moveSpeed.x -= m_moveSpeed.x * BRAKE_POWER;
-			m_moveSpeed.z -= m_moveSpeed.z * BRAKE_POWER;
-			BleedAir(speedToHorizontal.Length() * BRAKE_POWER);	//ブレーキのデメリットとして空気が抜ける
-		}
-		else
-		{
-			//サイズを大きくする。
-			AddAir(1.0f);
-		}
-	}
+	float tiltPower = m_moveSpeed.Length() * 0.01f;
+
+	Vector3 right = Cross(Vector3::AxisY, dir);
 	
-	//プレイヤーがスティックを倒しているとき
-	if (g_pad[GetPlayerNum()]->GetLStickXF() != 0.0f
-		|| g_pad[GetPlayerNum()]->GetLStickYF() != 0.0f)
-	{
-		//Lスティックの傾きの大きさに応じて、空気が抜ける。
-		Vector3 LStickTilt = {
-			(g_pad[GetPlayerNum()]->GetLStickXF()),
-			(g_pad[GetPlayerNum()]->GetLStickYF()),
-			0.0f
-		};
-		BleedAir(LStickTilt.Length() * 0.05f);
+	m_rot.SetRotation(right, tiltPower);
 
-		//Aボタンが押されたら、空気バースト！空気を噴射して一気に加速。
-		//処理の内容間違えた。直す。
-		if (g_pad[0]->IsTrigger(enButtonA))
-		{
-			Vector3 boostDir;
-			boostDir.x = g_pad[GetPlayerNum()]->GetLStickXF();
-			boostDir.z = g_pad[GetPlayerNum()]->GetLStickYF();
-			boostDir.y = 0.0f;
-			boostDir.Normalize();
+	m_rot.Apply(dir);
 
-			boostDir.x *= 70.0f;
-			boostDir.z *= 70.0f;
+	m_skinModelRender->SetRotation(m_rot);
 
-			m_moveSpeed.x = boostDir.x;
-			m_moveSpeed.z = boostDir.z;
-
-			//空気が一定量抜ける。
-			BleedAir(20.0f);
-		}
-	}
-	if (g_pad[0]->IsTrigger(enButtonY))
-	{
-		m_moveSpeed.y = 30.0f;
-		//空気が一定量抜ける。
-		BleedAir(20.0f);
-	}
-}
-
-//airの値分、風船に空気を加える
-void Player::AddAir(float air)
-{ 
-	m_myAirVolume += air;
-	if (m_myAirVolume > MAX_BALLOON_SIZE)	//最大サイズよりは大きくなれない。
-		m_myAirVolume = MAX_BALLOON_SIZE;
-}
-//airの値分、風船の空気を抜く
-void  Player::BleedAir(float air)			
-{ 
-	m_myAirVolume -= air; 
-	if (m_myAirVolume < MIN_BALLOON_SIZE)	//最小サイズよりは小さくなれない。
-		m_myAirVolume = MIN_BALLOON_SIZE;
 }
