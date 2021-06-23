@@ -1,15 +1,13 @@
 #pragma once
+class BalloonAir;
 #include<vector>
+#include "BalloonAir.h"
 namespace
 {
 	const int STAGE_WIDTH = 750;
 	const int STAGE_DEPTH = 750;	
-	const int INI_BALLOON_SIZE = 70;//風船の大きさの初期値
-	const int MAX_BALLOON_SIZE = 350;	//風船が大きくなれる最大サイズ
-	const int MIN_BALLOON_SIZE = 10;	//風船が小さくなれる最大サイズ
 	const int MASS_DIVISOR = 20;//風船の大きさから質量を出すときの割る値
 	const float REBOUND_POWER = 2;//敵と衝突したとき、勢いにかける値
-	const float BRAKE_POWER = 0.1;	//ブレーキを行った際にm_moveSpeedにかける値
 }
 class Player:public IGameObject
 {
@@ -34,9 +32,11 @@ private:
 
 	SkinModelRender* m_skinModelRender = nullptr;
 	
-
-	float m_balloonSize = INI_BALLOON_SIZE;//風船の大きさ(幅)
 	bool m_enemyHit = false;//敵とあたったとき		
+
+	BalloonAir* m_myAir = nullptr;
+
+	float m_myAirVolume = 0.0f;
 public:
 	std::vector<Player*> m_enemy;
 	std::vector<Player*>::iterator it;
@@ -79,6 +79,8 @@ public:
 
 	void AddAir(float air);		//airの値分、空気を入れる
 	void BleedAir(float air);	//airの値分、空気を抜く
+
+	void SetAirVolume(float air) { m_myAirVolume = air; };
 
 	//デバッグ用
 	void Debug(int pNum);

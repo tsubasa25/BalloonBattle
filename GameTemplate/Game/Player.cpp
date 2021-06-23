@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "GameScene.h"
+
 Player::~Player()
 {
 	DeleteGO(m_skinModelRender);
@@ -15,6 +16,8 @@ Player::~Player()
 	GameScene* gameScene = FindGO<GameScene>("gameScene");
 	gameScene->SetIsAlive(m_playerNum, false);
 	gameScene->SetPlayerCount(gameScene->GetPlayerCount() - 1);
+	
+	DeleteGO(m_myAir);
 }
 bool Player::Start()
 {
@@ -49,11 +52,16 @@ bool Player::Start()
 		m_skinModelRender->Init("Assets/modelData/Balloon7.tkm");
 	}
 	//キャラコンの初期化
-	m_charaCon.Init((m_balloonSize/2) , m_balloonSize, m_position);
+	m_charaCon.Init((m_myAirVolume/2) , m_myAirVolume, m_position);
 	//m_charaCon.Init(100, m_bulloonSize, m_position);
 	pointLight->SetColor({ 10,10,10 });
 	pointLight->SetRange(200);
 	pointLight->SetPosition({ m_position });
+
+	m_myAir = NewGO<BalloonAir>(0);
+	m_myAir->SetParent(this);
+	m_myAir->SetParentNum(m_playerNum);
+
 	return true;
 }
 void Player::Update()
@@ -61,9 +69,9 @@ void Player::Update()
 	Move();
 	HitWall();
 	//HitPlayer();
-	Air();
+	//Air();
 	Debug(GetPlayerNum());
-	SetScale({ m_balloonSize / INI_BALLOON_SIZE,m_balloonSize / INI_BALLOON_SIZE,m_balloonSize / INI_BALLOON_SIZE, });	
+	SetScale({ m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME, });	
 }
 
 Vector3 Player::Decele(Vector3 speed)//減速
@@ -72,7 +80,7 @@ Vector3 Player::Decele(Vector3 speed)//減速
 	
 	if (speed.Length() > 0.0f) {		
 		 //return speedVec*-0.02;
-		return speedVec * -m_balloonSize / 3500;
+		return speedVec * -m_myAirVolume / 3500;
 	}
 	else {
 		return Vector3::Zero;
@@ -147,18 +155,18 @@ void Player::HitPlayer()
 		Vector3 diff = GetPosition() - m_enemy[i]->GetPosition();//敵との距離を測る
 		diff.y = 0;									//高さを無視する
 		//if (diff.Length() < (m_bulloonSize/2+m_enemy[i]->m_bulloonSize/2)+1) {//コリジョンがUpdateできたらこっち
-		if (diff.Length() < (INI_BALLOON_SIZE+2)){//距離が近ければ
+		if (diff.Length() < (INI_AIR_VOLUME+2)){//距離が近ければ
 			m_enemyHit = true;						//敵とあたったとみなす
 			Vector3 tmp = m_enemy[i]->GetMoveSpeed();//敵の勢いを保存する
 			//大きさに比例してふっとばしやすくなる
-			m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_balloonSize/ (INI_BALLOON_SIZE/ REBOUND_POWER)));//相手に自分の勢いを渡す
+			m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_myAirVolume/ (INI_AIR_VOLUME/ REBOUND_POWER)));//相手に自分の勢いを渡す
 			
-			if (m_moveSpeed.Length() < m_enemy[i]->m_balloonSize / MASS_DIVISOR) {//自分の勢いより、相手の質量が大きければ跳ね返される
-				m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_balloonSize / (INI_BALLOON_SIZE * REBOUND_POWER)));//敵はすこし押される
+			if (m_moveSpeed.Length() < m_enemy[i]->m_myAirVolume / MASS_DIVISOR) {//自分の勢いより、相手の質量が大きければ跳ね返される
+				m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_myAirVolume / (INI_AIR_VOLUME * REBOUND_POWER)));//敵はすこし押される
 				m_moveSpeed = ReboundSpeed();//自分は跳ね返される				
 			}
 			else {				
-				m_moveSpeed = tmp * ((INI_BALLOON_SIZE* REBOUND_POWER) /m_balloonSize);//自分は大きさに反比例してふっとばされやすくなる
+				m_moveSpeed = tmp * ((INI_AIR_VOLUME* REBOUND_POWER) /m_myAirVolume);//自分は大きさに反比例してふっとばされやすくなる
 			}
 			//BleedAir(m_moveSpeed.Length());	//自分の空気が抜ける
 			//m_enemy[i]->BleedAir(m_moveSpeed.Length());//相手の空気も抜ける。
@@ -205,14 +213,14 @@ void Player::Debug(int pNum)//デバッグ用
 	m_PosX_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionX())));
 	m_PosY_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionY())));
 	m_PosZ_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionZ())));
-	m_Size_font->SetText(std::to_wstring(int(m_balloonSize)));	
+	m_Size_font->SetText(std::to_wstring(int(m_myAirVolume)));	
 	if (g_pad[pNum]->IsPress(enButtonLB1)) {
-			m_balloonSize += 1;			
+			m_myAirVolume += 1;			
 			//m_charaCon.ReInit((m_bulloonSize / 2), 70,m_position);
 			//m_moveSpeed.y = 0;
 	}
 	if (g_pad[pNum]->IsPress(enButtonRB1)) {
-			m_balloonSize -= 1;			
+			m_myAirVolume -= 1;			
 			Vector3 Accele = m_moveSpeed;
 			Accele.Normalize();
 			m_moveSpeed += Accele;
@@ -326,14 +334,14 @@ void Player::Air()
 //airの値分、風船に空気を加える
 void Player::AddAir(float air)
 { 
-	m_balloonSize += air;
-	if (m_balloonSize > MAX_BALLOON_SIZE)	//最大サイズよりは大きくなれない。
-		m_balloonSize = MAX_BALLOON_SIZE;
+	m_myAirVolume += air;
+	if (m_myAirVolume > MAX_BALLOON_SIZE)	//最大サイズよりは大きくなれない。
+		m_myAirVolume = MAX_BALLOON_SIZE;
 }
 //airの値分、風船の空気を抜く
 void  Player::BleedAir(float air)			
 { 
-	m_balloonSize -= air; 
-	if (m_balloonSize < MIN_BALLOON_SIZE)	//最小サイズよりは小さくなれない。
-		m_balloonSize = MIN_BALLOON_SIZE;
+	m_myAirVolume -= air; 
+	if (m_myAirVolume < MIN_BALLOON_SIZE)	//最小サイズよりは小さくなれない。
+		m_myAirVolume = MIN_BALLOON_SIZE;
 }
