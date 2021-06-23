@@ -78,12 +78,7 @@ public:
 	
 	Vector3 ReboundSpeed();//モデルの法線から反射する方向を求めて移動方向を決定する
 
-	void Air();	//風船の空気に関する関数
-
-	void AddAir(float air);		//airの値分、空気を入れる
-	void BleedAir(float air);	//airの値分、空気を抜く
-
-	void SetAirVolume(float air) { m_myAirVolume = air; };
+	void SetAirVolume(float air) { m_myAirVolume = air; };	//風船の空気の量を設定
 
 	void Tilt();	//風船の傾きを決める。
 
