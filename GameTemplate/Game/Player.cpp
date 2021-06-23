@@ -86,7 +86,7 @@ void Player::Move()//移動
 	m_moveSpeed += Decele(m_moveSpeed);//MoveDirの小さくした逆ベクトルを代入する(減速処理)
 	m_position = m_charaCon.Execute(m_moveSpeed, 1.0f);//ポジションを決定
 	if (m_charaCon.IsOnGround() == false) {//地面についていなかったら
-		m_moveSpeed.y -= pow(2,0.5f);//重力を与える
+		m_moveSpeed.y -= pow(0.7f, 2.0f);//重力を与える
 	}
 	else {
 		m_moveSpeed.y = 0;
@@ -147,7 +147,7 @@ void Player::HitPlayer()
 		Vector3 diff = GetPosition() - m_enemy[i]->GetPosition();//敵との距離を測る
 		diff.y = 0;									//高さを無視する
 		//if (diff.Length() < (m_bulloonSize/2+m_enemy[i]->m_bulloonSize/2)+1) {//コリジョンがUpdateできたらこっち
-		if (diff.Length() < (m_balloonSize+2)){//距離が近ければ
+		if (diff.Length() < (INI_BALLOON_SIZE+2)){//距離が近ければ
 			m_enemyHit = true;						//敵とあたったとみなす
 			Vector3 tmp = m_enemy[i]->GetMoveSpeed();//敵の勢いを保存する
 			//大きさに比例してふっとばしやすくなる
@@ -326,7 +326,7 @@ void Player::Air()
 //airの値分、風船に空気を加える
 void Player::AddAir(float air)
 { 
-	m_balloonSize += air; 
+	m_balloonSize += air;
 	if (m_balloonSize > MAX_BALLOON_SIZE)	//最大サイズよりは大きくなれない。
 		m_balloonSize = MAX_BALLOON_SIZE;
 }

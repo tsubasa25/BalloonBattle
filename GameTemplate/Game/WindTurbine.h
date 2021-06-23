@@ -15,8 +15,9 @@ private:
 	void SetPosition(Vector3 pos) { m_skinModelRender->SetPosition(pos); }
 
 	float m_angle=0.0f;
-	Vector3 m_front = { 1.0f,0.0f, 0.0f };
-	float a = -1.0f;
+	Vector3 m_front = { -1.0f,0.0f, 0.0f };
+	float a = 0.0f;
 	Vector3 m_diff;
+	
 };
 
