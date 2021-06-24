@@ -3,7 +3,6 @@
 
 bool BalloonAir::Start()
 {
-
 	return true;
 }
 
@@ -15,11 +14,12 @@ void BalloonAir::Update()
 void BalloonAir::Air()
 {
 	Vector3 speedToHorizontal = m_parent->GetMoveSpeed();	//水平方向へのスピード(y方向は0)
-	speedToHorizontal.y = 0;
+	speedToHorizontal.y = 0.0f;
 
 	//ブレーキと空気注入の処理
 	if (g_pad[m_parentNum]->IsPress(enButtonB))
 	{
+		//プレイヤーが動いているときにBボタンを押すと、
 		if (speedToHorizontal.Length() > 0.0f)
 		{
 			//ブレーキをかける。
@@ -33,7 +33,7 @@ void BalloonAir::Air()
 		else
 		{
 			//止まっているときにBボタンを押すと、膨む。
-			AddAir(1.0f);
+			AddAir(ADD_AIR_TO_BALLOON_POWER);
 		}
 	}
 
@@ -47,7 +47,7 @@ void BalloonAir::Air()
 			(g_pad[m_parentNum]->GetLStickYF()),
 			0.0f
 		};
-		BleedAir(LStickTilt.Length() * 0.02f);
+		BleedAir(LStickTilt.Length() * AIR_COST_MOVE);
 
 		//Aボタンが押されたら、空気を噴射して一気に加速。
 		if (g_pad[0]->IsPress(enButtonA))
@@ -55,8 +55,8 @@ void BalloonAir::Air()
 			Vector3 boostSpeed = m_parent->GetMoveSpeed();		
 			boostSpeed.y = 0.0f;
 
-			boostSpeed.x *= 0.05f;
-			boostSpeed.z *= 0.05f;
+			boostSpeed.x *= ADD_BOOST_POWER;
+			boostSpeed.z *= ADD_BOOST_POWER;
 
 			m_parent->AddMoveSpeed(boostSpeed);
 
@@ -66,7 +66,7 @@ void BalloonAir::Air()
 	}
 	if (g_pad[m_parentNum]->IsPress(enButtonY))
 	{
-		m_parent->AddMoveSpeed({0.0f,1.0f,0.0f});
+		m_parent->AddMoveSpeed(RISE_BOOST_POWER);
 		
 		//空気が一定量抜ける。
 		BleedAir(AIR_COST_BOOST);
