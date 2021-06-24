@@ -51,6 +51,13 @@ bool Player::Start()
 	else if (GetPlayerNum() == 7) {
 		m_skinModelRender->Init("Assets/modelData/Balloon7.tkm");
 	}
+
+	m_myAir = NewGO<BalloonAir>(0);
+	m_myAir->SetParent(this);
+	m_myAir->SetParentNum(m_playerNum);
+
+	m_myAir->SetAirVolume(m_myAirVolume);
+
 	//ƒLƒƒƒ‰ƒRƒ“‚Ì‰Šú‰»
 	m_charaCon.Init((m_myAirVolume/2) , m_myAirVolume, m_position);
 	//m_charaCon.Init(100, m_bulloonSize, m_position);
@@ -58,16 +65,12 @@ bool Player::Start()
 	pointLight->SetRange(200);
 	pointLight->SetPosition({ m_position });
 
-	m_myAir = NewGO<BalloonAir>(0);
-	m_myAir->SetParent(this);
-	m_myAir->SetParentNum(m_playerNum);
-
 	return true;
 }
 void Player::Update()
 {
 	Move();
-	Tilt();
+	//Tilt();
 	HitWall();
 	//HitPlayer();
 	Debug(GetPlayerNum());
@@ -273,10 +276,10 @@ void Player::Tilt()
 
 	Vector3 right = Cross(Vector3::AxisY, dir);
 	
-	m_rot.SetRotation(right, tiltPower);
+	m_playerRot.SetRotation(right, tiltPower);
 
-	m_rot.Apply(dir);
+	m_playerRot.Apply(dir);
 
-	m_skinModelRender->SetRotation(m_rot);
+	m_skinModelRender->SetRotation(m_playerRot);
 
 }

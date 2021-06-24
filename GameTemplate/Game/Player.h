@@ -8,6 +8,7 @@ namespace
 	const int STAGE_DEPTH = 750;	
 	const int MASS_DIVISOR = 20;//風船の大きさから質量を出すときの割る値
 	const float REBOUND_POWER = 2;//敵と衝突したとき、勢いにかける値
+	const int INI_AIR_VOLUME = 70;//風船の空気の量の初期値
 }
 class Player:public IGameObject
 {
@@ -36,9 +37,9 @@ private:
 
 	BalloonAir* m_myAir = nullptr;
 
-	float m_myAirVolume = 0.0f;
+	float m_myAirVolume = INI_AIR_VOLUME;
 
-	Quaternion m_rot = {0.0f,0.0f,0.0f,0.0f};
+	Quaternion m_playerRot = {0.0f,0.0f,0.0f,0.0f};
 
 public:
 	std::vector<Player*> m_enemy;
@@ -88,7 +89,7 @@ public:
 	bool m_IsArrowOn = true;//矢印を表示するか
 	bool m_IsAIOn = false;//敵が自分めがけて突進してくる
 	SkinModelRender* m_skinModelRenderArrow = nullptr;
-	//Quaternion m_rot;
+	Quaternion m_rot;
 	Vector3 m_arrowSize = Vector3::One;
 	Vector3 m_oldPos = Vector3::Zero;
 
