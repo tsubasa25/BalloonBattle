@@ -91,7 +91,7 @@ void Player::Move()//移動
 	else {
 		m_moveSpeed.y = 0;
 	}
-	if (m_moveSpeed.y < -50) {//ステージから落ちたら
+	if (m_position.y < -1000) {//ステージから落ちたら
 		m_stock--;//ストックを減らす
 		if (m_stock > 0) {//ストックが残っていたら
 			m_moveSpeed = (m_iniPos - m_position);//初期座標にとばす

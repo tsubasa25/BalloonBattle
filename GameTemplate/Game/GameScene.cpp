@@ -53,20 +53,22 @@ void GameScene::Update()
             aa = true;
         }
     }
-    if (g_pad[0]->IsPress(enButtonX)) {//復活
+    if (g_pad[0]->IsTrigger(enButtonX)) {//復活
         for (int i = 0; i < 8; i++)
         {
-            if (m_IsAlive[i] == false) {
-                m_playerCount++;
+            if (m_IsAlive[i] == false) {                
                 player[i] = NewGO<Player>(0,"player");
                 player[i]->SetPlayerNum(i);//プレイヤー番号を設定
                 player[i]->SetIniPosition({ GetIniPos(i) });//初期位置を設定
+                m_playerCount++;//合計人数を設定
                 player[i]->SetPlayerCount(m_playerCount);//プレイヤー人数を設定
                 m_IsAlive[i] = true;//生きていることにする
+               
                 for (int j = 0; j < m_playerCount; j++)//敵を入れる
                 {
                     if (player[i]->GetPlayerNum() != player[j]->GetPlayerNum()) {//自分を入れないようにする
-                        player[i]->m_enemy.push_back(player[j]);//敵情報を入れる 
+                        player[i]->m_enemy.push_back(player[j]);//敵情報を入れる
+                        player[j]->m_enemy.push_back(player[i]);
                     }
                 }
                 break;
