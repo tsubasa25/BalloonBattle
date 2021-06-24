@@ -84,6 +84,6 @@ void BalloonAir::AddAir(float air)
 void  BalloonAir::BleedAir(float air)
 {
 	m_airVolume -= air;
-	if (m_airVolume < MIN_AIR_VOLUME)	//最小サイズより小さくなったら、死亡する。2\\
+	if (m_airVolume < MIN_AIR_VOLUME)	//最小サイズより小さくなったら、死亡する。
 		m_parent->PlayerDeath();
 }
