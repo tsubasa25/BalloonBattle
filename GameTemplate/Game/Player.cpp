@@ -103,27 +103,7 @@ void Player::Move()//移動
 		m_moveSpeed.y = 0;
 	}
 	if (m_position.y < -1000) {//ステージから落ちたら
-		m_stock--;//ストックを減らす
-		if (m_stock > 0) {//ストックが残っていたら
-			m_moveSpeed = (m_iniPos - m_position);//初期座標にとばす
-			m_position = m_charaCon.Execute(m_moveSpeed, 1.0f);
-			
-			m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
-		}
-		else {
-			for (int i = 0; i < m_enemy.size();i++) {
-				it = std::find(
-					m_enemy[i]->m_enemy.begin(),
-					m_enemy[i]->m_enemy.end(),
-					this
-				);
-				if (it != m_enemy[i]->m_enemy.end()) {
-					//見つかったので削除
-					m_enemy[i]->m_enemy.erase(it);
-				}
-			}
-			DeleteGO(this);
-		}
+		PlayerDeath();
 	}
 
 	//ほどんど動いていないとき、移動速度を0にする。
@@ -282,4 +262,31 @@ void Player::Tilt()
 
 	m_skinModelRender->SetRotation(m_playerRot);
 
+}
+
+//プレイヤーが死亡したときの処理
+void Player::PlayerDeath()
+{
+	m_stock--;//ストックを減らす
+	if (m_stock > 0) {//ストックが残っていたら
+		m_moveSpeed = (m_iniPos - m_position);//初期座標にとばす
+		m_position = m_charaCon.Execute(m_moveSpeed, 1.0f);
+
+		m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
+		m_myAir->SetAirVolume(INI_AIR_VOLUME);
+	}
+	else {
+		for (int i = 0; i < m_enemy.size();i++) {
+			it = std::find(
+				m_enemy[i]->m_enemy.begin(),
+				m_enemy[i]->m_enemy.end(),
+				this
+			);
+			if (it != m_enemy[i]->m_enemy.end()) {
+				//見つかったので削除
+				m_enemy[i]->m_enemy.erase(it);
+			}
+		}
+		DeleteGO(this);
+	}
 }
