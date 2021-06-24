@@ -47,7 +47,7 @@ void BalloonAir::Air()
 			(g_pad[m_parentNum]->GetLStickYF()),
 			0.0f
 		};
-		BleedAir(LStickTilt.Length() * 0.05f);
+		BleedAir(LStickTilt.Length() * 0.02f);
 
 		//Aボタンが押されたら、空気を噴射して一気に加速。
 		if (g_pad[0]->IsPress(enButtonA))
@@ -55,8 +55,8 @@ void BalloonAir::Air()
 			Vector3 boostSpeed = m_parent->GetMoveSpeed();		
 			boostSpeed.y = 0.0f;
 
-			boostSpeed.x *= 0.1f;
-			boostSpeed.z *= 0.1f;
+			boostSpeed.x *= 0.05f;
+			boostSpeed.z *= 0.05f;
 
 			m_parent->AddMoveSpeed(boostSpeed);
 
@@ -77,13 +77,13 @@ void BalloonAir::Air()
 void BalloonAir::AddAir(float air)
 {
 	m_airVolume += air;
-	if (m_airVolume > MAX_BALLOON_SIZE)	//最大サイズよりは大きくなれない。
-		m_airVolume = MAX_BALLOON_SIZE;
+	if (m_airVolume > MAX_AIR_VOLUME)	//最大サイズよりは大きくなれない。
+		m_airVolume = MAX_AIR_VOLUME;
 }
 //airの値分、風船の空気を抜く
 void  BalloonAir::BleedAir(float air)
 {
 	m_airVolume -= air;
-	if (m_airVolume < MIN_BALLOON_SIZE)	//最小サイズよりは小さくなれない。
-		m_airVolume = MIN_BALLOON_SIZE;
+	if (m_airVolume < MIN_AIR_VOLUME)	//最小サイズよりは小さくなれない。
+		m_airVolume = MIN_AIR_VOLUME;
 }

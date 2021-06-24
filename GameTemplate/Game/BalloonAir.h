@@ -3,11 +3,10 @@ class Player;
 #include "Player.h"
 namespace
 {
-	
-	const int MAX_BALLOON_SIZE = 350;	//風船の空気の量の最大量
-	const int MIN_BALLOON_SIZE = 10;	//風船の空気の量の最小量
+	const int MAX_AIR_VOLUME = 350;	//風船の空気の量の最大量
+	const int MIN_AIR_VOLUME = 10;	//風船の空気の量の最小量
 	const float BRAKE_POWER = 0.1;	//ブレーキを行った際にm_moveSpeedにかける値
-	const float AIR_COST_BOOST = 0.5f;	//空気を噴射しているときに、1フレームで減る空気量
+	const float AIR_COST_BOOST = 0.2f;	//空気を噴射しているときに、1フレームで減る空気量
 }
 
 class BalloonAir : public IGameObject

@@ -70,7 +70,7 @@ bool Player::Start()
 void Player::Update()
 {
 	Move();
-	//Tilt();
+	Tilt();
 	HitWall();
 	//HitPlayer();
 	Debug(GetPlayerNum());
@@ -272,7 +272,7 @@ void Player::Tilt()
 	dir.y = 0.0f;
 	dir.Normalize();
 
-	float tiltPower = m_moveSpeed.Length() * 0.01f;
+	float tiltPower = m_moveSpeed.Length() * 0.02f;
 
 	Vector3 right = Cross(Vector3::AxisY, dir);
 	
