@@ -38,7 +38,7 @@ void WindTurbine::Update()
 				m_angle *= -1;
 			}
 			if (m_angle <= 0.3 && m_angle >= -0.3) {
-				player->SetMoveSpeed(m_front/2);
+				player->AddMoveSpeed(m_front/2);
 			}
 		}
 

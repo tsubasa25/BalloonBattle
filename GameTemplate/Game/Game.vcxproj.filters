@@ -263,10 +263,11 @@
     <ClCompile Include="..\..\ExEngine\effect\EffectEngine.cpp">
       <Filter>ExEngine\effect</Filter>
     </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
+ <ClCompile Include="BalloonAir.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-  </ItemGroup>
+    </ClCompile> <ClCompile Include="TitleScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
       <Filter>ヘッダー ファイル\system</Filter>
@@ -496,8 +497,9 @@
     <ClInclude Include="..\..\ExEngine\effect\EffectEngine.h">
       <Filter>ExEngine\effect</Filter>
     </ClInclude>
-    <ClInclude Include="TitleScene.h">
+ <ClInclude Include="BalloonAir.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-  </ItemGroup>
+    </ClInclude> <ClInclude Include="TitleScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>  </ItemGroup>
 </Project>

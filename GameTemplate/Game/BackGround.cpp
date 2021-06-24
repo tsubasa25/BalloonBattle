@@ -20,7 +20,7 @@ bool BackGround::Start()
     m_directionLight->SetDirection({ -2,-1,-1 });
 
     //•—ŽÔ‚ð•\Ž¦
-    m_windTurbine = NewGO<WindTurbine>(0);
+    //m_windTurbine = NewGO<WindTurbine>(0);
 
 	return true;
 }
