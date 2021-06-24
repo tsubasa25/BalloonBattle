@@ -311,6 +311,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="system\system.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="tklFile.cpp" />
     <ClCompile Include="WindTurbine.cpp" />
   </ItemGroup>
@@ -389,6 +390,7 @@
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="tklFile.h" />
     <ClInclude Include="WindTurbine.h" />
   </ItemGroup>
