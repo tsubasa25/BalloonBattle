@@ -9,6 +9,12 @@ namespace
 	const int MASS_DIVISOR = 20;//風船の大きさから質量を出すときの割る値
 	const float REBOUND_POWER = 2;//敵と衝突したとき、勢いにかける値
 	const int INI_AIR_VOLUME = 70;//風船の空気の量の初期値
+	const Vector3 POINTLIGHT_COLOR = { 10,10,10 };//ポイントライトの色
+	const int POINTLIGHT_RANGE = 200;//ポイントライトの影響範囲
+	const int DESELE_VOLUME = 3500;//減速させる大きさを調整する値
+	const float GRAVITY_SPEED = 0.7f;//落下スピード
+	const float GRAVITY_INDEX = 2.0f;//落下スピードにかける指数
+	const float PAI = 3.14159;//円周率
 }
 class Player:public IGameObject
 {

@@ -61,8 +61,8 @@ bool Player::Start()
 	//キャラコンの初期化
 	m_charaCon.Init((m_myAirVolume/2) , m_myAirVolume, m_position);
 	//m_charaCon.Init(100, m_bulloonSize, m_position);
-	pointLight->SetColor({ 10,10,10 });
-	pointLight->SetRange(200);
+	pointLight->SetColor(POINTLIGHT_COLOR);
+	pointLight->SetRange(POINTLIGHT_RANGE);
 	pointLight->SetPosition({ m_position });
 
 	return true;
@@ -83,7 +83,7 @@ Vector3 Player::Decele(Vector3 speed)//減速
 	
 	if (speed.Length() > 0.0f) {		
 		 //return speedVec*-0.02;
-		return speedVec * -m_myAirVolume / 3500;
+		return speedVec * -m_myAirVolume / DESELE_VOLUME;
 	}
 	else {
 		return Vector3::Zero;
@@ -97,7 +97,7 @@ void Player::Move()//移動
 	m_moveSpeed += Decele(m_moveSpeed);//MoveDirの小さくした逆ベクトルを代入する(減速処理)
 	m_position = m_charaCon.Execute(m_moveSpeed, 1.0f);//ポジションを決定
 	if (m_charaCon.IsOnGround() == false) {//地面についていなかったら
-		m_moveSpeed.y -= pow(0.7f, 2.0f);//重力を与える
+		m_moveSpeed.y -= pow( GRAVITY_SPEED,GRAVITY_INDEX );//重力を与える
 	}
 	else {
 		m_moveSpeed.y = 0;
@@ -218,7 +218,7 @@ void Player::Debug(int pNum)//デバッグ用
 			//m_moveSpeed.y = 0;
 	}
 	if (g_pad[pNum]->IsPress(enButtonRB1)) {
-			m_myAirVolume -= 1;			
+			m_myAirVolume -= 1;
 			Vector3 Accele = m_moveSpeed;
 			Accele.Normalize();
 			m_moveSpeed += Accele;
@@ -254,7 +254,7 @@ void Player::Debug(int pNum)//デバッグ用
 		if (Dir.z < 0) {
 			angleX *= -1;
 		}
-		angleX -= 0.5 * 3.14159;
+		angleX -= 0.5 * PAI;
 
 		m_rot.SetRotationY(angleX);//ｘ度だけY軸を回す
 		m_skinModelRenderArrow->SetRotation(m_rot);//角度を設定する

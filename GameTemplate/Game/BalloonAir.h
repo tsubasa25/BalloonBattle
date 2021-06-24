@@ -1,6 +1,5 @@
 #pragma once
 class Player;
-#include "Player.h"
 namespace
 {
 	const int MAX_AIR_VOLUME = 350;	//•—‘D‚Ì‹ó‹C‚Ì—Ê‚ÌÅ‘å—Ê
