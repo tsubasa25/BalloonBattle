@@ -82,7 +82,7 @@ Vector3 Player::Decele(Vector3 speed)//減速
 	Vector3 speedVec = speed;
 	
 	if (speed.Length() > 0.0f) {		
-		 //return speedVec*-0.02;
+		//return speedVec*-0.02;
 		return speedVec * -m_myAirVolume / DESELE_VOLUME;
 	}
 	else {
@@ -213,7 +213,7 @@ void Player::Debug(int pNum)//デバッグ用
 	m_PosZ_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionZ())));
 	m_Size_font->SetText(std::to_wstring(int(m_myAirVolume)));	
 	if (g_pad[pNum]->IsPress(enButtonLB1)) {
-			m_myAirVolume += 1;			
+			m_myAirVolume += 1;
 			//m_charaCon.ReInit((m_bulloonSize / 2), 70,m_position);
 			//m_moveSpeed.y = 0;
 	}

@@ -93,7 +93,7 @@ public:
 	void Debug(int pNum);
 	int m_oldStock = m_stock;
 	bool m_IsArrowOn = true;//–îˆó‚ğ•\¦‚·‚é‚©
-	bool m_IsAIOn = false;//“G‚ª©•ª‚ß‚ª‚¯‚Ä“Ëi‚µ‚Ä‚­‚é
+	bool m_IsAIOn = true;//“G‚ª©•ª‚ß‚ª‚¯‚Ä“Ëi‚µ‚Ä‚­‚é
 	SkinModelRender* m_skinModelRenderArrow = nullptr;
 	Quaternion m_rot;
 	Vector3 m_arrowSize = Vector3::One;

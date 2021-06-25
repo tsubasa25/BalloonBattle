@@ -1,34 +1,31 @@
 #pragma once
 namespace 
 {
-	Vector4 TITLE_COLOR = { 1,0,0,0 };//タイトルの色
-	Vector4 CHOOSING_COLOR = { 0,1,1,0 };//選択中の色
-	Vector4 NOTCHOOSING_COLOR = { 1,1,1,0 };//選択されてない時の色
-
-
+	const Vector3 EXIT_INI_POS={ -300,-200,0 };
+	const Vector3 START_INI_POS = { 0,-200,0 };
+	const Vector3 OPTION_INI_POS = { 300,-200,0 };
+	const Vector3 BALLOON_SIZE = { 0.7f,0.7f,1.0f };
+	const int BALLOON_INI_POSY = -200;
 }
 class TitleScene : public IGameObject
 {
 public:
 	bool Start();
 	void Update();
-	~TitleScene();
-	
+	~TitleScene();	
 
 private:
-	FontRender* m_title_FontRender = NewGO<FontRender>(0);//タイトルの文字
-	std::wstring m_title = L"TITLE";
-	FontRender* m_playernumber_FontRender = NewGO<FontRender>(0);//タイトルの文字
-	std::wstring m_playernumber = L"プレイ人数";
-	FontRender* m_start_FontRender = NewGO<FontRender>(0);//タイトルの文字
-	std::wstring m_start = L"はじめる";
-	FontRender* m_exit_FontRender = NewGO<FontRender>(0);//タイトルの文字
-	std::wstring m_exit = L"おわる";
+	SpriteRender* m_title_Sprite = NewGO<SpriteRender>(0);
+	SpriteRender* m_start_Sprite = NewGO<SpriteRender>(1);
+	SpriteRender* m_option_Sprite = NewGO<SpriteRender>(1);
+	SpriteRender* m_exit_Sprite = NewGO<SpriteRender>(1);
 
-	FontRender* m_playerCount_FontRender = NewGO<FontRender>(0);//タイトルの文字
-
+	Vector3 m_exitPos = { -300,-200,0 };
+	Vector3 m_startPos = { 0,-200,0 };
+	Vector3 m_optionPos = { 300,-200,0 };
+	
 	int m_playerCount = 4;
-	int m_selectNum = 0;
-
+	int m_selectNum = 1;
+	float m_selectLoopCount = 0;
 };
 
