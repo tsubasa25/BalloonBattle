@@ -89,6 +89,8 @@ public:
 
 	void Tilt();	//風船の傾きを決める。
 
+	void PlayerDeath();	//キャラクターが死亡したときの処理
+
 	//デバッグ用
 	void Debug(int pNum);
 	int m_oldStock = m_stock;
