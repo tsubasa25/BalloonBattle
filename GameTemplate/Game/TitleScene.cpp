@@ -10,10 +10,10 @@ TitleScene::~TitleScene()
 	DeleteGO(m_exit_Sprite);
 }
 bool TitleScene::Start()
-{	
+{
 	m_title_Sprite = NewGO<SpriteRender>(0);
 	m_title_Sprite->Init("Assets/Image/TITLE01.dds", 1280, 720);
-	
+
 	m_exit_Sprite = NewGO<SpriteRender>(1);
 	m_exit_Sprite->Init("Assets/Image/EXIT.dds", 252, 420);
 	m_exit_Sprite->SetScale(BALLOON_SIZE);
@@ -23,7 +23,7 @@ bool TitleScene::Start()
 	m_start_Sprite->Init("Assets/Image/START.dds", 252, 420);
 	m_start_Sprite->SetScale(BALLOON_SIZE);
 	m_start_Sprite->SetPosition(START_INI_POS);
-	
+
 	m_option_Sprite = NewGO<SpriteRender>(1);
 	m_option_Sprite->Init("Assets/Image/OPTION.dds", 252, 420);
 	m_option_Sprite->SetScale(BALLOON_SIZE);
@@ -31,10 +31,10 @@ bool TitleScene::Start()
 
 	return true;
 }
-	
+
 void TitleScene::Update()
 {
-	if (g_pad[0]->IsTrigger(enButtonRight)){
+	if (g_pad[0]->IsTrigger(enButtonRight)) {
 		m_selectNum += 1;
 		m_selectLoopCount = 0;
 	}
@@ -58,8 +58,8 @@ void TitleScene::Update()
 		break;
 
 	case 1:
-		m_selectLoopCount+=0.05f;
-		m_startPos.y = BALLOON_INI_POSY +(sin(m_selectLoopCount))*40.0f;
+		m_selectLoopCount += 0.05f;
+		m_startPos.y = BALLOON_INI_POSY + (sin(m_selectLoopCount)) * 40.0f;
 		m_exitPos.y = BALLOON_INI_POSY;
 		m_optionPos.y = BALLOON_INI_POSY;
 		break;
