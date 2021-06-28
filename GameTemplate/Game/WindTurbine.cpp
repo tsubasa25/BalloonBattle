@@ -10,10 +10,8 @@ bool WindTurbine::Start()
 {
 	m_skinModelRender = NewGO<SkinModelRender>(0);
 	m_skinModelRender->Init("Assets/modelData/WindTurbine.tkm");
-	
-	SetPosition(m_position);
 
-
+	m_skinModelRender->SetPosition(m_position);
 	return true;
 }
 

@@ -28,7 +28,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
    /* GameScene*gameScene=NewGO<GameScene>(0,"gameScene");*/   
    /* NewGO<BackGround>(0);*/
 
-    g_camera3D->SetPosition({ 0.0f, 1500.0f, -700.0f });
+    g_camera3D->SetPosition({ 0.0f, 3000.0f, -700.0f });
     g_camera3D->SetTarget({ 0,10,0 });
     
     //////////////////////////////////////
