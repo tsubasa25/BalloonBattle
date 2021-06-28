@@ -13,5 +13,7 @@ private:
 	PhysicsStaticObject m_physicsStaticObject;				//CharaConとの当たり判定に使用する静的物理オブジェクト
 
 	WindTurbine* m_windTurbine = nullptr;
+
+	Level m_level;
 };
 

@@ -17,3 +17,4 @@
 #include "Level.h"
 #include "effect/Effect.h"
 #include "effect/EffectEngine.h"
+#include "SpriteRender.h"
