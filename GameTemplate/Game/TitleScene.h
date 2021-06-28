@@ -24,7 +24,7 @@ private:
 	Vector3 m_startPos = { 0,-200,0 };
 	Vector3 m_optionPos = { 300,-200,0 };
 	
-	int m_playerCount = 4;
+	int m_playerCount = 1;
 	int m_selectNum = 1;
 	float m_selectLoopCount = 0;
 };

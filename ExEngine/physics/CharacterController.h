@@ -5,16 +5,17 @@
 #pragma once
 
 #include "CapsuleCollider.h"
+#include "SphereCollider.h"
 #include "RigidBody.h"
 
 
-/*!
-	* @brief	キャラクタコントローラー。
-	*@details
-	* キャラクターと背景の衝突解決を行うことができます。\n
-	* 下記のサンプルプログラムを参考にしてください。\n
-	* Sample/Sample07
-	*/
+ /*!
+	 * @brief	キャラクタコントローラー。
+	 *@details
+	 * キャラクターと背景の衝突解決を行うことができます。\n
+	 * 下記のサンプルプログラムを参考にしてください。\n
+	 * Sample/Sample07
+	 */
 class CharacterController
 {
 public:
@@ -25,14 +26,14 @@ public:
 	{
 		RemoveRigidBoby();
 	}
-		
+
 	/*!
 		* @brief	初期化。
 		*@param[in]	radius		カプセルコライダーの半径。
 		*@param[in]	height		カプセルコライダーの高さ。
 		*@param[in]	position	初期位置。
 		*/
-	void Init(float radius, float height, const Vector3& position);
+	void Init(float radius,  const Vector3& position);
 	/*!
 		* @brief	実行。
 		*@param[in, out]	moveSpeed		移動速度。
@@ -40,7 +41,7 @@ public:
 		*@return 移動後のキャラクターの座標。
 		*/
 	const Vector3& Execute(Vector3& moveSpeed, float deltaTime);
-	
+
 	/*!
 		* @brief	座標を取得。
 		*/
@@ -73,7 +74,7 @@ public:
 	/*!
 	* @brief	コライダーを取得。
 	*/
-	CCapsuleCollider* GetCollider()
+	CSphereCollider* GetCollider()
 	{
 		return &m_collider;
 	}
@@ -92,21 +93,22 @@ public:
 	///////////////////////////////////////////kinoto
 	const Vector3 GetWallNormal() { return m_wallNormal; }
 	const bool GetIsHitWall() { return m_isHit; }
-	void  ReInit(float radius, float height, const Vector3& position);
+	void  ReInit(float radius,Vector3 position);
 	///////////////////////////////////////////
 private:
 	bool				m_isInited = false;				//!<初期化済み？
 	Vector3 			m_position;						//!<座標。
 	bool 				m_isJump = false;				//!<ジャンプ中？
 	bool				m_isOnGround = true;			//!<地面の上にいる？
-	CCapsuleCollider	m_collider;						//!<コライダー。
+	CSphereCollider	    m_collider;						//!<コライダー。
 	float				m_radius = 0.0f;				//!<カプセルコライダーの半径。
-	float				m_height = 0.0f;				//!<カプセルコライダーの高さ。
-	RigidBody			m_rigidBody;					//剛体。
-
-
 	
+	RigidBody			m_rigidBody;					//剛体。
+	
+
 	//////////////////////////kinoto	
 	bool  m_isHit = false;
 	Vector3 m_wallNormal = Vector3::Zero;
+	RigidBodyInitData m_rbInfo;
+
 };
