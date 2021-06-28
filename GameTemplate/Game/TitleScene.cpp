@@ -13,28 +13,29 @@ bool TitleScene::Start()
 {	
 	m_title_FontRender->SetText(m_title);
 	m_title_FontRender->SetColor(TITLE_COLOR);
-	m_title_FontRender->SetPosition({ -100,200 });
-	m_title_FontRender->SetScale({ 2 });
+	m_title_FontRender->SetPosition({ SPRITE_TITLE_POSITION });
+	m_title_FontRender->SetScale({ SPRITE_TITLE_SCALE });
 
 	m_start_FontRender->SetText(m_start);
 	m_start_FontRender->SetColor(NOTCHOOSING_COLOR);
-	m_start_FontRender->SetPosition({ -100,0 });
-	m_start_FontRender->SetScale({ 1 });
+	m_start_FontRender->SetPosition({ SPRITE_START_POSITION });
+	m_start_FontRender->SetScale({ SPRITE_START_SCALE });
 
 	m_playernumber_FontRender->SetText(m_playernumber);
 	m_playernumber_FontRender->SetColor(NOTCHOOSING_COLOR);
-	m_playernumber_FontRender->SetPosition({ -100,-100});
-	m_playernumber_FontRender->SetScale({ 1 });
+	m_playernumber_FontRender->SetPosition({ SPRITE_PLAYERNUM_POSITION });
+	m_playernumber_FontRender->SetScale({ SPRITE_PLAYERNUM_SCALE });
 
 	m_playerCount_FontRender->SetText(std::to_wstring(m_playerCount));
 	m_playerCount_FontRender->SetColor(NOTCHOOSING_COLOR);
-	m_playerCount_FontRender->SetPosition({ 200,-100 });
-	m_playerCount_FontRender->SetScale({ 1 });
+	m_playerCount_FontRender->SetPosition({ SPRITE_PLAYERCOUNT_POSITION });
+	m_playerCount_FontRender->SetScale({ SPRITE_PLAYERCOUNT_SCALE });
 
 	m_exit_FontRender->SetText(m_exit);
 	m_exit_FontRender->SetColor(NOTCHOOSING_COLOR);
-	m_exit_FontRender->SetPosition({ -100,-200 });
-	m_exit_FontRender->SetScale({ 1 });
+	m_exit_FontRender->SetPosition({ SPRITE_EXIT_POSITION });
+	m_exit_FontRender->SetScale({ SPRITE_EXIT_SCALE });
+
 	return true;
 }
 	
@@ -83,17 +84,18 @@ void TitleScene::Update()
 		DeleteGO(this);
 	}
 
-	if (m_selectNum == 1 && g_pad[0]->IsTrigger(enButtonRight)){
-		m_playerCount += 1;
-		if (m_playerCount > 8) {
-			m_playerCount = 8;
+	if (m_selectNum == 1 && g_pad[0]->IsTrigger(enButtonLeft)) {
+		m_playerCount -= 1;
+		if (m_playerCount < MIN_PLAYERCOUNT) {
+			m_playerCount = MIN_PLAYERCOUNT;
 		}
 		m_playerCount_FontRender->SetText(std::to_wstring(m_playerCount));
 	}
-	if (m_selectNum == 1 && g_pad[0]->IsTrigger(enButtonLeft)) {
-		m_playerCount -= 1;
-		if (m_playerCount < 0) {
-			m_playerCount = 0;
+
+	if (m_selectNum == 1 && g_pad[0]->IsTrigger(enButtonRight)) {
+		m_playerCount += 1;
+		if (m_playerCount > MAX_PLAYERCOUNT) {
+			m_playerCount = MAX_PLAYERCOUNT;
 		}
 		m_playerCount_FontRender->SetText(std::to_wstring(m_playerCount));
 	}
