@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "GameScene.h"
+#include "BackGround.h"
 
 Player::~Player()
 {
@@ -57,6 +58,8 @@ bool Player::Start()
 	m_myAir->SetParentNum(m_playerNum);
 
 	m_myAir->SetAirVolume(m_myAirVolume);
+
+	m_backGround = FindGO<BackGround>("backGround");
 
 	//ƒLƒƒƒ‰ƒRƒ“‚Ì‰Šú‰»
 	m_charaCon.Init((m_myAirVolume/2) , m_myAirVolume, m_position);
