@@ -124,7 +124,7 @@ void CharacterController::Init(float radius, const Vector3& position)
 	m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Character);
 	m_rigidBody.GetBody()->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
 
-	m_isInited = true;
+	//m_isInited = true;
 }
 const Vector3& CharacterController::Execute(Vector3& moveSpeed, float deltaTime)
 {
@@ -159,7 +159,7 @@ const Vector3& CharacterController::Execute(Vector3& moveSpeed, float deltaTime)
 			}
 			//カプセルコライダーの中心座標 + 高さ*0.1の座標をposTmpに求める。
 			Vector3 posTmp = m_position;
-			posTmp.y += m_radius+m_radius*0.1f  ;
+			posTmp.y += m_radius  ;//+m_radius*0.1f
 			//レイを作成。
 			btTransform start, end;
 			start.setIdentity();
@@ -306,21 +306,23 @@ void CharacterController::RemoveRigidBoby()
 	PhysicsWorld::GetInstance()->RemoveRigidBody(m_rigidBody);
 }
 
-void CharacterController::ReInit(float radius,Vector3 position)
+void CharacterController::ReInit(float radius, const Vector3& position)//再イニット
 {	
 	
 	m_position = position;
 	//コリジョン作成。
 	m_radius = radius;
 	m_collider.ReInit(radius);
-
-	//剛体を初期化。	
+	
+	//剛体を初期化。
 	m_rbInfo.collider = &m_collider;
 	m_rbInfo.mass = 0.0f;
+	
 	m_rigidBody.ReInit(m_rbInfo);
 	btTransform& trans = m_rigidBody.GetBody()->getWorldTransform();
 	//剛体の位置を更新。
-	trans.setOrigin(btVector3(position.x, position.y + m_radius, position.z));
+	trans.setOrigin(btVector3(m_position.x, m_position.y + m_radius, m_position.z));
+	//trans.setOrigin(btVector3(position.x, position.y + 35, position.z));
 	//@todo 未対応。trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 	m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Character);
 	m_rigidBody.GetBody()->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);

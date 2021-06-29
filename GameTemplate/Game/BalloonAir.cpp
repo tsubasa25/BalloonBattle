@@ -8,7 +8,7 @@ bool BalloonAir::Start()
 
 void BalloonAir::Update()
 {
-	Air();
+	Air();	
 	m_parent->SetAirVolume(m_airVolume);
 }
 void BalloonAir::Air()

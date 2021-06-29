@@ -24,9 +24,10 @@ public:
 	////////////////kinoto
 	void ReInit(float radius)
 	{
+		m_radius = radius;
 		//m_shape(new btSphereShape(m_radius));
 		m_shape.release();
-		m_shape = std::make_unique<btSphereShape>(radius);
+		m_shape = std::make_unique<btSphereShape>(m_radius);
 		//m_radius = radius;
 		/*std::unique_ptr<btSphereShape>shape = std::make_unique<btSphereShape>(m_radius);
 		m_shape.swap(shape);*/

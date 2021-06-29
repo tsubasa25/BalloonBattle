@@ -24,6 +24,9 @@ void RigidBody::Init(RigidBodyInitData& m_initData)
 }
 void RigidBody::ReInit(RigidBodyInitData& m_initData)
 {
+	if (m_rigidBody) {
+		PhysicsWorld::GetInstance()->RemoveRigidBody(*this);
+	}
 	btTransform transform;
 	transform.setIdentity();	
 	transform.setOrigin(btVector3(m_initData.pos.x, m_initData.pos.y, m_initData.pos.z));
@@ -37,12 +40,12 @@ void RigidBody::ReInit(RigidBodyInitData& m_initData)
 	btLocalInteria.setZ(m_initData.localInteria.z);
 
 	btRigidBody::btRigidBodyConstructionInfo btRbInfo(m_initData.mass, m_myMotionState.get(), m_initData.collider->GetBody(), btLocalInteria);
-	std::unique_ptr<btRigidBody>rigidBody = std::make_unique<btRigidBody>(btRbInfo);
-	//m_rigidBody.swap(rigidBody);
-	//m_rigidBody.reset(new btRigidBody(btRbInfo));
-	m_rigidBody.release();
+	//std::unique_ptr<btRigidBody>rigidBody = std::make_unique<btRigidBody>(btRbInfo);
+	/*m_rigidBody.swap(rigidBody);
+	m_rigidBody.reset(new btRigidBody(btRbInfo));*/
+	//m_rigidBody.release();
 	m_rigidBody = std::make_unique<btRigidBody>(btRbInfo);
-	//PhysicsWorld::GetInstance()->AddRigidBody(*this);
+	PhysicsWorld::GetInstance()->AddRigidBody(*this);
 }
 RigidBody::~RigidBody()
 {
