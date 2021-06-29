@@ -119,3 +119,40 @@ void BackGround::Update()
 //
 //    return 
 //}
+
+//リスポーン地点を割り出す関数
+Vector3 BackGround::GetRespawnPosition(int ResPlNum)
+{
+    m_respawnPlayerNum = ResPlNum;
+    m_enemyMiddlePos = {Vector3::Zero};
+
+    //まず、自分以外のプレイヤーのポジションを全員分加算
+    QueryGOs<Player>("player", [this](Player* player)->bool 
+        {
+        if (player->GetPlayerNum() != m_respawnPlayerNum)
+            m_enemyMiddlePos += player->GetPosition();     
+        return true;
+        });
+    //そして自分以外のプレイヤー数で割ることで、平均位置を求める。
+    m_enemyMiddlePos /= m_gameScene->GetPlayerCount() - 1.0f;
+
+    Vector3 ResPos = { Vector3::Zero }; //リスポーン地点
+    Vector3 toResPosDis = {Vector3::Zero};  //リスポーン地点からm_enemyMiddlePosへの距離
+    Vector3 dis = { Vector3::Zero };    //リスポーン地点候補からm_enemyMiddlePosへの距離
+
+    //リスポーン地点の候補から、m_enemyMiddlePosへの距離が最も遠い場所を割り出す。
+    for (int i = 0; i < RESPAWN_POSITION_NUM; i++)
+    {
+        dis = m_spawnPos[i] - m_enemyMiddlePos;
+        if (toResPosDis.Length() < dis.Length())
+        {
+            toResPosDis = dis;
+            ResPos = m_spawnPos[i];
+        }
+    }
+
+    //空中からリスポーンするようにする。
+    ResPos.y += RESPAWN_POSITION_HEIGHT;
+    
+    return ResPos;
+}

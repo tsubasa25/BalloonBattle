@@ -276,6 +276,7 @@ void Player::PlayerDeath()
 {
 	m_stock--;//ストックを減らす
 	if (m_stock > 0) {//ストックが残っていたら
+		m_iniPos = m_backGround->GetRespawnPosition(m_playerNum);
 		m_moveSpeed = (m_iniPos - m_position);//初期座標にとばす
 		m_position = m_charaCon.Execute(m_moveSpeed, 1.0f);
 

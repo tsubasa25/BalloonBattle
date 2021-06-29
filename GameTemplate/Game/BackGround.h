@@ -1,6 +1,14 @@
 #pragma once
 #include "WindTurbine.h"
 class GameScene;
+class Player;
+
+namespace
+{
+	const int RESPAWN_POSITION_NUM = 8;
+	const float RESPAWN_POSITION_HEIGHT = 800.0f;
+}
+
 
 class BackGround:public IGameObject
 {
@@ -8,7 +16,9 @@ public:
 	~BackGround();
 	bool Start();
 	void Update();
+	Vector3 GetRespawnPosition(int ResPlNum);	//リスポーンしたいプレイヤーの番号を渡すことで、リスポーン位置を計算する。
 	//Vector3 GetIniSpawnPosition();
+	
 private:
 	SkinModelRender* m_skinModelRender=nullptr;
 	DirectionLight* m_directionLight = nullptr;
@@ -19,7 +29,10 @@ private:
 	GameScene* m_gameScene = nullptr;
 	Level m_level;
 
-	Vector3 m_spawnPos[8]{Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero, };
+	Vector3 m_spawnPos[RESPAWN_POSITION_NUM]{Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero, };
 
+	Vector3 m_enemyMiddlePos = { Vector3::Zero };	//他プレイヤーのポジションの平均地点
+
+	int m_respawnPlayerNum = 0;	//リスポーンするプレイヤーの番号
 };
 

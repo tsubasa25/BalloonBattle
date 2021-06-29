@@ -78,7 +78,7 @@ void TitleScene::Update()
 	if (m_selectNum == 1 && g_pad[0]->IsTrigger(enButtonA)) {
 		GameScene* gameScene = NewGO<GameScene>(0, "gameScene");
 		gameScene->SetPlayerCount(m_playerCount);
-		NewGO<BackGround>(0);
+		NewGO<BackGround>(0,"backGround");
 		DeleteGO(this);
 	}
 	m_option_Sprite->SetPosition(m_optionPos);
