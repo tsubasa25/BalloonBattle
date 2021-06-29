@@ -274,6 +274,7 @@ void Player::Tilt()
 //プレイヤーが死亡したときの処理
 void Player::PlayerDeath()
 {
+	
 	m_stock--;//ストックを減らす
 	if (m_stock > 0) {//ストックが残っていたら
 		m_iniPos = m_backGround->GetRespawnPosition(m_playerNum);
