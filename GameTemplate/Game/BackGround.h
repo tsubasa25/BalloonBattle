@@ -5,8 +5,8 @@ class Player;
 
 namespace
 {
-	const int RESPAWN_POSITION_NUM = 8;
-	const float RESPAWN_POSITION_HEIGHT = 800.0f;
+	const int RESPAWN_POSITION_NUM = 8;	//リスポーン地点の総数
+	const float RESPAWN_POSITION_HEIGHT = 800.0f;	//リスポーンするときにプレイヤーが降りてくる高さ。
 }
 
 
