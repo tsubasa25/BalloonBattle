@@ -8,7 +8,7 @@ namespace
 	const int STAGE_WIDTH = 750;
 	const int STAGE_DEPTH = 750;	
 	const int MASS_DIVISOR = 20;//風船の大きさから質量を出すときの割る値
-	const float REBOUND_POWER = 2;//敵と衝突したとき、勢いにかける値
+	const float REBOUND_POWER = 1.5;//敵と衝突したとき、勢いにかける値
 	const int INI_AIR_VOLUME = 70;//風船の空気の量の初期値
 	const Vector3 POINTLIGHT_COLOR = { 10,10,10 };//ポイントライトの色
 	const int POINTLIGHT_RANGE = 200;//ポイントライトの影響範囲
@@ -97,7 +97,7 @@ public:
 	void Debug(int pNum);
 	int m_oldStock = m_stock;
 	bool m_IsArrowOn = true;//矢印を表示するか
-	bool m_IsAIOn = false;//敵が自分めがけて突進してくる
+	bool m_IsAIOn = true;//敵が自分めがけて突進してくる
 	SkinModelRender* m_skinModelRenderArrow = nullptr;
 	Quaternion m_rot;
 	Vector3 m_arrowSize = Vector3::One;

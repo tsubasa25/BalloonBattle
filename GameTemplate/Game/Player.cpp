@@ -76,10 +76,10 @@ void Player::Update()
 	Move();
 	Tilt();
 	HitWall();
-	//HitPlayer();
+	HitPlayer();
 	Debug(GetPlayerNum());
 	SetScale({ m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME, });	
-	m_ReInitLoopCount++;	
+		
 	m_charaCon.ReInit((m_myAirVolume / 2), m_position);	
 }
 
@@ -89,7 +89,7 @@ Vector3 Player::Decele(Vector3 speed)//Œ¸‘¬
 	
 	if (speed.Length() > 0.0f) {		
 		//return speedVec*-0.02;
-		return speedVec * -m_myAirVolume / DESELE_VOLUME;
+		return speedVec * -m_myAirVolume/2 / DESELE_VOLUME;
 	}
 	else {
 		return Vector3::Zero;
@@ -126,11 +126,7 @@ void Player::Move()//ˆÚ“®
 void Player::HitWall()//•Ç‚É‚ ‚½‚Á‚½‚Æ‚«
 {			
 	if (m_charaCon.GetIsHitWall() == true) {
-		HitPlayer();
-		if (m_enemyHit == false) {//“G‚Å‚Í‚È‚­•Ç‚É‚ ‚Á‚Ä‚¢‚ê‚Î
-			//”½Ë‚·‚é•ûŒü‚ğ‹‚ß‚é
-			m_moveSpeed = ReboundSpeed();
-		}
+		m_moveSpeed = ReboundSpeed();
 	}
 }
 
@@ -139,25 +135,15 @@ void Player::HitPlayer()
 	for (int i = 0; i < m_enemy.size(); i++)		//‚Ç‚Ì“G‚É‚ ‚½‚Á‚½‚©’T‚·
 	{
 		Vector3 diff = GetPosition() - m_enemy[i]->GetPosition();//“G‚Æ‚Ì‹——£‚ğ‘ª‚é
-		diff.y = 0;									//‚‚³‚ğ–³‹‚·‚é
-		if (diff.Length() < (m_myAirVolume /2+m_enemy[i]->m_myAirVolume /2)+5) {//ƒRƒŠƒWƒ‡ƒ“‚ªUpdate‚Å‚«‚½‚ç‚±‚Á‚¿
-		//if (diff.Length() < (INI_AIR_VOLUME+2)){//‹——£‚ª‹ß‚¯‚ê‚Î
-			m_enemyHit = true;						//“G‚Æ‚ ‚½‚Á‚½‚Æ‚İ‚È‚·
+		if (diff.Length() < (m_myAirVolume /2+m_enemy[i]->m_myAirVolume /2)+1) {//ƒRƒŠƒWƒ‡ƒ“‚æ‚è­‚µL‚¢”ÍˆÍ‚É‚«‚½‚ç‚ ‚½‚Á‚½‚Æ‚İ‚È‚·
+			//diff.y = 0;									//‚‚³‚ğ–³‹‚·‚é
+			//m_hitLoopCount = 0;
 			Vector3 tmp = m_enemy[i]->GetMoveSpeed();//“G‚Ì¨‚¢‚ğ•Û‘¶‚·‚é
+			diff.Normalize();//“G‚Æ‚ÌŒü‚«‚ğ‚Æ‚é
 			//‘å‚«‚³‚É”ä—á‚µ‚Ä‚Ó‚Á‚Æ‚Î‚µ‚â‚·‚­‚È‚é
-			m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_myAirVolume/ (INI_AIR_VOLUME/ REBOUND_POWER)));//‘Šè‚É©•ª‚Ì¨‚¢‚ğ“n‚·
-			
-			if (m_moveSpeed.Length() < m_enemy[i]->m_myAirVolume / MASS_DIVISOR) {//©•ª‚Ì¨‚¢‚æ‚èA‘Šè‚Ì¿—Ê‚ª‘å‚«‚¯‚ê‚Î’µ‚Ë•Ô‚³‚ê‚é
-				m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_myAirVolume / (INI_AIR_VOLUME * REBOUND_POWER)));//“G‚Í‚·‚±‚µ‰Ÿ‚³‚ê‚é
-				m_moveSpeed = ReboundSpeed();//©•ª‚Í’µ‚Ë•Ô‚³‚ê‚é				
-			}
-			else {				
-				m_moveSpeed = tmp * ((INI_AIR_VOLUME* REBOUND_POWER) /m_myAirVolume);//©•ª‚Í‘å‚«‚³‚É”½”ä—á‚µ‚Ä‚Ó‚Á‚Æ‚Î‚³‚ê‚â‚·‚­‚È‚é
-			}
-		}	
-		else {//“G‚Æ‚Ì‹——£‚ª‰“‚¯‚ê‚Î‚È‚É‚à‚µ‚È‚¢
-			m_enemyHit = false;						//“G‚Æ‡‚Á‚Ä‚¢‚È‚¢
-		}
+			m_enemy[i]->m_moveSpeed = (diff*GetMoveSpeed().Length() * -(m_myAirVolume/ (INI_AIR_VOLUME/ REBOUND_POWER)));//‘Šè‚É©•ª‚Ì¨‚¢‚ğ“n‚·
+			m_moveSpeed = diff*(tmp.Length() * ((INI_AIR_VOLUME) /m_myAirVolume));//©•ª‚Í‘å‚«‚³‚É”½”ä—á‚µ‚Ä‚Ó‚Á‚Æ‚Î‚³‚ê‚â‚·‚­‚È‚é
+		}		
 	}
 }
 
