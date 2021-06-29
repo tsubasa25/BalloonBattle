@@ -47,6 +47,8 @@ private:
 
 	Quaternion m_playerRot = {0.0f,0.0f,0.0f,0.0f};
 
+	int m_ReInitLoopCount = 0;
+
 public:
 	std::vector<Player*> m_enemy;
 	std::vector<Player*>::iterator it;
@@ -72,7 +74,7 @@ public:
 	
 	float GetStageWidth() { return STAGE_WIDTH; }//ステージの横幅
 	float GetStageDepth() { return STAGE_DEPTH; }//ステージの縦幅
-
+	
 	void AddMoveSpeed(Vector3 dir) { m_moveSpeed += dir; }//コントローラー入力の値を加算合計する
 	void SetMoveSpeed(Vector3 dir) { m_moveSpeed = dir; }//再設定する
 	Vector3 GetMoveSpeed() { return m_moveSpeed; }
@@ -95,7 +97,7 @@ public:
 	void Debug(int pNum);
 	int m_oldStock = m_stock;
 	bool m_IsArrowOn = true;//矢印を表示するか
-	bool m_IsAIOn = true;//敵が自分めがけて突進してくる
+	bool m_IsAIOn = false;//敵が自分めがけて突進してくる
 	SkinModelRender* m_skinModelRenderArrow = nullptr;
 	Quaternion m_rot;
 	Vector3 m_arrowSize = Vector3::One;

@@ -15,17 +15,17 @@ public:
 	/// </summary>
 	/// <param name="radius"></param>
 	/// <param name="height"></param>
-	void Init(float radius, float height)
+	void Init(float radius)
 	{
-		m_shape = std::make_unique<btCapsuleShape>(radius, height);
+		m_shape = std::make_unique<btCapsuleShape>(radius, radius);
 		m_radius = radius;
-		m_height = height;
+		m_height = radius;
 	}
 	////////////////kinoto
-	void ReInit(float radius, float height)
-	{
-		m_radius = radius;
-		m_height = height;
+	void ReInit(float radius)
+	{		
+		m_shape.release();
+		m_shape = std::make_unique<btCapsuleShape>(radius, radius);
 	}
 
 

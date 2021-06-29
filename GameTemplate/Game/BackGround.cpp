@@ -9,8 +9,8 @@ BackGround::~BackGround()
 bool BackGround::Start()
 {
     m_skinModelRender = NewGO<SkinModelRender>(0);
-    m_skinModelRender->Init("Assets/modelData/TestStage.tkm"); 
-
+    m_skinModelRender->Init("Assets/modelData/Stage.tkm");
+    
     //ステージのモデルの静的物理モデルを作成
     m_physicsStaticObject.CreateFromModel(m_skinModelRender->GetModel(), m_skinModelRender->GetModel().GetWorldMatrix());
 
@@ -25,8 +25,8 @@ bool BackGround::Start()
         {
             if (strcmp(objData.name, "TestPos") == 0) {        
                 //風車を表示
-                m_windTurbine = NewGO<WindTurbine>(0);
-                m_windTurbine->SetPosition(objData.position);
+                //m_windTurbine = NewGO<WindTurbine>(0);
+                //m_windTurbine->SetPosition(objData.position);
 
                 return true;
             }

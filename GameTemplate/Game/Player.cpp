@@ -59,7 +59,7 @@ bool Player::Start()
 	m_myAir->SetAirVolume(m_myAirVolume);
 
 	//キャラコンの初期化
-	m_charaCon.Init((m_myAirVolume/2),  m_position);
+	m_charaCon.Init((m_myAirVolume/2), m_position);
 
 	//m_charaCon.Init(100, m_bulloonSize, m_position);
 	pointLight->SetColor(POINTLIGHT_COLOR);
@@ -76,7 +76,8 @@ void Player::Update()
 	//HitPlayer();
 	Debug(GetPlayerNum());
 	SetScale({ m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME, });	
-	m_charaCon.ReInit((m_myAirVolume / 2), m_position);
+	m_ReInitLoopCount++;	
+	m_charaCon.ReInit((m_myAirVolume / 2), m_position);	
 }
 
 Vector3 Player::Decele(Vector3 speed)//減速
@@ -136,7 +137,7 @@ void Player::HitPlayer()
 	{
 		Vector3 diff = GetPosition() - m_enemy[i]->GetPosition();//敵との距離を測る
 		diff.y = 0;									//高さを無視する
-		if (diff.Length() < (m_myAirVolume /2+m_enemy[i]->m_myAirVolume /2)+1) {//コリジョンがUpdateできたらこっち
+		if (diff.Length() < (m_myAirVolume /2+m_enemy[i]->m_myAirVolume /2)+5) {//コリジョンがUpdateできたらこっち
 		//if (diff.Length() < (INI_AIR_VOLUME+2)){//距離が近ければ
 			m_enemyHit = true;						//敵とあたったとみなす
 			Vector3 tmp = m_enemy[i]->GetMoveSpeed();//敵の勢いを保存する
