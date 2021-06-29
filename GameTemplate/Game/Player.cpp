@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "GameScene.h"
+#include "BackGround.h"
 
 Player::~Player()
 {
@@ -57,6 +58,8 @@ bool Player::Start()
 	m_myAir->SetParentNum(m_playerNum);
 
 	m_myAir->SetAirVolume(m_myAirVolume);
+
+	m_backGround = FindGO<BackGround>("backGround");
 
 	//キャラコンの初期化
 	m_charaCon.Init((m_myAirVolume/2), m_position);
@@ -274,6 +277,7 @@ void Player::PlayerDeath()
 {
 	m_stock--;//ストックを減らす
 	if (m_stock > 0) {//ストックが残っていたら
+		m_iniPos = m_backGround->GetRespawnPosition(m_playerNum);
 		m_moveSpeed = (m_iniPos - m_position);//初期座標にとばす
 		m_position = m_charaCon.Execute(m_moveSpeed, 1.0f);
 

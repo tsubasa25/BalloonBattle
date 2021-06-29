@@ -1,5 +1,6 @@
 #pragma once
 class BalloonAir;
+class BackGround;
 #include<vector>
 #include "BalloonAir.h"
 namespace
@@ -47,8 +48,7 @@ private:
 
 	Quaternion m_playerRot = {0.0f,0.0f,0.0f,0.0f};
 
-	int m_ReInitLoopCount = 0;
-
+BackGround* m_backGround = nullptr;
 public:
 	std::vector<Player*> m_enemy;
 	std::vector<Player*>::iterator it;
