@@ -39,7 +39,7 @@ public:
 		*@param[in, out]	moveSpeed		移動速度。
 		*@param[in]	deltaTime		経過時間。単位は秒。デフォルトでは、１フレームの経過時間が渡されています。
 		*@return 移動後のキャラクターの座標。
-		*/
+	*/
 	const Vector3& Execute(Vector3& moveSpeed, float deltaTime);
 
 	/*!
@@ -74,6 +74,10 @@ public:
 	/*!
 	* @brief	コライダーを取得。
 	*/
+	/*CCapsuleCollider* GetCollider()
+	{
+		return &m_collider;
+	}*/
 	CSphereCollider* GetCollider()
 	{
 		return &m_collider;
@@ -93,14 +97,16 @@ public:
 	///////////////////////////////////////////kinoto
 	const Vector3 GetWallNormal() { return m_wallNormal; }
 	const bool GetIsHitWall() { return m_isHit; }
-	void  ReInit(float radius,Vector3 position);
+	void  ReInit(float radius,const Vector3& position);
 	///////////////////////////////////////////
 private:
 	bool				m_isInited = false;				//!<初期化済み？
 	Vector3 			m_position;						//!<座標。
 	bool 				m_isJump = false;				//!<ジャンプ中？
 	bool				m_isOnGround = true;			//!<地面の上にいる？
-	CSphereCollider	    m_collider;						//!<コライダー。
+	CSphereCollider		m_collider;						//!<コライダー。
+	//CCapsuleCollider		m_collider;						//!<コライダー。
+	
 	float				m_radius = 0.0f;				//!<カプセルコライダーの半径。
 	
 	RigidBody			m_rigidBody;					//剛体。

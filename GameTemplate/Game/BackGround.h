@@ -16,10 +16,9 @@ public:
 	~BackGround();
 	bool Start();
 	void Update();
-	Vector3 GetRespawnPosition(int ResPlNum);	//リスポーンしたいプレイヤーの番号を渡すことで、リスポーン位置を計算する。
+Vector3 GetRespawnPosition(int ResPlNum);	//リスポーンしたいプレイヤーの番号を渡すことで、リスポーン位置を計算する。
 	//Vector3 GetIniSpawnPosition();
-	
-private:
+	private:
 	SkinModelRender* m_skinModelRender=nullptr;
 	DirectionLight* m_directionLight = nullptr;
 	PhysicsStaticObject m_physicsStaticObject;				//CharaConとの当たり判定に使用する静的物理オブジェクト
