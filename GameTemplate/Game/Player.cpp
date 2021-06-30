@@ -107,7 +107,10 @@ void Player::Move()//移動
 	else {
 		m_moveSpeed.y = 0;
 	}
-	if (m_position.y < -1000) {//ステージから落ちたら
+	if (m_position.y < OVER_STAGE_LINE.y	//ステージから落ちるか、
+		|| fabsf(m_position.x) > OVER_STAGE_LINE.x
+		|| fabsf(m_position.z) > OVER_STAGE_LINE.z	//ステージから大きく離れたら。
+		) {
 		PlayerDeath();
 	}
 
@@ -263,8 +266,8 @@ void Player::PlayerDeath()
 	
 	m_stock--;//ストックを減らす
 	if (m_stock > 0) {//ストックが残っていたら
-		m_iniPos = m_backGround->GetRespawnPosition(m_playerNum);
-		m_moveSpeed = (m_iniPos - m_position);//初期座標にとばす
+		m_resPos = m_backGround->GetRespawnPosition(m_playerNum);
+		m_moveSpeed = (m_resPos - m_position);//初期座標にとばす
 		m_position = m_charaCon.Execute(m_moveSpeed, 1.0f);
 
 		m_moveSpeed = { Vector3::Zero };//スピードをゼロにする

@@ -25,7 +25,7 @@ bool BackGround::Start()
     m_gameScene = FindGO<GameScene>("gameScene");
 
 
-    m_level.Init("Assets/modelData/Level/SimpleLevel.tkl", [&](LevelObjectData& objData)
+    m_level.Init("Assets/modelData/Level/BuildingLevel.tkl", [&](LevelObjectData& objData)
         {             
             if (strcmp(objData.name, "SpawnP0") == 0)
             {
@@ -153,7 +153,7 @@ Vector3 BackGround::GetRespawnPosition(int ResPlNum)
     }
 
     //空中からリスポーンするようにする。
-    ResPos.y += RESPAWN_POSITION_HEIGHT;
+   // ResPos.y += RESPAWN_POSITION_HEIGHT;
     
     return ResPos;
 }
