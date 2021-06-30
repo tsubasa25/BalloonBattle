@@ -27,11 +27,11 @@ void RigidBody::ReInit(RigidBodyInitData& m_initData)
 	if (m_rigidBody) {
 		PhysicsWorld::GetInstance()->RemoveRigidBody(*this);
 	}
+	PhysicsWorld::GetInstance()->RemoveRigidBody(*this);
 	btTransform transform;
 	transform.setIdentity();	
 	transform.setOrigin(btVector3(m_initData.pos.x, m_initData.pos.y, m_initData.pos.z));
 	transform.setRotation(btQuaternion(m_initData.rot.x, m_initData.rot.y, m_initData.rot.z, m_initData.rot.w));
-
 	
 	m_myMotionState->setWorldTransform(transform);
 	btVector3 btLocalInteria;

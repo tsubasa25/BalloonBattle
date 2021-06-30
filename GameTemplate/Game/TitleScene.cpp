@@ -2,6 +2,7 @@
 #include "TitleScene.h"
 #include "BackGround.h"
 #include "GameScene.h"
+#include "UIDisplay.h"
 TitleScene::~TitleScene()
 {
 	DeleteGO(m_title_Sprite);
@@ -79,6 +80,7 @@ void TitleScene::Update()
 		GameScene* gameScene = NewGO<GameScene>(0, "gameScene");
 		gameScene->SetPlayerCount(m_playerCount);
 		NewGO<BackGround>(0,"backGround");
+		//UIDisplay* UIdisplay = NewGO<UIDisplay>(0, "UIdisplay");
 		DeleteGO(this);
 	}
 	m_option_Sprite->SetPosition(m_optionPos);

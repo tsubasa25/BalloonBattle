@@ -76,11 +76,10 @@ void Player::Update()
 	Move();
 	Tilt();
 	HitWall();
-	//HitPlayer();
+	HitPlayer();
 	Debug(GetPlayerNum());
 	SetScale({ m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME, });	
-	
-	m_charaCon.ReInit((m_myAirVolume / 2), m_position);	
+	m_ReInitLoopCount++;		m_charaCon.ReInit((m_myAirVolume / 2), m_position);	
 }
 
 Vector3 Player::Decele(Vector3 speed)//減速
@@ -89,7 +88,7 @@ Vector3 Player::Decele(Vector3 speed)//減速
 	
 	if (speed.Length() > 0.0f) {		
 		//return speedVec*-0.02;
-		return speedVec * -m_myAirVolume / DESELE_VOLUME;
+		return speedVec * -m_myAirVolume/2 / DESELE_VOLUME;
 	}
 	else {
 		return Vector3::Zero;
@@ -126,11 +125,7 @@ void Player::Move()//移動
 void Player::HitWall()//壁にあたったとき
 {			
 	if (m_charaCon.GetIsHitWall() == true) {
-		HitPlayer();
-		if (m_enemyHit == false) {//敵ではなく壁にあっていれば
-			//反射する方向を求める
-			m_moveSpeed = ReboundSpeed();
-		}
+		m_moveSpeed = ReboundSpeed();
 	}
 }
 
@@ -139,25 +134,15 @@ void Player::HitPlayer()
 	for (int i = 0; i < m_enemy.size(); i++)		//どの敵にあたったか探す
 	{
 		Vector3 diff = GetPosition() - m_enemy[i]->GetPosition();//敵との距離を測る
-		diff.y = 0;									//高さを無視する
-		if (diff.Length() < (m_myAirVolume /2+m_enemy[i]->m_myAirVolume /2)+5) {//コリジョンがUpdateできたらこっち
-		//if (diff.Length() < (INI_AIR_VOLUME+2)){//距離が近ければ
-			m_enemyHit = true;						//敵とあたったとみなす
+		if (diff.Length() < (m_myAirVolume /2+m_enemy[i]->m_myAirVolume /2)+1) {//コリジョンより少し広い範囲にきたらあたったとみなす
+			//diff.y = 0;									//高さを無視する
+			//m_hitLoopCount = 0;
 			Vector3 tmp = m_enemy[i]->GetMoveSpeed();//敵の勢いを保存する
+			diff.Normalize();//敵との向きをとる
 			//大きさに比例してふっとばしやすくなる
-			m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_myAirVolume/ (INI_AIR_VOLUME/ REBOUND_POWER)));//相手に自分の勢いを渡す
-			
-			if (m_moveSpeed.Length() < m_enemy[i]->m_myAirVolume / MASS_DIVISOR) {//自分の勢いより、相手の質量が大きければ跳ね返される
-				m_enemy[i]->m_moveSpeed = (ReboundSpeed() * -(m_myAirVolume / (INI_AIR_VOLUME * REBOUND_POWER)));//敵はすこし押される
-				m_moveSpeed = ReboundSpeed();//自分は跳ね返される				
-			}
-			else {				
-				m_moveSpeed = tmp * ((INI_AIR_VOLUME* REBOUND_POWER) /m_myAirVolume);//自分は大きさに反比例してふっとばされやすくなる
-			}
-		}	
-		else {//敵との距離が遠ければなにもしない
-			m_enemyHit = false;						//敵と合っていない
-		}
+			m_enemy[i]->m_moveSpeed = (diff*GetMoveSpeed().Length() * -(m_myAirVolume/ (INI_AIR_VOLUME/ REBOUND_POWER)));//相手に自分の勢いを渡す
+			m_moveSpeed = diff*(tmp.Length() * ((INI_AIR_VOLUME) /m_myAirVolume));//自分は大きさに反比例してふっとばされやすくなる
+		}		
 	}
 }
 
@@ -275,6 +260,7 @@ void Player::Tilt()
 //プレイヤーが死亡したときの処理
 void Player::PlayerDeath()
 {
+	
 	m_stock--;//ストックを減らす
 	if (m_stock > 0) {//ストックが残っていたら
 		m_iniPos = m_backGround->GetRespawnPosition(m_playerNum);

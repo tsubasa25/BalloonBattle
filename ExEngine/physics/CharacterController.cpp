@@ -86,6 +86,7 @@ namespace {
 				|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
 				) {
 				isHit = true;
+				
 				Vector3 hitPosTmp;
 				Vector3CopyFrom(hitPosTmp, convexResult.m_hitPointLocal);
 
@@ -101,6 +102,7 @@ namespace {
 					hitNormal = hitNormalTmp;
 				}
 			}
+			
 			return 0.0f;
 		}
 	};
