@@ -61,6 +61,9 @@ void TitleScene::Update()
 	case 1:
 		m_selectLoopCount += 0.05f;
 		m_startPos.y = BALLOON_INI_POSY + (sin(m_selectLoopCount)) * 40.0f;
+		break;
+
+	default:
 		m_exitPos.y = BALLOON_INI_POSY;
 		m_optionPos.y = BALLOON_INI_POSY;
 		break;
@@ -70,9 +73,6 @@ void TitleScene::Update()
 		m_optionPos.y = BALLOON_INI_POSY + (sin(m_selectLoopCount)) * 40.0f;
 		m_exitPos.y = BALLOON_INI_POSY;
 		m_startPos.y = BALLOON_INI_POSY;
-		break;
-
-	default:
 		break;
 	}
 
