@@ -79,7 +79,7 @@ void Player::Update()
 	//HitPlayer();
 	Debug(GetPlayerNum());
 	SetScale({ m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME, });	
-	m_ReInitLoopCount++;	
+	
 	m_charaCon.ReInit((m_myAirVolume / 2), m_position);	
 }
 
