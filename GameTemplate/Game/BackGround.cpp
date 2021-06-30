@@ -19,7 +19,7 @@ bool BackGround::Start()
 
     m_directionLight = nullptr;
     m_directionLight = NewGO<DirectionLight>(0);
-    m_directionLight->SetColor({ 0.7f,0.7f,0.7f });
+    m_directionLight->SetColor({ 1.0f,1.0f,1.0f });
     m_directionLight->SetDirection({ -2,-1,-1 });
 
     m_gameScene = FindGO<GameScene>("gameScene");
