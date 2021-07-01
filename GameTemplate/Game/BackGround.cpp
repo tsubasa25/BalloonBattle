@@ -23,7 +23,7 @@ bool BackGround::Start()
     m_gameScene = FindGO<GameScene>("gameScene");
 
 
-    m_level.Init("Assets/modelData/Level/BuildingLevel.tkl", [&](LevelObjectData& objData)
+    m_level.Init("Assets/modelData/Level/Level00.tkl", [&](LevelObjectData& objData)
         {             
             if (strcmp(objData.name, "SpawnP0") == 0)
             {
