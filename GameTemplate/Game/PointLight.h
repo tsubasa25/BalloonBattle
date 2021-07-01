@@ -17,7 +17,7 @@ class PointLight:public IGameObject
 public:
 	PointLight();
 	~PointLight();
-	int GetPointLigNum() { return m_pointLigData->pointLigNum; }
+	int GetPointLigNum() { return int(m_pointLigData->pointLigNum); }
 	void SetPointLigNum(int num) { m_pointLigData->pointLigNum = num; }
 	/**
 		 * @brief ポイントライトのデータを取得

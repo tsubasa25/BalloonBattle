@@ -3,7 +3,7 @@
 //ポイントライトの数を減らした時
 PointLight::~PointLight()
 {
-	LightManager::GetInstance()->RemovePointLight(m_pointLigData->pointLigNum);	
+	LightManager::GetInstance()->RemovePointLight(int(m_pointLigData->pointLigNum));	
 }
 PointLight::PointLight()//ポイントライトの数を増やした時
 {	
@@ -21,5 +21,5 @@ bool PointLight::Start()
 //毎フレームカメラの位置とポイントライトのデータを更新
 void PointLight::Update()
 {
-	LightManager::GetInstance()->UpdatePointLight(m_pointLigData->pointLigNum,GetLigData());
+	LightManager::GetInstance()->UpdatePointLight(int(m_pointLigData->pointLigNum),GetLigData());
 }

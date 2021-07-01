@@ -21,7 +21,7 @@ bool GameScene::Start()
         for (int j = 0; j < m_playerCount; j++)
         {
             if (player[i]->GetPlayerNum() != player[j]->GetPlayerNum()) {//©•ª‚ğ“ü‚ê‚È‚¢‚æ‚¤‚É‚·‚é
-                player[i]->m_enemy.push_back(player[j]);//“Gî•ñ‚ğ“ü‚ê‚é 
+                player[i]->SetEnemyData(player[j]);//“Gî•ñ‚ğ“ü‚ê‚é
             }
         }
     }
@@ -56,7 +56,7 @@ void GameScene::Update()
     if (g_pad[0]->IsTrigger(enButtonX)) {//•œŠˆ
         for (int i = 0; i < 8; i++)
         {
-            if (m_IsAlive[i] == false) {                
+            if (m_IsAlive[i] == false) {
                 player[i] = NewGO<Player>(0,"player");
                 player[i]->SetPlayerNum(i);//ƒvƒŒƒCƒ„[”Ô†‚ğİ’è
                 player[i]->SetIniPosition({ GetIniPos(i) });//‰ŠúˆÊ’u‚ğİ’è
@@ -67,8 +67,8 @@ void GameScene::Update()
                 for (int j = 0; j < m_playerCount; j++)//“G‚ğ“ü‚ê‚é
                 {
                     if (player[i]->GetPlayerNum() != player[j]->GetPlayerNum()) {//©•ª‚ğ“ü‚ê‚È‚¢‚æ‚¤‚É‚·‚é
-                        player[i]->m_enemy.push_back(player[j]);//“Gî•ñ‚ğ“ü‚ê‚é
-                        player[j]->m_enemy.push_back(player[i]);
+                        player[i]->SetEnemyData(player[j]);//“Gî•ñ‚ğ“ü‚ê‚é
+                        player[j]->SetEnemyData(player[i]);//“Gî•ñ‚ğ“ü‚ê‚é
                     }
                 }
                 break;

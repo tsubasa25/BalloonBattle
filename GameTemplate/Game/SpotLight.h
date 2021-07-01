@@ -2,12 +2,12 @@
 
 struct SpotLigData
 {
-	Vector3 position;
-	float pad;
-	Vector3 color;
-	float range;
-	Vector3 direction;
-	float angle;
+	Vector3 position=Vector3::Zero;
+	float pad=0.0f;
+	Vector3 color=Vector3::Zero;
+	float range=0.0f;
+	Vector3 direction=Vector3::Zero;
+	float angle=0.0f;
 };
 class SpotLight:public IGameObject
 {

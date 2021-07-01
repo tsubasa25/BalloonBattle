@@ -208,7 +208,7 @@ void Player::Debug(int pNum)//デバッグ用
 				Vector3 diff = Vector3::Zero;
 				diff = m_position - m_enemy[0]->m_position;
 				diff.Normalize();
-				m_enemy[0]->m_moveSpeed += diff * 0.3;
+				m_enemy[0]->m_moveSpeed += diff * 0.3f;
 				if (m_stock != m_oldStock) {
 					m_oldStock--;
 					m_enemy[0]->m_moveSpeed = (m_enemy[0]->m_iniPos - m_enemy[0]->m_position);//初期座標にとばす
