@@ -10,7 +10,8 @@ namespace
 	const int STAGE_DEPTH = 750;
 	const int MASS_DIVISOR = 20;//風船の大きさから質量を出すときの割る値
 	const float REBOUND_POWER = 1.5;//敵と衝突したとき、勢いにかける値
-	const int INI_AIR_VOLUME = 70;//風船の空気の量の初期値
+	const int INI_AIR_VOLUME = 150;//風船の空気の量の初期値
+	const float BALLOON_SIZE_BASE = 100;	//風船の大きさの基本値
 	const Vector3 POINTLIGHT_COLOR = { 10,10,10 };//ポイントライトの色
 	const int POINTLIGHT_RANGE = 200;//ポイントライトの影響範囲
 	const int DESELE_VOLUME = 3500;//減速させる大きさを調整する値

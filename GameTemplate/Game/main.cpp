@@ -23,7 +23,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     LightManager::CreateInstance();
 
     EffectEngine::CreateInstance();
-
+    // サウンドエンジンのインスタンスを作成する。
+    SoundEngine::CreateInstance();
+    SoundEngine::GetInstance()->Init();
     TitleScene* titleScene = NewGO<TitleScene>(0, "titleScene");
    /* GameScene*gameScene=NewGO<GameScene>(0,"gameScene");*/   
    /* NewGO<BackGround>(0);*/

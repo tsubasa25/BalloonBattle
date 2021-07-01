@@ -12,14 +12,20 @@ class TkEngine;
 /*!
  *@brief	ゲーム時間。
  */
-class GameTime{
-	GameTime() 
+class GameTime {
+	GameTime()
 	{
 	}
 	~GameTime()
 	{
 	}
 public:
+	static GameTime& GetInstance()
+	{
+		static GameTime t;
+		return t;
+	}
+
 	/*!
 	 *@brief	1フレームの経過時間を取得(単位・秒)。
 	 */
