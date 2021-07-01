@@ -6,7 +6,7 @@ class BackGround;
 namespace
 {
 	const int STAGE_WIDTH = 750;
-	const int STAGE_DEPTH = 750;	
+	const int STAGE_DEPTH = 750;
 	const int MASS_DIVISOR = 20;//風船の大きさから質量を出すときの割る値
 	const float REBOUND_POWER = 1.5;//敵と衝突したとき、勢いにかける値
 	const int INI_AIR_VOLUME = 70;//風船の空気の量の初期値
@@ -15,7 +15,7 @@ namespace
 	const int DESELE_VOLUME = 3500;//減速させる大きさを調整する値
 	const float GRAVITY_SPEED = 0.7f;//落下スピード
 	const float GRAVITY_INDEX = 2.0f;//落下スピードにかける指数
-	const float PAI = 3.14159;//円周率
+	const float PAI = 3.14159f;//円周率
 }
 class Player:public IGameObject
 {
@@ -47,11 +47,12 @@ private:
 	float m_myAirVolume = INI_AIR_VOLUME;
 
 	Quaternion m_playerRot = {0.0f,0.0f,0.0f,0.0f};
-
-BackGround* m_backGround = nullptr;
-public:
 	std::vector<Player*> m_enemy;
 	std::vector<Player*>::iterator it;
+	BackGround* m_backGround = nullptr;
+public:
+
+	
 	~Player();
 	bool Start();
 	void Update();
@@ -61,7 +62,7 @@ public:
 
 	void SetPlayerCount(int num) { m_playerCount = num; }//プレイヤー人数を設定する
 
-	void SetEnemy(Player* enemy, int i) { m_enemy[i] = enemy; }//敵情報を設定する
+	void SetEnemyData(Player* enemy) { m_enemy.push_back(enemy); }//敵情報を設定する
 
 	void SetIniPosition(Vector3 pos) { m_position = pos; m_iniPos = pos; }//初期位置を設定
 	void SetPosition(Vector3 pos) { m_skinModelRender->SetPosition(pos); m_position = pos; }
@@ -97,7 +98,7 @@ public:
 	void Debug(int pNum);
 	int m_oldStock = m_stock;
 	bool m_IsArrowOn = true;//矢印を表示するか
-	bool m_IsAIOn = true;//敵が自分めがけて突進してくる
+	bool m_IsAIOn = false;//敵が自分めがけて突進してくる
 	SkinModelRender* m_skinModelRenderArrow = nullptr;
 	Quaternion m_rot;
 	Vector3 m_arrowSize = Vector3::One;
