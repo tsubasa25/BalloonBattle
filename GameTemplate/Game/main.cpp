@@ -30,7 +30,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
     g_camera3D->SetPosition({ 0.0f, 1200.0f, -1800.0f });
     g_camera3D->SetTarget({ 0,0,-300 });    
-    
+    g_camera3D->SetFar(50000.0f);
     //////////////////////////////////////
     // 初期化を行うコードを書くのはここまで！！！
     //////////////////////////////////////

@@ -16,6 +16,7 @@ namespace
 	const float GRAVITY_SPEED = 0.7f;//落下スピード
 	const float GRAVITY_INDEX = 2.0f;//落下スピードにかける指数
 	const float PAI = 3.14159f;//円周率
+	const Vector3 OVER_STAGE_LINE = {4000.0f, -2000.0f, 4000.0f};	//ステージから遠ざかりすぎた時に死亡する距離。
 }
 class Player:public IGameObject
 {
@@ -33,6 +34,7 @@ private:
 	
 	Vector3 m_position = { Vector3::Zero };
 	Vector3 m_iniPos= { Vector3::Zero };
+	Vector3 m_resPos = { Vector3::Zero };	//リスポーン位置
 	Vector3 m_decele = { Vector3::Zero };
 	Vector3 m_moveSpeed = { Vector3::Zero };
 

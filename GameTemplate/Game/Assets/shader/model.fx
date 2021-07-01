@@ -119,7 +119,7 @@ float4 PSMain(SPSIn psIn) : SV_Target0
         finalLig += spotLig;
     }
     // 反射光を最終的な反射光に足し算する
-    float3 ambientLight = { 0.3,0.3, 0.3 };//環境光
+    float3 ambientLight = { 0.5,0.5, 0.5 };//環境光
     finalLig += ambientLight;
     float4 finalColor = g_texture.Sample(g_sampler, psIn.uv);
 
