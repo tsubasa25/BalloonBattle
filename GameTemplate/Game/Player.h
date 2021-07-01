@@ -1,6 +1,7 @@
 #pragma once
 class BalloonAir;
 class BackGround;
+class UIDisplay;
 #include<vector>
 #include "BalloonAir.h"
 namespace
@@ -52,6 +53,8 @@ private:
 	std::vector<Player*> m_enemy;
 	std::vector<Player*>::iterator it;
 	BackGround* m_backGround = nullptr;
+	UIDisplay* m_UIDisplay = nullptr;
+
 public:
 
 	
@@ -61,6 +64,7 @@ public:
 
 	void SetPlayerNum(int num) { m_playerNum = num; }//プレイヤー番号を設定する
 	int GetPlayerNum() { return m_playerNum; }//プレイヤー番号を入手する
+	int GetPlayerStock() { return m_stock; }//プレイヤーのストック数を入手する
 
 	void SetPlayerCount(int num) { m_playerCount = num; }//プレイヤー人数を設定する
 
