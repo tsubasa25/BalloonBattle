@@ -458,9 +458,9 @@ void UIDisplay::Update()
 		}
 		return true;
 		});*/
-	loopcount += 1;
+	/*loopcount += 1;
 	if (loopcount == 40) {
 		loopcount = 0;
-	}
+	}*/
 }
  
