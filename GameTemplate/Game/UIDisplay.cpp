@@ -9,134 +9,63 @@ UIDisplay::~UIDisplay()
 bool UIDisplay::Start()
 {
 	QueryGOs<Player>("player", [this](Player* player)->bool {
-		if (player->GetPlayerNum() == 0) {
-			m_player1UI_Sprite = NewGO<SpriteRender>(0);
-			m_player1UI_Sprite->Init("Assets/Image/ballooooooon.red.dds", 252, 420);
-			m_player1UI_Sprite->SetScale(PLAYER_UI_SIZE);
-			m_player1UI_Sprite->SetPosition(m_player1UI_Pos);
+		for (int i = 0; i < 8; i++) {
+			if (player->GetPlayerNum() == i) {				
+				m_playerUI_Sprite[i] = NewGO<SpriteRender>(0);	
+				m_playerstock_Sprite[i] = NewGO<SpriteRender>(0);
+				m_playerstock_FontRender[i] = NewGO<FontRender>(0);
+				
+				switch (i)
+				{
+				case 0:
+					m_playerUI_Sprite[i]->Init("Assets/Image/ballooooooon.red.dds", 252, 420);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					break;
+				case 1:
+					m_playerUI_Sprite[i]->Init("Assets/Image/ballooooooon.blue.dds", 252, 420);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.blue2.dds", 128, 128);
+					break;
+				case 2:
+					m_playerUI_Sprite[i]->Init("Assets/Image/ballooooooon.green.dds", 252, 420);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.green2.dds", 128, 128);
+					break;
+				case 3:
+					m_playerUI_Sprite[i]->Init("Assets/Image/ballooooooon.yellow.dds", 252, 420);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.yellow2.dds", 128, 128);
+					break;
+				case 4:
+					m_playerUI_Sprite[i]->Init("Assets/Image/ballooooooon.orange.dds", 252, 420);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.orange2.dds", 128, 128);
+					break;
+				case 5:
+					m_playerUI_Sprite[i]->Init("Assets/Image/ballooooooon.pink.dds", 252, 420);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.pink2.dds", 128, 128);
+					break;
+				case 6:
+					m_playerUI_Sprite[i]->Init("Assets/Image/ballooooooon.gray.dds", 252, 420);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.gray2.dds", 128, 128);
+					break;
+				case 7:
+					m_playerUI_Sprite[i]->Init("Assets/Image/ballooooooon.purple.dds", 252, 420);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.purple2.dds", 128, 128);
+					break;
+				default:
+					break;
+				}
+				
+				m_playerUI_Sprite[i]->SetScale(PLAYER_UI_SIZE);
+				m_playerUI_Sprite[i]->SetPosition(m_playerUI_Pos[i]);
 
-			m_player1stock_Sprite = NewGO<SpriteRender>(0); 
-			m_player1stock_Sprite->Init("Assets/Image/balloon.red2.dds", 128, 128);
-			m_player1stock_Sprite->SetScale(PLAYER_STOCK_SIZE);
-			m_player1stock_Sprite->SetPosition(m_player1stock_Pos);
+				m_playerstock_Sprite[i]->SetScale(PLAYER_STOCK_SIZE);
+				m_playerstock_Sprite[i]->SetPosition(m_playerstock_Pos[i]);
 
-			m_player1stock_FontRender = NewGO<FontRender>(0);
-			m_player1stock_FontRender->SetColor(STOCKNUM_COLOR);
-			m_player1stock_FontRender->SetPosition(PL1_STOCKNUM_POS);
-			m_player1stock_FontRender->SetScale({ STOCKNUM_SIZE });
+				m_playerstock_FontRender[i]->SetColor(STOCKNUM_COLOR);
+				m_playerstock_FontRender[i]->SetPosition(PL_STOCKNUM_POS[i]);
+				m_playerstock_FontRender[i]->SetScale({ STOCKNUM_SIZE });
+				break;
+			}
 		}
-		else if (player->GetPlayerNum() == 1) {
-			m_player2UI_Sprite = NewGO<SpriteRender>(0);
-			m_player2UI_Sprite->Init("Assets/Image/ballooooooon.blue.dds", 252, 420);
-			m_player2UI_Sprite->SetScale(PLAYER_UI_SIZE);
-			m_player2UI_Sprite->SetPosition(m_player2UI_Pos);
-
-			m_player2stock_Sprite = NewGO<SpriteRender>(0);
-			m_player2stock_Sprite->Init("Assets/Image/balloon.blue2.dds", 128, 128);
-			m_player2stock_Sprite->SetScale(PLAYER_STOCK_SIZE);
-			m_player2stock_Sprite->SetPosition(m_player2stock_Pos);
-
-			m_player2stock_FontRender = NewGO<FontRender>(0);
-			m_player2stock_FontRender->SetColor(STOCKNUM_COLOR);
-			m_player2stock_FontRender->SetPosition(PL2_STOCKNUM_POS);
-			m_player2stock_FontRender->SetScale({ STOCKNUM_SIZE });
-		}
-		else if (player->GetPlayerNum() == 2) {
-			m_player3UI_Sprite = NewGO<SpriteRender>(0);
-			m_player3UI_Sprite->Init("Assets/Image/ballooooooon.green.dds", 252, 420);
-			m_player3UI_Sprite->SetScale(PLAYER_UI_SIZE);
-			m_player3UI_Sprite->SetPosition(m_player3UI_Pos);
-
-			m_player3stock_Sprite = NewGO<SpriteRender>(0);
-			m_player3stock_Sprite->Init("Assets/Image/balloon.green2.dds", 128, 128);
-			m_player3stock_Sprite->SetScale(PLAYER_STOCK_SIZE);
-			m_player3stock_Sprite->SetPosition(m_player3stock_Pos);
-
-			m_player3stock_FontRender = NewGO<FontRender>(0);
-			m_player3stock_FontRender->SetColor(STOCKNUM_COLOR);
-			m_player3stock_FontRender->SetPosition(PL3_STOCKNUM_POS);
-			m_player3stock_FontRender->SetScale({ STOCKNUM_SIZE });
-		}
-		else if (player->GetPlayerNum() == 3) {
-			m_player4UI_Sprite = NewGO<SpriteRender>(0);
-			m_player4UI_Sprite->Init("Assets/Image/ballooooooon.yellow.dds", 252, 420);
-			m_player4UI_Sprite->SetScale(PLAYER_UI_SIZE);
-			m_player4UI_Sprite->SetPosition(m_player4UI_Pos);
-
-			m_player4stock_Sprite = NewGO<SpriteRender>(0);
-			m_player4stock_Sprite->Init("Assets/Image/balloon.yellow2.dds", 128, 128);
-			m_player4stock_Sprite->SetScale(PLAYER_STOCK_SIZE);
-			m_player4stock_Sprite->SetPosition(m_player4stock_Pos);
-
-			m_player4stock_FontRender = NewGO<FontRender>(0);
-			m_player4stock_FontRender->SetColor(STOCKNUM_COLOR);
-			m_player4stock_FontRender->SetPosition(PL4_STOCKNUM_POS);
-			m_player4stock_FontRender->SetScale({ STOCKNUM_SIZE });
-		}
-		else if (player->GetPlayerNum() == 4) {
-			m_player5UI_Sprite = NewGO<SpriteRender>(0);
-			m_player5UI_Sprite->Init("Assets/Image/ballooooooon.orange.dds", 252, 420);
-			m_player5UI_Sprite->SetScale(PLAYER_UI_SIZE);
-			m_player5UI_Sprite->SetPosition(m_player5UI_Pos);
-
-			m_player5stock_Sprite = NewGO<SpriteRender>(0);
-			m_player5stock_Sprite->Init("Assets/Image/balloon.orange2.dds", 128, 128);
-			m_player5stock_Sprite->SetScale(PLAYER_STOCK_SIZE);
-			m_player5stock_Sprite->SetPosition(m_player5stock_Pos);
-
-			m_player5stock_FontRender = NewGO<FontRender>(0);
-			m_player5stock_FontRender->SetColor(STOCKNUM_COLOR);
-			m_player5stock_FontRender->SetPosition(PL5_STOCKNUM_POS);
-			m_player5stock_FontRender->SetScale({ STOCKNUM_SIZE });
-		}
-		else if (player->GetPlayerNum() == 5) {
-			m_player6UI_Sprite = NewGO<SpriteRender>(0);
-			m_player6UI_Sprite->Init("Assets/Image/ballooooooon.pink.dds", 252, 420);
-			m_player6UI_Sprite->SetScale(PLAYER_UI_SIZE);
-			m_player6UI_Sprite->SetPosition(m_player6UI_Pos);
-
-			m_player6stock_Sprite = NewGO<SpriteRender>(0);
-			m_player6stock_Sprite->Init("Assets/Image/balloon.pink2.dds", 128, 128);
-			m_player6stock_Sprite->SetScale(PLAYER_STOCK_SIZE);
-			m_player6stock_Sprite->SetPosition(m_player6stock_Pos);
-
-			m_player6stock_FontRender = NewGO<FontRender>(0);
-			m_player6stock_FontRender->SetColor(STOCKNUM_COLOR);
-			m_player6stock_FontRender->SetPosition(PL6_STOCKNUM_POS);
-			m_player6stock_FontRender->SetScale({ STOCKNUM_SIZE });
-		}
-		else if (player->GetPlayerNum() == 6) {
-			m_player7UI_Sprite = NewGO<SpriteRender>(0);
-			m_player7UI_Sprite->Init("Assets/Image/ballooooooon.gray.dds", 252, 420);
-			m_player7UI_Sprite->SetScale(PLAYER_UI_SIZE);
-			m_player7UI_Sprite->SetPosition(m_player7UI_Pos);
-
-			m_player7stock_Sprite = NewGO<SpriteRender>(0);
-			m_player7stock_Sprite->Init("Assets/Image/balloon.gray2.dds", 128, 128);
-			m_player7stock_Sprite->SetScale(PLAYER_STOCK_SIZE);
-			m_player7stock_Sprite->SetPosition(m_player7stock_Pos);
-
-			m_player7stock_FontRender = NewGO<FontRender>(0);
-			m_player7stock_FontRender->SetColor(STOCKNUM_COLOR);
-			m_player7stock_FontRender->SetPosition(PL7_STOCKNUM_POS);
-			m_player7stock_FontRender->SetScale({ STOCKNUM_SIZE });
-		}
-		else if (player->GetPlayerNum() == 7) {
-			m_player8UI_Sprite = NewGO<SpriteRender>(0);
-			m_player8UI_Sprite->Init("Assets/Image/ballooooooon.purple.dds", 252, 420);
-			m_player8UI_Sprite->SetScale(PLAYER_UI_SIZE);
-			m_player8UI_Sprite->SetPosition(m_player8UI_Pos);
-
-			m_player8stock_Sprite = NewGO<SpriteRender>(0);
-			m_player8stock_Sprite->Init("Assets/Image/balloon.purple2.dds", 128, 128);
-			m_player8stock_Sprite->SetScale(PLAYER_STOCK_SIZE);
-			m_player8stock_Sprite->SetPosition(m_player8stock_Pos);
-
-			m_player8stock_FontRender = NewGO<FontRender>(0);
-			m_player8stock_FontRender->SetColor(STOCKNUM_COLOR);
-			m_player8stock_FontRender->SetPosition(PL8_STOCKNUM_POS);
-			m_player8stock_FontRender->SetScale({ STOCKNUM_SIZE });
-		}
+		
 		return true;
 		});
 
@@ -145,169 +74,201 @@ bool UIDisplay::Start()
 void UIDisplay::Update()
 {
 	QueryGOs<Player>("player", [this](Player* player)->bool {
-		if (player->GetPlayerNum() == 0) {
-			if (player->GetPlayerStock() == 5) {
-				m_player1stock_FontRender->SetText(m_stocknum5);
-			}
-			if (player->GetPlayerStock() == 4) {
-				m_player1stock_FontRender->SetText(m_stocknum4);
-			}
-			if (player->GetPlayerStock() == 3) {
-				m_player1stock_FontRender->SetText(m_stocknum3);
-			}
-			if (player->GetPlayerStock() == 2) {
-				m_player1stock_FontRender->SetText(m_stocknum2);
-			}
-			if (player->GetPlayerStock() == 1) {
-				m_player1stock_FontRender->SetText(m_stocknum1);
-			}
-			if (player->GetPlayerStock() == 0) {
-				m_player1stock_FontRender->SetText(m_stocknum1);
+		for (int i = 0; i < 8; i++) {
+			if (player->GetPlayerNum() == i) {
+				for (int j = 1; j < 6; j++) {
+					if (player->GetPlayerStock() == j) {
+						m_playerstock_FontRender[i]->SetText(m_stocknum[j]);
+						break;
+					}
+				}
+				break;
 			}
 		}
-		if (player->GetPlayerNum() == 1) {
-			if (player->GetPlayerStock() == 5) {
-				m_player2stock_FontRender->SetText(m_stocknum5);
-			}
-			if (player->GetPlayerStock() == 4) {
-				m_player2stock_FontRender->SetText(m_stocknum4);
-			}
-			if (player->GetPlayerStock() == 3) {
-				m_player2stock_FontRender->SetText(m_stocknum3);
-			}
-			if (player->GetPlayerStock() == 2) {
-				m_player2stock_FontRender->SetText(m_stocknum2);
-			}
-			if (player->GetPlayerStock() == 1) {
-				m_player2stock_FontRender->SetText(m_stocknum1);
-			}
-			if (player->GetPlayerStock() == 0) {
-				m_player2stock_FontRender->SetText(m_stocknum1);
-			}
-		}
-		if (player->GetPlayerNum() == 2) {
-			if (player->GetPlayerStock() == 5) {
-				m_player3stock_FontRender->SetText(m_stocknum5);
-			}
-			if (player->GetPlayerStock() == 4) {
-				m_player3stock_FontRender->SetText(m_stocknum4);
-			}
-			if (player->GetPlayerStock() == 3) {
-				m_player3stock_FontRender->SetText(m_stocknum3);
-			}
-			if (player->GetPlayerStock() == 2) {
-				m_player3stock_FontRender->SetText(m_stocknum2);
-			}
-			if (player->GetPlayerStock() == 1) {
-				m_player3stock_FontRender->SetText(m_stocknum1);
-			}
-			if (player->GetPlayerStock() == 0) {
-				m_player3stock_FontRender->SetText(m_stocknum1);
-			}
-		}
-		if (player->GetPlayerNum() == 3) {
-			if (player->GetPlayerStock() == 5) {
-				m_player4stock_FontRender->SetText(m_stocknum5);
-			}
-			if (player->GetPlayerStock() == 4) {
-				m_player4stock_FontRender->SetText(m_stocknum4);
-			}
-			if (player->GetPlayerStock() == 3) {
-				m_player4stock_FontRender->SetText(m_stocknum3);
-			}
-			if (player->GetPlayerStock() == 2) {
-				m_player4stock_FontRender->SetText(m_stocknum2);
-			}
-			if (player->GetPlayerStock() == 1) {
-				m_player4stock_FontRender->SetText(m_stocknum1);
-			}
-			if (player->GetPlayerStock() == 0) {
-				m_player4stock_FontRender->SetText(m_stocknum1);
-			}
-		}
-		if (player->GetPlayerNum() == 4) {
-			if (player->GetPlayerStock() == 5) {
-				m_player5stock_FontRender->SetText(m_stocknum5);
-			}
-			if (player->GetPlayerStock() == 4) {
-				m_player5stock_FontRender->SetText(m_stocknum4);
-			}
-			if (player->GetPlayerStock() == 3) {
-				m_player5stock_FontRender->SetText(m_stocknum3);
-			}
-			if (player->GetPlayerStock() == 2) {
-				m_player5stock_FontRender->SetText(m_stocknum2);
-			}
-			if (player->GetPlayerStock() == 1) {
-				m_player5stock_FontRender->SetText(m_stocknum1);
-			}
-			if (player->GetPlayerStock() == 0) {
-				m_player5stock_FontRender->SetText(m_stocknum1);
-			}
-		}
-		if (player->GetPlayerNum() == 5) {
-			if (player->GetPlayerStock() == 5) {
-				m_player6stock_FontRender->SetText(m_stocknum5);
-			}
-			if (player->GetPlayerStock() == 4) {
-				m_player6stock_FontRender->SetText(m_stocknum4);
-			}
-			if (player->GetPlayerStock() == 3) {
-				m_player6stock_FontRender->SetText(m_stocknum3);
-			}
-			if (player->GetPlayerStock() == 2) {
-				m_player6stock_FontRender->SetText(m_stocknum2);
-			}
-			if (player->GetPlayerStock() == 1) {
-				m_player6stock_FontRender->SetText(m_stocknum1);
-			}
-			if (player->GetPlayerStock() == 0) {
-				m_player6stock_FontRender->SetText(m_stocknum1);
-			}
-		}
-		if (player->GetPlayerNum() == 6) {
-			if (player->GetPlayerStock() == 5) {
-				m_player7stock_FontRender->SetText(m_stocknum5);
-			}
-			if (player->GetPlayerStock() == 4) {
-				m_player7stock_FontRender->SetText(m_stocknum4);
-			}
-			if (player->GetPlayerStock() == 3) {
-				m_player7stock_FontRender->SetText(m_stocknum3);
-			}
-			if (player->GetPlayerStock() == 2) {
-				m_player7stock_FontRender->SetText(m_stocknum2);
-			}
-			if (player->GetPlayerStock() == 1) {
-				m_player7stock_FontRender->SetText(m_stocknum1);
-			}
-			if (player->GetPlayerStock() == 0) {
-				m_player7stock_FontRender->SetText(m_stocknum1);
-			}
-		}
-		if (player->GetPlayerNum() == 7) {
-			if (player->GetPlayerStock() == 5) {
-				m_player8stock_FontRender->SetText(m_stocknum5);
-			}
-			if (player->GetPlayerStock() == 4) {
-				m_player8stock_FontRender->SetText(m_stocknum4);
-			}
-			if (player->GetPlayerStock() == 3) {
-				m_player8stock_FontRender->SetText(m_stocknum3);
-			}
-			if (player->GetPlayerStock() == 2) {
-				m_player8stock_FontRender->SetText(m_stocknum2);
-			}
-			if (player->GetPlayerStock() == 1) {
-				m_player8stock_FontRender->SetText(m_stocknum1);
-			}
-			if (player->GetPlayerStock() == 0) {
-				m_player8stock_FontRender->SetText(m_stocknum1);
-			}
-		}
-		
 		return true;
 		});
+
+	for (int i = 0; i < 8; i++) {
+		if (m_PlDecStock[i] == true) {
+			switch (i)
+			{
+			case 0:
+				explosioncount[i] += 1;
+				if (explosioncount[i] == changeframenum[0]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red4.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[1]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red5.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[2]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red6.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[3]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					explosioncount[i] = 0;
+					m_PlDecStock[i] = false;
+					break;
+				}
+				break;
+			case 1:
+				explosioncount[i] += 1;
+				if (explosioncount[i] == changeframenum[0]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.blue4.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[1]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.blue5.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[2]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.blue6.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[3]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.blue2.dds", 128, 128);
+					explosioncount[i] = 0;
+					m_PlDecStock[i] = false;
+					break;
+				}
+				break;
+			case 2:
+				explosioncount[i] += 1;
+				if (explosioncount[i] == changeframenum[0]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red4.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[1]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red5.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[2]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red6.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[3]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					explosioncount[i] = 0;
+					m_PlDecStock[i] = false;
+					break;
+				}
+				break;
+			case 3:
+				explosioncount[i] += 1;
+				if (explosioncount[i] == changeframenum[0]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red4.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[1]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red5.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[2]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red6.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[3]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					explosioncount[i] = 0;
+					m_PlDecStock[i] = false;
+					break;
+				}
+				break;
+			case 4:
+				explosioncount[i] += 1;
+				if (explosioncount[i] == changeframenum[0]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red4.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[1]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red5.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[2]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red6.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[3]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					explosioncount[i] = 0;
+					m_PlDecStock[i] = false;
+					break;
+				}
+				break;
+			case 5:
+				explosioncount[i] += 1;
+				if (explosioncount[i] == changeframenum[0]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red4.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[1]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red5.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[2]){
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red6.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[3]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					explosioncount[i] = 0;
+					m_PlDecStock[i] = false;
+					break;
+				}
+				break;
+			case 6:
+				explosioncount[i] += 1;
+				if (explosioncount[i] == changeframenum[0]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red4.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[1]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red5.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[2]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red6.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[3]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					explosioncount[i] = 0;
+					m_PlDecStock[i] = false;
+					break;
+				}
+				break;
+			case 7:
+				explosioncount[i] += 1;
+				if (explosioncount[i] == changeframenum[0]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red4.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[1]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red5.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[2]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red6.dds", 128, 128);
+					break;
+				}
+				if (explosioncount[i] == changeframenum[3]) {
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					explosioncount[i] = 0;
+					m_PlDecStock[i] = false;
+					break;
+				}
+				break;
+			}
+		}
+		for (int i = 0; i < 8; i++) {
+			if (m_PlDeath[i] == true) {
+				m_playerstock_FontRender[i]->SetText(m_stocknum[0]);
+			}
+		}
+	}
+
 
 	/*QueryGOs<Player>("player", [this](Player* player)->bool {
 		if (player->GetPlayerNum() == 0)
@@ -503,7 +464,3 @@ void UIDisplay::Update()
 	}
 }
  
-void UIDisplay::SetPlayerDeath()
-{
-
-}

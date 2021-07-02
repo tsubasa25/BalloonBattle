@@ -267,7 +267,7 @@ void Player::Tilt()
 void Player::PlayerDeath()
 {
 	m_stock--;//ストックを減らす
-
+	m_UIDisplay->SetPlayerDecStock(m_playerNum);
 	if (m_stock > 0) {//ストックが残っていたら
 		m_resPos = m_backGround->GetRespawnPosition(m_playerNum);
 		m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
@@ -277,7 +277,9 @@ void Player::PlayerDeath()
 		m_myAirVolume = INI_AIR_VOLUME;
 		m_myAir->SetAirVolume(INI_AIR_VOLUME);
 	}
-	else {
+	else {			
+			m_UIDisplay->SetPlayerDeath(m_playerNum);			
+		
 		for (int i = 0; i < m_enemy.size();i++) {
 			it = std::find(
 				m_enemy[i]->m_enemy.begin(),
