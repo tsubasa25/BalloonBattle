@@ -9,6 +9,7 @@
 
 
 #include "SoundEngine.h"
+#include "SoundSource.h"
 #include "LightManager.h"
 #include "DirectionLight.h"
 #include "PointLight.h"

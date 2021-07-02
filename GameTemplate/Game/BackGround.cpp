@@ -11,7 +11,7 @@ BackGround::~BackGround()
 }
 bool BackGround::Start()
 {
-    m_skinModelRender = NewGO<SkinModelRender>(0, "backGround");
+m_skinModelRender = NewGO<SkinModelRender>(0, "backGround");
     m_skinModelRender->Init("Assets/modelData/BuildingStage.tkm");
     //ステージのモデルの静的物理モデルを作成    
     m_physicsStaticObject.CreateFromModel(m_skinModelRender->GetModel(), m_skinModelRender->GetModel().GetWorldMatrix());

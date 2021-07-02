@@ -6,6 +6,7 @@ namespace
 	const Vector3 OPTION_INI_POS = { 300,-200,0 };
 	const Vector3 BALLOON_SIZE = { 0.7f,0.7f,1.0f };
 	const int BALLOON_INI_POSY = -200;
+	const float SOUND_BGM_TITLE_VOLUME = 0.2f;
 }
 class TitleScene : public IGameObject
 {
@@ -25,6 +26,8 @@ private:
 	Vector3 m_optionPos = { 300,-200,0 };
 	int m_selectNum = 1;
 	float m_selectLoopCount = 0;
-int m_playerCount = 8;
+int m_playerCount = 2;
+public:
+	SoundSource* m_titleBGM = nullptr;						//BGMのサウンドソース
 };
 
