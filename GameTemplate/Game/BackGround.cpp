@@ -107,7 +107,7 @@ m_skinModelRender = NewGO<SkinModelRender>(0, "backGround");
         });
 
         //モデル表示テスト
-       // m_needle = NewGO<GimmickNeedle>(0);
+        m_needle = NewGO<GimmickNeedle>(0);
 
 	return true;
 }

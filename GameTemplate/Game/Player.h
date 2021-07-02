@@ -56,6 +56,8 @@ private:
 	BackGround* m_backGround = nullptr;
 	UIDisplay* m_UIDisplay = nullptr;
 
+	Effect m_breakEff;
+
 public:
 
 	
@@ -100,6 +102,7 @@ public:
 	void Tilt();	//風船の傾きを決める。
 
 	void PlayerDeath();	//キャラクターが死亡したときの処理
+	void BreakBalloon();	//風船破裂の処理
 
 	//デバッグ用
 	void Debug(int pNum);
@@ -110,6 +113,5 @@ public:
 	Quaternion m_rot;
 	Vector3 m_arrowSize = Vector3::One;
 	Vector3 m_oldPos = Vector3::Zero;
-
 };
 

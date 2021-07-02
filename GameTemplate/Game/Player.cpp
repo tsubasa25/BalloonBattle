@@ -70,6 +70,30 @@ bool Player::Start()
 	pointLight->SetRange(POINTLIGHT_RANGE);
 	pointLight->SetPosition({ m_position });
 
+	if (GetPlayerNum() == 0) {
+		m_breakEff.Init(u"Assets/effect/BalloonBreak00.efk");
+	}
+	else if (GetPlayerNum() == 1) {
+		m_breakEff.Init(u"Assets/effect/BalloonBreak001.efk");
+	}
+	else if (GetPlayerNum() == 2) {
+		m_breakEff.Init(u"Assets/effect/BalloonBreak02.efk");
+	}
+	else if (GetPlayerNum() == 3) {
+		m_breakEff.Init(u"Assets/effect/BalloonBreak03.efk");
+	}
+	else if (GetPlayerNum() == 4) {
+		m_breakEff.Init(u"Assets/effect/BalloonBreak04.efk");
+	}
+	else if (GetPlayerNum() == 5) {
+		m_breakEff.Init(u"Assets/effect/BalloonBreak05.efk");
+	}
+	else if (GetPlayerNum() == 6) {
+		m_breakEff.Init(u"Assets/effect/BalloonBreak06.efk");
+	}
+	else if (GetPlayerNum() == 7) {
+		m_breakEff.Init(u"Assets/effect/BalloonBreak07.efk");
+	}
 	return true;
 }
 void Player::Update()
@@ -293,4 +317,11 @@ void Player::PlayerDeath()
 		}
 		DeleteGO(this);
 	}
+}
+
+void Player::BreakBalloon()
+{
+	m_breakEff.Play();
+	m_breakEff.SetPosition(m_position);
+	m_breakEff.Update();
 }

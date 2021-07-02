@@ -48,6 +48,7 @@ void GimmickNeedle::Update()
 				&& m_needlePos.y + NEEDLE_HEIGHT > plPos.y	//プレイヤーの位置が針の高さより低いかどうか
 				)
 			{
+				player->BreakBalloon();
 				player->PlayerDeath();
 			}
 
