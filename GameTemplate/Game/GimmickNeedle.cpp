@@ -11,7 +11,7 @@ bool GimmickNeedle::Start()
 	m_needleBoardModelRender->Init("Assets/modelData/NeedleBoard.tkm");
 
 	//針は、板より下の位置で引っ込んでいる。
-	m_needlePos = { m_needleBoardPos.x, m_needleBoardPos.y - 200.0f, m_needleBoardPos.z };
+	m_needlePos = { m_needleBoardPos.x, m_needleBoardPos.y - NEEDLE_HEIGHT, m_needleBoardPos.z };
 
 	m_needleModelRender->SetPosition(m_needlePos);
 	m_needleBoardModelRender->SetPosition(m_needleBoardPos);
@@ -37,11 +37,16 @@ void GimmickNeedle::Update()
 	{
 		//プレイヤーを探す
 		QueryGOs<Player>("player", [this](Player* player)->bool {
-			m_diff = player->GetPosition() - m_needleBoardPos;//プレイヤーと針の位置の距離をとる
+			//プレイヤーと針の位置の距離をとる
+			Vector3 plPos = player->GetPosition();
+			m_diff.x = plPos.x - m_needleBoardPos.x;
+			m_diff.z = plPos.x - m_needleBoardPos.z;
 
 			//プレイヤーが針の範囲に入っていたら、死ぬ。
 			if (fabsf(m_diff.x) < 200.0f
-				&& fabsf(m_diff.z) < 200.0f)
+				&& fabsf(m_diff.z) < 200.0f
+				&& m_needlePos.y + NEEDLE_HEIGHT > plPos.y	//プレイヤーの位置が針の高さより低いかどうか
+				)
 			{
 				player->PlayerDeath();
 			}
@@ -76,8 +81,8 @@ void GimmickNeedle::Move()
 		else if (m_needleMoveTimer > NEEDLE_UP_INTERVAL - 10)
 		{
 			m_needlePos.y -= 20.0f;
-			if (m_needlePos.y < m_needleBoardPos.y - 200.0f)
-				m_needlePos.y = m_needleBoardPos.y - 200.0f;
+			if (m_needlePos.y < m_needleBoardPos.y - NEEDLE_HEIGHT)
+				m_needlePos.y = m_needleBoardPos.y - NEEDLE_HEIGHT;
 
 			m_needleModelRender->SetPosition(m_needlePos);
 		}

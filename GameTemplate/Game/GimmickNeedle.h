@@ -3,6 +3,7 @@ namespace
 {
 	const int NEEDLE_DOWN_INTERVAL = 400;	//j‚ªo‚Ä‚¢‚È‚¢ŠÔ
 	const int NEEDLE_UP_INTERVAL = 200;	//j‚ªo‚Ä‚¢‚éŠÔ
+	const float NEEDLE_HEIGHT = 200.0f;	//j‚Ì’·‚³(‚‚³)
 }
 class GimmickNeedle	: public IGameObject
 {
