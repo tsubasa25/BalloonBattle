@@ -3,6 +3,7 @@
 #include "BackGround.h"
 #include "GameScene.h"
 #include "UIDisplay.h"
+
 TitleScene::~TitleScene()
 {
 	DeleteGO(m_title_Sprite);
@@ -29,6 +30,12 @@ bool TitleScene::Start()
 	m_option_Sprite->Init("Assets/Image/OPTION.dds", 252, 420);
 	m_option_Sprite->SetScale(BALLOON_SIZE);
 	m_option_Sprite->SetPosition(OPTION_INI_POS);
+
+	//BGM‚ğÄ¶
+	m_titleBGM = NewGO<SoundSource>(0);
+	m_titleBGM->Init(L"Assets/sound/ƒ^ƒCƒgƒ‹‹È.wav", SoundType::enBGM);
+	m_titleBGM->SetVolume(SOUND_BGM_TITLE_VOLUME);
+	m_titleBGM->Play(true);
 
 	return true;
 }
