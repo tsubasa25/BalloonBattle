@@ -147,7 +147,7 @@ void Player::HitPlayer()
 			m_enemy[i]->m_moveSpeed = (diff*GetMoveSpeed().Length() * -(m_myAirVolume/ (INI_AIR_VOLUME/ REBOUND_POWER)));//‘ŠŽè‚ÉŽ©•ª‚Ì¨‚¢‚ð“n‚·
 			m_moveSpeed = diff*(tmp.Length() * ((INI_AIR_VOLUME) /m_myAirVolume));//Ž©•ª‚Í‘å‚«‚³‚É”½”ä—á‚µ‚Ä‚Ó‚Á‚Æ‚Î‚³‚ê‚â‚·‚­‚È‚é
 		
-			m_myAir->SetAirVolume(m_myAirVolume * 0.8f);
+			m_myAir->BleedAir(m_myAirVolume * 0.1f);
 		}		
 	}
 }
