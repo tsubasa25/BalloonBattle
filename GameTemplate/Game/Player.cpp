@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "GameScene.h"
 #include "BackGround.h"
-
+#include "UIDisplay.h"
 Player::~Player()
 {
 	DeleteGO(m_skinModelRender);
@@ -57,9 +57,10 @@ bool Player::Start()
 	m_myAir->SetParent(this);
 	m_myAir->SetParentNum(m_playerNum);
 
-	m_myAir->SetAirVolume(m_myAirVolume);
+	m_myAir->SetAirVolume(m_myAirVolume);	//空気の量の初期値を設定
 
 	m_backGround = FindGO<BackGround>("backGround");
+	m_UIDisplay = FindGO<UIDisplay>("UIdisplay");
 
 	//キャラコンの初期化
 	m_charaCon.Init((m_myAirVolume/2), m_position);
@@ -78,7 +79,7 @@ void Player::Update()
 	HitWall();
 	HitPlayer();
 	Debug(GetPlayerNum());
-	SetScale({ m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME,m_myAirVolume / INI_AIR_VOLUME, });	
+	SetScale({ m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE, });
 	m_charaCon.ReInit((m_myAirVolume / 2), m_position);	
 }
 
@@ -145,6 +146,8 @@ void Player::HitPlayer()
 			//大きさに比例してふっとばしやすくなる
 			m_enemy[i]->m_moveSpeed = (diff*GetMoveSpeed().Length() * -(m_myAirVolume/ (INI_AIR_VOLUME/ REBOUND_POWER)));//相手に自分の勢いを渡す
 			m_moveSpeed = diff*(tmp.Length() * ((INI_AIR_VOLUME) /m_myAirVolume));//自分は大きさに反比例してふっとばされやすくなる
+		
+			m_myAir->SetAirVolume(m_myAirVolume * 0.8f);
 		}		
 	}
 }
@@ -263,14 +266,15 @@ void Player::Tilt()
 //プレイヤーが死亡したときの処理
 void Player::PlayerDeath()
 {
-	
 	m_stock--;//ストックを減らす
+
 	if (m_stock > 0) {//ストックが残っていたら
 		m_resPos = m_backGround->GetRespawnPosition(m_playerNum);
-		m_moveSpeed = (m_resPos - m_position);//初期座標にとばす
-		m_position = m_charaCon.Execute(m_moveSpeed, 1.0f);
-
 		m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
+		m_charaCon.SetPosition(m_resPos);	//キャラコンに座標を設定
+		SetPosition(m_resPos);	//初期座標に飛ばす。
+		
+		m_myAirVolume = INI_AIR_VOLUME;
 		m_myAir->SetAirVolume(INI_AIR_VOLUME);
 	}
 	else {
