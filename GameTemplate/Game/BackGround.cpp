@@ -2,6 +2,7 @@
 #include "BackGround.h"
 #include "GameScene.h"
 #include "Player.h"
+#include "GimmickNeedle.h"
 
 BackGround::~BackGround()
 {
@@ -104,6 +105,9 @@ bool BackGround::Start()
             }
         return true;
         });
+
+        //モデル表示テスト
+        m_needle = NewGO<GimmickNeedle>(0);
 
 	return true;
 }
