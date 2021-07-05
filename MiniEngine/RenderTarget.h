@@ -10,6 +10,7 @@ class GraphicsEngine;
 /// </summary>
 class RenderTarget {
 public:
+	~RenderTarget();
 	/// <summary>
 	/// レンダリングターゲットの作成。
 	/// </summary>
@@ -107,7 +108,7 @@ private:
 	bool CreateRenderTargetTexture(
 		GraphicsEngine& ge,
 		ID3D12Device5*& d3dDevice,
-		int w, 
+		int w,
 		int h,
 		int mipLevel,
 		int arraySize,
@@ -139,8 +140,8 @@ private:
 	Texture m_renderTargetTexture;
 	ID3D12Resource* m_renderTargetTextureDx12;	//レンダリングターゲットとなるテクスチャ。
 	ID3D12Resource* m_depthStencilTexture;		//深度ステンシルバッファとなるテクスチャ。
-	ID3D12DescriptorHeap*		m_rtvHeap;		//RTV用のディスクリプタヒープ。
-	ID3D12DescriptorHeap*		m_dsvHeap;		//深度ステンシルバッファビューのディスクリプタヒープ。
+	ID3D12DescriptorHeap* m_rtvHeap;		//RTV用のディスクリプタヒープ。
+	ID3D12DescriptorHeap* m_dsvHeap;		//深度ステンシルバッファビューのディスクリプタヒープ。
 	UINT m_rtvDescriptorSize = 0;				//フレームバッファのディスクリプタのサイズ。
 	UINT m_dsvDescriptorSize = 0;				//深度ステンシルバッファのディスクリプタのサイズ。
 	int m_width = 0;							//レンダリングターゲットの幅。

@@ -11,21 +11,25 @@ BackGround::~BackGround()
 }
 bool BackGround::Start()
 {
-m_skinModelRender = NewGO<SkinModelRender>(0, "backGround");
-    m_skinModelRender->Init("Assets/modelData/BuildingStage.tkm");
+    m_skinModelRender = NewGO<SkinModelRender>(0, "backGround");
+    //ステージは影を発生させる
+    m_skinModelRender->SetShadowCasterFlag(true);
+    
+    m_skinModelRender->Init("Assets/modelData/SkyIsland.tkm");
+   
     //ステージのモデルの静的物理モデルを作成    
     m_physicsStaticObject.CreateFromModel(m_skinModelRender->GetModel(), m_skinModelRender->GetModel().GetWorldMatrix());
 
     m_directionLight = nullptr;
     m_directionLight = NewGO<DirectionLight>(0);
     m_directionLight->SetColor({ 1.0f,1.0f,1.0f });
-    m_directionLight->SetDirection({ -2,-1,-1 });
+    m_directionLight->SetDirection({0.0f, -1.0f, 1.0f}); // 
 
     m_gameScene = FindGO<GameScene>("gameScene");
 
 
     m_level.Init("Assets/modelData/Level/Level00.tkl", [&](LevelObjectData& objData)
-        {             
+        {
             if (strcmp(objData.name, "SpawnP0") == 0)
             {
                 m_spawnPos[0] = objData.position;

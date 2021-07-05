@@ -11,6 +11,9 @@
 #include "SoundEngine.h"
 #include "SoundSource.h"
 #include "LightManager.h"
+#include "ResourceBankManager.h"
+#include "PostEffectManager.h"
+
 #include "DirectionLight.h"
 #include "PointLight.h"
 #include "SpotLight.h"

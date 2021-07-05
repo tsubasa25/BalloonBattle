@@ -57,7 +57,7 @@ inline void RenderContext::SetRenderTargets(UINT numRT, RenderTarget* renderTarg
 	//d
 	D3D12_CPU_DESCRIPTOR_HANDLE rtDSHandleTbl[32];
 	int rtNo = 0;
-	for( UINT rtNo = 0; rtNo < numRT; rtNo++){
+	for (UINT rtNo = 0; rtNo < numRT; rtNo++) {
 		rtDSHandleTbl[rtNo] = renderTargets[rtNo]->GetRTVCpuDescriptorHandle();
 	}
 	D3D12_CPU_DESCRIPTOR_HANDLE dsDS = renderTargets[0]->GetDSVCpuDescriptorHandle();
@@ -74,4 +74,16 @@ inline void RenderContext::ClearRenderTargetViews(int numRt, RenderTarget* rende
 inline void RenderContext::SetPipelineState(raytracing::PSO& pso)
 {
 	m_commandList->SetPipelineState1(pso.Get());
+}
+inline void RenderContext::SetRenderTargetAndViewport(RenderTarget& renderTarget)
+{
+	D3D12_VIEWPORT viewport;
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.Width = static_cast<float>(renderTarget.GetWidth());
+	viewport.Height = static_cast<float>(renderTarget.GetHeight());
+	viewport.MinDepth = D3D12_MIN_DEPTH;
+	viewport.MaxDepth = D3D12_MAX_DEPTH;
+	SetViewport(viewport);
+	SetRenderTarget(renderTarget);
 }

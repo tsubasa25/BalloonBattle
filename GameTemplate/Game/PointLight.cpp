@@ -8,7 +8,7 @@ PointLight::~PointLight()
 PointLight::PointLight()//ポイントライトの数を増やした時
 {	
 	m_pointLigData = LightManager::GetInstance()->GetPointLigData();//データを確保する
-	//m_pointLigData->pointLigNum = LightManager::GetInstance()->GetPointLigNum();//作られた番号を記録する
+	m_pointLigData->pointLigNum = LightManager::GetInstance()->GetPointLigNum();//作られた番号を記録する
 	LightManager::GetInstance()->AddPointLig(GetLigData());//
 }
 

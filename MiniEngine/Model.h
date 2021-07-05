@@ -20,8 +20,8 @@ struct ModelInitData {
 	const char* m_vsSkinEntryPointFunc = "VSMain";					//スキンありマテリアル用の頂点シェーダーのエントリーポイント。
 	const char* m_psEntryPointFunc = "PSMain";						//ピクセルシェーダーのエントリーポイント。
 	const char* m_fxFilePath = nullptr;								//.fxファイルのファイルパス。
-	void* m_expandConstantBuffer = nullptr;							//ユーザー拡張の定数バッファ。
-	int m_expandConstantBufferSize = 0;								//ユーザー拡張の定数バッファのサイズ。
+	void* m_expandConstantBuffer[3] = { nullptr,nullptr,nullptr };	//ユーザー拡張の定数バッファ。	 
+	int m_expandConstantBufferSize[3] = { 0,0,0 };					//ユーザー拡張の定数バッファ。							//ユーザー拡張の定数バッファのサイズ。
 	IShaderResource* m_expandShaderResoruceView = nullptr;			//ユーザー拡張のシェーダーリソース。
 	Skeleton* m_skeleton = nullptr;									//スケルトン。
 	EnModelUpAxis m_modelUpAxis = enModelUpAxisZ;					//モデルの上方向。
@@ -47,7 +47,11 @@ public:
 	/// <param name="rot">回転</param>
 	/// <param name="scale">拡大率</param>
 	void UpdateWorldMatrix(Vector3 pos, Quaternion rot, Vector3 scale);
-
+	/// <summary>
+	/// ワールド行列の更新
+	/// </summary>
+	/// <param name="world">ワールド行列</param>
+	void UpdateWorldMatrix(Matrix world);
 	/// <summary>
 	/// 描画
 	/// </summary>
@@ -89,13 +93,13 @@ public:
 	/// <returns></returns>
 	const TkmFile& GetTkmFile() const
 	{
-		return m_tkmFile;
+		return *m_tkmFile;
 	}
 private:
 
-	Matrix m_world;														//ワールド行列。
-	TkmFile m_tkmFile;													//tkmファイル。
-	Skeleton m_skeleton;												//スケルトン。
-	MeshParts m_meshParts;											//メッシュパーツ。
+	Matrix m_world;										//ワールド行列。
+	TkmFile* m_tkmFile;									//tkmファイル。
+	Skeleton m_skeleton;								//スケルトン。
+	MeshParts m_meshParts;								//メッシュパーツ。
 	EnModelUpAxis m_modelUpAxis = enModelUpAxisY;		//モデルの上方向。
 };

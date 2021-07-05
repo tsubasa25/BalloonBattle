@@ -32,7 +32,7 @@ bool RenderTarget::Create(
 	m_height = h;
 	//レンダリングターゲットとなるテクスチャを作成する。
 	if (!CreateRenderTargetTexture(*g_graphicsEngine, d3dDevice, w, h, mipLevel, arraySize, colorFormat, clearColor)) {
-	//	TK_ASSERT(false, "レンダリングターゲットとなるテクスチャの作成に失敗しました。");
+		//	TK_ASSERT(false, "レンダリングターゲットとなるテクスチャの作成に失敗しました。");
 		MessageBoxA(nullptr, "レンダリングターゲットとなるテクスチャの作成に失敗しました。", "エラー", MB_OK);
 		return false;
 	}
@@ -57,7 +57,7 @@ bool RenderTarget::Create(
 }
 bool RenderTarget::CreateDescriptorHeap(GraphicsEngine& ge, ID3D12Device5*& d3dDevice)
 {
-		
+
 	//RTV用のディスクリプタヒープを作成する。
 	D3D12_DESCRIPTOR_HEAP_DESC desc = {};
 	desc.NumDescriptors = GraphicsEngine::FRAME_BUFFER_COUNT;

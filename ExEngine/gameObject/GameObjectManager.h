@@ -9,20 +9,20 @@
 #include <vector>
 
 
-/// <summary>
-/// GameObjectManagerクラス
-/// <summary>
-/// <remark>
-/// このクラスはシングルトンパターンで設計されています。
-/// インスタンスの生成はCreateInstance()、
-/// インスタンスの破棄はDeleteInstance()、
-/// インスタンスの取得はCreateInstance()を呼び出してください。
-/// シングルトンパターンは下記の二つの機能を提供するパターンです。
-/// 1.　グローバルなアクセスポイント
-///		->グローバル変数の機能
-/// 2　インスタンスの数を一つに制限する機能。
-/// </reramk>
-/// 
+ /// <summary>
+ /// GameObjectManagerクラス
+ /// <summary>
+ /// <remark>
+ /// このクラスはシングルトンパターンで設計されています。
+ /// インスタンスの生成はCreateInstance()、
+ /// インスタンスの破棄はDeleteInstance()、
+ /// インスタンスの取得はCreateInstance()を呼び出してください。
+ /// シングルトンパターンは下記の二つの機能を提供するパターンです。
+ /// 1.　グローバルなアクセスポイント
+ ///		->グローバル変数の機能
+ /// 2　インスタンスの数を一つに制限する機能。
+ /// </reramk>
+ /// 
 class GameObjectManager {
 private:
 	GameObjectManager();
@@ -60,8 +60,13 @@ public:
 	/// </summary>
 	/// <param name="rc"></param>
 	void ExecuteRender(RenderContext& rc);
-	
-	
+
+	/// <summary>
+	/// ポストレンダーの描画処理を実行。
+	/// </summary>
+	/// <param name="rc"></param>
+	void ExecutePostRender(RenderContext& rc);
+
 	/*!
 	*@brief	ゲームオブジェクトのnew
 	*@details
@@ -80,7 +85,7 @@ public:
 	/*!
 		*@brief	ゲームオブジェクトの削除。
 		*/
-	void DeleteGameObject( IGameObject* gameObject )
+	void DeleteGameObject(IGameObject* gameObject)
 	{
 		if (gameObject != nullptr) {
 			gameObject->Dead();
@@ -95,17 +100,17 @@ public:
 	template<class T>
 	T* FindGameObject(const char* objectName)
 	{
-		
+
 		for (auto goList : m_gameObjectListArray) {
 			for (auto go : goList) {
-				if (go->IsMatchName(objectName)) {
+				if (go->EqualName(objectName)) {
 					//見つけた。
 					T* p = dynamic_cast<T*>(go);
 					return p;
 				}
 			}
 		}
-		
+
 		//見つからなかった。
 		return nullptr;
 	}
@@ -114,7 +119,7 @@ public:
 	{
 		for (auto goList : m_gameObjectListArray) {
 			for (auto go : goList) {
-				if (go->IsMatchName(objectName) == true) {
+				if (go->EqualName(objectName)) {
 					//見つけた。
 					T* p = dynamic_cast<T*>(go);
 					if (func(p) == false) {
@@ -125,12 +130,19 @@ public:
 			}
 		}
 	}
-	
+
+	/// <summary>
+	/// レンダリングコンテキストを返す
+	/// </summary>
+	RenderContext* GetRenderContext() { return m_rc; }
+
 private:
 	enum { GAME_OBJECT_PRIO_MAX = 255 };		//!<ゲームオブジェクトの優先度の最大値。
 	typedef std::list<IGameObject*>	 GameObjectList;
 	std::array<GameObjectList, GAME_OBJECT_PRIO_MAX>	m_gameObjectListArray;							//!<ゲームオブジェクトの優先度付きリスト。
 	static GameObjectManager* m_instance;		//唯一のインスタンスのアドレスを記録する変数。
+	bool m_2screenMode = false;
+	RenderContext* m_rc = nullptr;
 };
 
 
@@ -164,11 +176,11 @@ static inline void QueryGOs(const char* objectName, std::function<bool(T* go)> f
 	*@param[in]	objectName	オブジェクト名。(NULLの指定可）
 	*/
 template<class T>
-static inline T* NewGO( int priority, const char* objectName = nullptr)
+static inline T* NewGO(int priority, const char* objectName = nullptr)
 {
-	return GameObjectManager::GetInstance()->NewGameObject<T>( priority, objectName);
+	return GameObjectManager::GetInstance()->NewGameObject<T>(priority, objectName);
 }
-	
+
 /*!
 	*@brief	ゲームオブジェクト削除のヘルパー関数。
 	* NewGOを使用して作成したオブジェクトは必ずDeleteGOを実行するように。
@@ -181,6 +193,5 @@ static inline void DeleteGO(IGameObject* go)
 
 
 
-	
 
- 
+

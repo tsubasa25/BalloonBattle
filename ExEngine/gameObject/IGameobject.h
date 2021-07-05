@@ -43,7 +43,11 @@ public:
 	{
 		(void)renderContext;
 	}
-	
+	virtual void PostRender(RenderContext& renderContext)
+	{
+		(void)renderContext;
+	}
+
 public:
 	/*!
 	*@brief Startä÷êîÇ™äÆóπÇµÇΩÅH
@@ -111,6 +115,11 @@ public:
 		}
 		return false;
 	}
+
+	bool EqualName(const char* name)const
+	{
+		return strcmp(m_name.c_str(), name) == 0;
+	}
 public:
 
 	void RenderWrapper(RenderContext& renderContext)
@@ -119,7 +128,14 @@ public:
 			Render(renderContext);
 		}
 	}
-	
+
+	void PostRenderWrapper(RenderContext& renderContext)
+	{
+		if (m_isActive && m_isStart && !m_isDead) {
+			PostRender(renderContext);
+		}
+	}
+
 	void UpdateWrapper()
 	{
 		if (m_isActive && m_isStart && !m_isDead ) {
@@ -135,7 +151,7 @@ public:
 			}
 		}
 	}
-
+	
 		
 	friend class CGameObjectManager;
 protected:
