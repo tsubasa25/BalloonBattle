@@ -158,6 +158,11 @@ void Player::HitWall()//•Ç‚É‚ ‚½‚Á‚½‚Æ‚«
 {			
 	if (m_charaCon.GetIsHitWall() == true) {
 		m_moveSpeed = ReboundSpeed();
+
+		//SE‚ğÄ¶
+		SoundSource* ss = NewGO<SoundSource>(0);
+		ss->Init(L"Assets/sound/•—‘D‚Ì’µ‚Ë‚é‰¹.wav");
+		ss->Play(false);
 	}
 }
 
@@ -176,6 +181,14 @@ void Player::HitPlayer()
 			m_moveSpeed = diff*(tmp.Length() * ((INI_AIR_VOLUME) /m_myAirVolume));//©•ª‚Í‘å‚«‚³‚É”½”ä—á‚µ‚Ä‚Ó‚Á‚Æ‚Î‚³‚ê‚â‚·‚­‚È‚é
 		
 			m_myAir->BleedAir(m_myAirVolume * 0.1f);
+
+			if (m_enemy[i]->GetPlayerNum() > m_playerNum)
+			{
+				//SE‚ğÄ¶
+				SoundSource* ss = NewGO<SoundSource>(0);
+				ss->Init(L"Assets/sound/•—‘D‚Ì’µ‚Ë‚é‰¹.wav");
+				ss->Play(false);
+			}
 		}		
 	}
 }
