@@ -28,7 +28,7 @@ bool GameScene::Start()
 
     //エフェクト実験用
     //eff = NewGO<Effect>(0);
-    eff.Init(u"Assets/effect/JetEff02.efk");
+    eff.Init(u"Assets/effect/BalloonBreak07.efk");
     
 
 
