@@ -137,19 +137,19 @@ void UIDisplay::Update()
 			case 2:
 				explosioncount[i] += 1;
 				if (explosioncount[i] == changeframenum[0]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red4.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.green4.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[1]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red5.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.green5.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[2]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red6.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.green6.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[3]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.green2.dds", 128, 128);
 					explosioncount[i] = 0;
 					m_PlDecStock[i] = false;
 					break;
@@ -158,19 +158,19 @@ void UIDisplay::Update()
 			case 3:
 				explosioncount[i] += 1;
 				if (explosioncount[i] == changeframenum[0]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red4.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.yellow4.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[1]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red5.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.yellow5.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[2]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red6.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.yellow6.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[3]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.yellow2.dds", 128, 128);
 					explosioncount[i] = 0;
 					m_PlDecStock[i] = false;
 					break;
@@ -179,19 +179,19 @@ void UIDisplay::Update()
 			case 4:
 				explosioncount[i] += 1;
 				if (explosioncount[i] == changeframenum[0]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red4.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.orange4.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[1]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red5.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.orange5.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[2]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red6.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.orange6.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[3]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.orange2.dds", 128, 128);
 					explosioncount[i] = 0;
 					m_PlDecStock[i] = false;
 					break;
@@ -200,19 +200,19 @@ void UIDisplay::Update()
 			case 5:
 				explosioncount[i] += 1;
 				if (explosioncount[i] == changeframenum[0]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red4.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.pink4.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[1]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red5.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.pink5.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[2]){
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red6.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.pink6.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[3]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.pink2.dds", 128, 128);
 					explosioncount[i] = 0;
 					m_PlDecStock[i] = false;
 					break;
@@ -221,19 +221,19 @@ void UIDisplay::Update()
 			case 6:
 				explosioncount[i] += 1;
 				if (explosioncount[i] == changeframenum[0]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red4.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.gray4.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[1]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red5.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.gray5.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[2]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red6.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.gray6.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[3]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.gray2.dds", 128, 128);
 					explosioncount[i] = 0;
 					m_PlDecStock[i] = false;
 					break;
@@ -242,19 +242,19 @@ void UIDisplay::Update()
 			case 7:
 				explosioncount[i] += 1;
 				if (explosioncount[i] == changeframenum[0]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red4.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.purple4.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[1]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red5.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.purple5.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[2]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red6.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.purple6.dds", 128, 128);
 					break;
 				}
 				if (explosioncount[i] == changeframenum[3]) {
-					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.red2.dds", 128, 128);
+					m_playerstock_Sprite[i]->Init("Assets/Image/balloon.purple2.dds", 128, 128);
 					explosioncount[i] = 0;
 					m_PlDecStock[i] = false;
 					break;
