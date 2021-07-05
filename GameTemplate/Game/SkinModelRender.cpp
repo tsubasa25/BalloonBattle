@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "SkinModelRender.h"
-#include "DirectionLight.h"
-#include "SpotLight.h"
-#include "PointLight.h"
+//#include "SkinModelRender.h"
+//#include "DirectionLight.h"
+//#include "SpotLight.h"
+//#include "PointLight.h"
 
 SkinModelRender::~SkinModelRender()
 {
@@ -16,22 +16,65 @@ void SkinModelRender::Init(const char* modelPath, const char* skeletonPath, Anim
 {
 	//モデルの初期化データ
 	ModelInitData initData;
+
+	//影の初期化データ
+	ModelInitData shadowModelInitData;
+
 	//モデルのファイルパスの指定
 	initData.m_tkmFilePath = modelPath;
+	shadowModelInitData.m_tkmFilePath = modelPath;
+
 	//シェーダーパスの指定
-	initData.m_fxFilePath = "Assets/shader/model.fx";
+	initData.m_fxFilePath = "Assets/shader/shadowReceiver.fx";
+	shadowModelInitData.m_fxFilePath = "Assets/shader/shadow.fx";
+
+	//シェーダーの頂点シェーダーのエントリー関数名の指定
+	initData.m_vsEntryPointFunc = "VSMain";
+	shadowModelInitData.m_vsEntryPointFunc = "VSMain";
+
+	//シェーダーのピクセルシェーダーのエントリー関数名の指定
+	initData.m_vsSkinEntryPointFunc = "VSSkinMain";
+	shadowModelInitData.m_vsSkinEntryPointFunc = "VSSkinMain";
+
+	//スケルトンが存在している時はスケルトンを初期化
+	if (skeletonPath != nullptr)
+	{
+		m_skeleton.Init(skeletonPath);
+		initData.m_skeleton = &m_skeleton;
+		shadowModelInitData.m_skeleton = &m_skeleton;
+	}
 	//カラーバッファのフォーマットを指定
 	initData.m_colorBufferFormat = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	
 	//モデルデータの上方向の軸を指定
 	initData.m_modelUpAxis = enModelUpAxisZ;
+
+	//モデルに影を落とすために影のテクスチャを紐付ける
+	initData.m_expandShaderResoruceView = &PostEffectManager::GetInstance()->GetBlurShadowMap();
 	
 	//定数バッファをモデルに紐付ける
-	initData.m_expandConstantBuffer = LightManager::GetInstance()->GetLigDatas();
-	initData.m_expandConstantBufferSize = LightManager::GetInstance()->GetLigDataSize();
-	//////////////////////////////////////////////
+	initData.m_expandConstantBufferSize[0] = LightManager::GetInstance()->GetLigDataSize();
+	shadowModelInitData.m_expandConstantBufferSize[0] = LightManager::GetInstance()->GetLigCameraDataSize();
+	initData.m_expandConstantBuffer[0] = LightManager::GetInstance()->GetLigDatas();
+	shadowModelInitData.m_expandConstantBuffer[0] = LightManager::GetInstance()->GetLigCameraDatas();
+
+	initData.m_expandConstantBufferSize[1] = LightManager::GetInstance()->GetLigCameraDataSize();
+	initData.m_expandConstantBuffer[1] = LightManager::GetInstance()->GetLigCameraDatas();
+	
 	//モデルの初期化
-	m_model.Init(initData);
+	m_model[eModel].Init(initData);
+
+	//影描画モデルの初期化
+	m_model[eModel_Shadow].Init(shadowModelInitData);
+
+	//アニメーション関連の初期化
+	m_animationClips = animClips;
+	m_animationClipNum = animClipNum;
+
+	if (m_animationClips != nullptr)
+	{
+		m_animation.Init(m_skeleton, m_animationClips, m_animationClipNum);
+	}
 	
 }
 void SkinModelRender::Init(const char* modelPath, const char* skeletonPath)
@@ -46,14 +89,29 @@ void SkinModelRender::Init(const char* modelPath)
 void SkinModelRender::Render(RenderContext& rc)
 {
 	//レンダーコンテキストの描画先で分岐
-	m_model.Draw(rc);
+	switch (rc.GetRenderStep()) {
+	case RenderContext::eStep_Render:
+		//画面1に描画
+		m_model[eModel].Draw(rc);
+		break;
+	
+	case RenderContext::eStep_RenderShadowMap:
+		//影を作るモデルの時だけ影を描画
+		if (m_isShadowCaster)
+		{
+			m_model[eModel_Shadow].Draw(rc);
+		}
+		break;
+	}
+	
 }
 void SkinModelRender::UpdateModel()
 {
 	//モデルをアップデート
-	//for (auto& model : m_model) {
-	m_model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
-	m_skeleton.Update(m_model.GetWorldMatrix());	
+	for (auto& model : m_model) {
+		model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
+		m_skeleton.Update(model.GetWorldMatrix());
+	}
 }
 
 void SkinModelRender::SetPosition(Vector3 pos)
@@ -85,4 +143,16 @@ void SkinModelRender::SetScale(Vector3 scale)
 	m_scale = scale;
 
 	UpdateModel();
+}
+void SkinModelRender::PreLoadModel(const char* tkmFilePath)
+{
+	TkmFile* tkmFile = ResourceBankManager::GetInstance()->GetTkmFileFromBank(tkmFilePath);
+
+	if (tkmFile == nullptr)
+	{
+		//未登録
+		tkmFile = new TkmFile;
+		tkmFile->Load(tkmFilePath);
+		ResourceBankManager::GetInstance()->RegistTkmFileToBank(tkmFilePath, tkmFile);
+	}
 }

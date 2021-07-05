@@ -24,10 +24,14 @@ bool Player::Start()
 {
 	//デバッグ用
 	m_skinModelRenderArrow = NewGO<SkinModelRender>(0);
+	m_skinModelRenderArrow->SetShadowCasterFlag(true);
+
 	m_skinModelRenderArrow->Init("Assets/modelData/arrow.tkm");
 
 	m_skinModelRender = NewGO<SkinModelRender>(0);
-	m_skinModelRender->Init("Assets/modelData/unityChan.tkm");
+	m_skinModelRender->SetShadowCasterFlag(true);
+
+	//m_skinModelRender->Init("Assets/modelData/Balloon0.tkm");
 	if (GetPlayerNum() == 0) {
 		m_skinModelRender->Init("Assets/modelData/Balloon0.tkm");		
 	}
@@ -52,7 +56,7 @@ bool Player::Start()
 	else if (GetPlayerNum() == 7) {
 		m_skinModelRender->Init("Assets/modelData/Balloon7.tkm");
 	}
-
+	
 	m_myAir = NewGO<BalloonAir>(0);
 	m_myAir->SetParent(this);
 	m_myAir->SetParentNum(m_playerNum);
@@ -66,9 +70,9 @@ bool Player::Start()
 	m_charaCon.Init((m_myAirVolume/2), m_position);
 
 	//m_charaCon.Init(100, m_bulloonSize, m_position);
-	pointLight->SetColor(POINTLIGHT_COLOR);
+	/*pointLight->SetColor(POINTLIGHT_COLOR);
 	pointLight->SetRange(POINTLIGHT_RANGE);
-	pointLight->SetPosition({ m_position });
+	pointLight->SetPosition({ m_position });*/
 
 	return true;
 }
@@ -80,7 +84,7 @@ void Player::Update()
 	HitPlayer();
 	Debug(GetPlayerNum());
 	SetScale({ m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE, });
-	m_charaCon.ReInit((m_myAirVolume / 2), m_position);	
+	//m_charaCon.ReInit((m_myAirVolume / 2), m_position);	
 }
 
 Vector3 Player::Decele(Vector3 speed)//減速

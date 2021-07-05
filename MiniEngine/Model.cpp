@@ -27,17 +27,25 @@ void Model::Init(const ModelInitData& m_initData)
 	}
 	
 	m_modelUpAxis = m_initData.m_modelUpAxis;
+	m_tkmFile = ResourceBankManager::GetInstance()->GetTkmFileFromBank(m_initData.m_tkmFilePath);
 
-	m_tkmFile.Load(m_initData.m_tkmFilePath);
+	if (m_tkmFile == nullptr)
+	{
+		//–¢“o˜^
+		m_tkmFile = new TkmFile;
+		m_tkmFile->Load(m_initData.m_tkmFilePath);
+		ResourceBankManager::GetInstance()->RegistTkmFileToBank(m_initData.m_tkmFilePath, m_tkmFile);
+	}
 	m_meshParts.InitFromTkmFile(
-		m_tkmFile, 
-		wfxFilePath, 
+		*m_tkmFile,
+		wfxFilePath,
 		m_initData.m_vsEntryPointFunc,
 		m_initData.m_vsSkinEntryPointFunc,
 		m_initData.m_psEntryPointFunc,
 		m_initData.m_expandConstantBuffer,
 		m_initData.m_expandConstantBufferSize,
-		m_initData.m_expandShaderResoruceView
+		m_initData.m_expandShaderResoruceView,
+		m_initData.m_colorBufferFormat
 	);
 
 	UpdateWorldMatrix(g_vec3Zero, g_quatIdentity, g_vec3One);
@@ -57,7 +65,10 @@ void Model::UpdateWorldMatrix(Vector3 pos, Quaternion rot, Vector3 scale)
 	mScale.MakeScaling(scale);
 	m_world = mBias * mScale * mRot * mTrans;
 }
-
+void Model::UpdateWorldMatrix(Matrix world)
+{
+	m_world = world;
+}
 void Model::ChangeAlbedoMap(const char* materialName, Texture& albedoMap)
 {
 	m_meshParts.QueryMeshs([&](const SMesh& mesh) {

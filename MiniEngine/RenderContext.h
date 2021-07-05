@@ -13,6 +13,10 @@ namespace raytracing{
 /// </summary>
 class RenderContext {
 public:
+	enum EnStep {		
+		eStep_Render,	// Render to AllScreen
+		eStep_RenderShadowMap,	// Render to shadowMap,
+	};
 	/// <summary>
 	/// 初期化。
 	/// </summary>
@@ -21,7 +25,22 @@ public:
 	{
 		m_commandList = commandList;
 	}
-
+	/// <summary>
+	/// Set current render step
+	/// </summary>
+	/// <param name="step"> show EnStep </param>
+	void SetStep(EnStep step)
+	{
+		m_step = step;
+	}
+	/// <summary>
+	/// Get current render step.
+	/// </summary>
+	/// <returns></returns>
+	EnStep GetRenderStep() const
+	{
+		return m_step;
+	}
 	/// <summary>
 	/// 頂点バッファを設定。
 	/// </summary>
@@ -64,6 +83,11 @@ public:
 	void SetViewport(D3D12_VIEWPORT& viewport)
 	{
 		m_commandList->RSSetViewports(1, &viewport);
+		m_currentViewPort = viewport;
+	}
+	D3D12_VIEWPORT GetViewport() const
+	{
+		return m_currentViewPort;
 	}
 	/// <summary>
 	/// シザリング矩形を設定
@@ -171,6 +195,22 @@ public:
 	{
 		m_commandList->OMSetRenderTargets(1, &rtvHandle, FALSE, &dsvHandle);
 	}
+
+	/// <summary>
+	/// レンダリングターゲットをスロット0に設定する。
+	/// </summary>
+	/// <remarks>
+	/// 本関数はビューポートの設定を行いません。
+	/// ユーザー側で適切なビューポートを指定する必要があります。
+	/// </remarks>
+	/// <param name="renderTarget">レンダリングターゲット</param>
+	void SetRenderTarget(RenderTarget& renderTarget)
+	{
+		RenderTarget* rtArray[] = { &renderTarget };
+		SetRenderTargets(1, rtArray);
+	}
+	void SetRenderTargetAndViewport(RenderTarget& renderTarget);
+
 	/// <summary>
 	/// レンダリングターゲットとビューポートを同時に設定する。
 	/// </summary>
@@ -357,5 +397,7 @@ private:
 	ID3D12DescriptorHeap* m_descriptorHeaps[MAX_DESCRIPTOR_HEAP];			//ディスクリプタヒープの配列。
 	ConstantBuffer* m_constantBuffers[MAX_CONSTANT_BUFFER] = { nullptr };	//定数バッファの配列。
 	Texture* m_shaderResources[MAX_SHADER_RESOURCE] = { nullptr };			//シェーダーリソースの配列。
+	EnStep m_step = eStep_Render;									// render step.
+	D3D12_VIEWPORT m_currentViewPort;
 };
 
