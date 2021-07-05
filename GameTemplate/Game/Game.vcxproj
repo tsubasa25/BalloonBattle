@@ -302,6 +302,7 @@
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapChipRender.cpp" />
+    <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="NameKey.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PointLight.cpp" />
@@ -404,6 +405,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="LightManager.h" />
     <ClInclude Include="MapChipRender.h" />
+    <ClInclude Include="MenuScene.h" />
     <ClInclude Include="NameKey.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />

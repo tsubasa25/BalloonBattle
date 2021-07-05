@@ -18,7 +18,9 @@ public:
 	bool Start();
 	void Update();
 Vector3 GetRespawnPosition(int ResPlNum);	//リスポーンしたいプレイヤーの番号を渡すことで、リスポーン位置を計算する。
+void SetStageNum(int num) { m_stageNum = num; }
 	//Vector3 GetIniSpawnPosition();
+
 
 private:
 	SkinModelRender* m_skinModelRender=nullptr;
@@ -37,5 +39,7 @@ private:
 	int m_respawnPlayerNum = 0;	//リスポーンするプレイヤーの番号
 
 	GimmickNeedle* m_needle = nullptr;
+
+	int m_stageNum = 0;
 };
 

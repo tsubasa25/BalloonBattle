@@ -325,7 +325,11 @@ void Player::PlayerDeath()
 
 void Player::BreakBalloon()
 {
-	m_breakEff.Play();
 	m_breakEff.SetPosition(m_position);
+	//エフェクトのサイズを風船のサイズに合わせる。
+	Vector3 size = { m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE, };
+	size *= 20.0f;	//エフェクトのサイズを大きくする。
+	m_breakEff.SetScale(size);
+	m_breakEff.Play();
 	m_breakEff.Update();
 }

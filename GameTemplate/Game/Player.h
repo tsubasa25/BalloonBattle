@@ -102,7 +102,7 @@ public:
 	void Tilt();	//風船の傾きを決める。
 
 	void PlayerDeath();	//キャラクターが死亡したときの処理
-	void BreakBalloon();	//風船破裂の処理
+	void BreakBalloon();	//風船破裂の処理。引数の位置で破裂エフェクトを表示
 
 	//デバッグ用
 	void Debug(int pNum);

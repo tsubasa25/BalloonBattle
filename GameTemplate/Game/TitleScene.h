@@ -26,7 +26,7 @@ private:
 	Vector3 m_optionPos = { 300,-200,0 };
 	int m_selectNum = 1;
 	float m_selectLoopCount = 0;
-int m_playerCount = 8;
+
 public:
 	SoundSource* m_titleBGM = nullptr;						//BGMのサウンドソース
 };
