@@ -78,7 +78,7 @@ bool Player::Start()
 		m_breakEff.Init(u"Assets/effect/BalloonBreak00.efk");
 	}
 	else if (GetPlayerNum() == 1) {
-		m_breakEff.Init(u"Assets/effect/BalloonBreak001.efk");
+		m_breakEff.Init(u"Assets/effect/BalloonBreak01.efk");
 	}
 	else if (GetPlayerNum() == 2) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak02.efk");
