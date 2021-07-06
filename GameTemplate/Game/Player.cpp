@@ -24,7 +24,7 @@ bool Player::Start()
 {
 	//デバッグ用
 	m_skinModelRenderArrow = NewGO<SkinModelRender>(0);
-	m_skinModelRenderArrow->SetShadowCasterFlag(true);
+	m_skinModelRenderArrow->SetShadowCasterFlag(false);
 
 	m_skinModelRenderArrow->Init("Assets/modelData/arrow.tkm");
 

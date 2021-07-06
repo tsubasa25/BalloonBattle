@@ -4,7 +4,7 @@ namespace
 {
 	const float ADD_AIR_TO_BALLOON_POWER = 3.0f;	//風船を膨らませるときに空気量に加算する値。
 	const int MAX_AIR_VOLUME = 500;	//風船の空気の量の最大量
-	const int MIN_AIR_VOLUME = 10;	//風船の空気の量の最小量
+	const int MIN_AIR_VOLUME = 30;	//風船の空気の量の最小量
 	const float BRAKE_POWER = 0.1f;	//ブレーキを行った際にm_moveSpeedにかける値
 	const float AIR_COST_MOVE = 0.02f;	//Lスティックを倒して移動しているときに、1フレームで減る空気量
 	const float AIR_COST_BOOST = 1.0f;	//水平ブーストしているときに、1フレームで減る空気量
