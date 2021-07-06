@@ -141,6 +141,9 @@ void Player::Move()//移動
 		|| fabsf(m_position.z) > OVER_STAGE_LINE.z	//ステージから大きく離れたら。
 		) {
 		PlayerDeath();
+		SoundSource* ss = NewGO<SoundSource>(0);
+		ss->Init(L"Assets/sound/風船が落ちて死んだ音.wav");
+		ss->Play(false);
 	}
 
 	//ほどんど動いていないとき、移動速度を0にする。
