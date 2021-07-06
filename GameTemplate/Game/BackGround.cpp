@@ -81,6 +81,7 @@ bool BackGround::Start()
                     GimmickNeedle* gimmickNeedle = NewGO<GimmickNeedle>(0, "gimmickNeedle");
                     gimmickNeedle->SetPosition(objData.position);
                 }
+                NewGO<WindTurbine>(0);
                 return true;
             }
             else
