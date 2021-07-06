@@ -13,7 +13,7 @@ bool BackGround::Start()
 {
     m_skinModelRender = NewGO<SkinModelRender>(0, "backGround");
     //ステージは影を発生させる
-    m_skinModelRender->SetShadowCasterFlag(true);
+    m_skinModelRender->SetShadowCasterFlag(false);
     
      if (m_stageNum == 1)
         m_skinModelRender->Init("Assets/modelData/SkyIsland.tkm");
@@ -30,7 +30,6 @@ bool BackGround::Start()
     m_directionLight->SetDirection({0.0f, -1.0f, 0.0f}); // 
 
     m_gameScene = FindGO<GameScene>("gameScene");
-
 
     m_level.Init("Assets/modelData/Level/Level00.tkl", [&](LevelObjectData& objData)
         {
@@ -74,6 +73,15 @@ bool BackGround::Start()
                 m_spawnPos[7] = objData.position;
                 return true;
             }
+            else if (strcmp(objData.name, "NeedlePoint") == 0)
+            {
+                if (m_stageNum == 3)
+                {
+                    GimmickNeedle* gimmickNeedle = NewGO<GimmickNeedle>(0, "gimmickNeedle");
+                    gimmickNeedle->SetPosition(objData.position);
+                }
+                return true;
+            }
             else
             {
                 return true;
@@ -113,9 +121,6 @@ bool BackGround::Start()
             }
         return true;
         });
-
-        //モデル表示テスト
-        m_needle = NewGO<GimmickNeedle>(0);
 
 	return true;
 }
