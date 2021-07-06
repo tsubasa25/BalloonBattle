@@ -34,7 +34,21 @@ void BalloonAir::Air()
 		{
 			//止まっているときにBボタンを押すと、膨む。
 			AddAir(ADD_AIR_TO_BALLOON_POWER);
+			
+			if (InflateFlg == false ) {
+				InflateFlg = true;
+				ss = NewGO<SoundSource>(0);
+				ss->Init(L"Assets/sound/風船を膨らませる音.wav");
+				ss->Play(true);
+			}
+			if (m_airVolume >= MAX_AIR_VOLUME) {
+				DeleteGO(ss);
+			}
 		}
+	}
+	else if (InflateFlg == true) {
+		DeleteGO(ss);
+		InflateFlg = false;
 	}
 
 	//プレイヤーがスティックを倒しているとき
@@ -66,6 +80,7 @@ void BalloonAir::Air()
 	}
 	if (g_pad[m_parentNum]->IsPress(enButtonY))
 	{
+
 		m_parent->AddMoveSpeed(RISE_BOOST_POWER);
 		
 		//空気が一定量抜ける。
@@ -79,6 +94,7 @@ void BalloonAir::AddAir(float air)
 	m_airVolume += air;
 	if (m_airVolume > MAX_AIR_VOLUME)	//最大サイズよりは大きくなれない。
 		m_airVolume = MAX_AIR_VOLUME;
+	
 }
 //airの値分、風船の空気を抜く
 void  BalloonAir::BleedAir(float air)

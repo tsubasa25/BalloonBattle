@@ -20,6 +20,7 @@ private:
 	Player* m_parent = nullptr;
 	int m_parentNum = 0;
 	float m_airVolume = 0.0f;//•—‘D‚Ì‘å‚«‚³(•)
+	SoundSource* ss = nullptr;
 
 public:
 	bool Start();
@@ -34,5 +35,6 @@ public:
 
 	void SetAirVolume(float air) { m_airVolume = air; };
 
+	bool InflateFlg = false;
 };
 
