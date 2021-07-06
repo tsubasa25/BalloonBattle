@@ -19,6 +19,8 @@ bool BackGround::Start()
         m_skinModelRender->Init("Assets/modelData/SkyIsland.tkm");
     else if (m_stageNum == 2)
         m_skinModelRender->Init("Assets/modelData/BuildingStage.tkm");
+    else if (m_stageNum == 3)
+        m_skinModelRender->Init("Assets/modelData/TrapStage.tkm");
    
     //ステージのモデルの静的物理モデルを作成    
     m_physicsStaticObject.CreateFromModel(m_skinModelRender->GetModel(), m_skinModelRender->GetModel().GetWorldMatrix());
