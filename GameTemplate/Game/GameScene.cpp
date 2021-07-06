@@ -8,8 +8,6 @@ GameScene::~GameScene()
 }
 bool GameScene::Start()
 {
-
-
     for (int i = 0; i < m_playerCount; i++)//ƒvƒŒƒCƒ„[‚ðì‚é
     {
         player[i] = NewGO<Player>(0,"player");

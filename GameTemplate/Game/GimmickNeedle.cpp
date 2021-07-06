@@ -2,6 +2,12 @@
 #include "GimmickNeedle.h"
 #include "Player.h"
 
+GimmickNeedle::~GimmickNeedle()
+{
+	DeleteGO(m_needleModelRender);
+	DeleteGO(m_needleBoardModelRender);
+}
+
 bool GimmickNeedle::Start()
 {
 	//針と、針の板を表示
@@ -40,11 +46,11 @@ void GimmickNeedle::Update()
 			//プレイヤーと針の位置の距離をとる
 			Vector3 plPos = player->GetPosition();
 			m_diff.x = plPos.x - m_needleBoardPos.x;
-			m_diff.z = plPos.x - m_needleBoardPos.z;
+			m_diff.z = plPos.z - m_needleBoardPos.z;
 
 			//プレイヤーが針の範囲に入っていたら、死ぬ。
-			if (fabsf(m_diff.x) < 200.0f
-				&& fabsf(m_diff.z) < 200.0f
+			if (fabsf(m_diff.x) < NEEDLE_BOARD_HALF_SCALE
+				&& fabsf(m_diff.z) < NEEDLE_BOARD_HALF_SCALE
 				&& m_needlePos.y + NEEDLE_HEIGHT > plPos.y	//プレイヤーの位置が針の高さより低いかどうか
 				)
 			{

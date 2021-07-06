@@ -4,10 +4,12 @@ namespace
 	const int NEEDLE_DOWN_INTERVAL = 400;	//針が出ていない時間
 	const int NEEDLE_UP_INTERVAL = 200;	//針が出ている時間
 	const float NEEDLE_HEIGHT = 200.0f;	//針の長さ(高さ)
+	const float NEEDLE_BOARD_HALF_SCALE = 200.0f;	//針の板のサイズの半分の大きさ
 }
 class GimmickNeedle	: public IGameObject
 {
 public:
+	~GimmickNeedle();
 	bool Start();
 	void Update();
 	void Move();
