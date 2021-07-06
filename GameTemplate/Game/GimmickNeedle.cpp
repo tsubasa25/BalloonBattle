@@ -50,6 +50,9 @@ void GimmickNeedle::Update()
 			{
 				player->BreakBalloon();
 				player->PlayerDeath();
+				SoundSource* ss = NewGO<SoundSource>(0);
+				ss->Init(L"Assets/sound/•—‘D‚ÌŠ„‚ê‚é‰¹.wav");
+				ss->Play(false);
 			}
 
 			return true;
