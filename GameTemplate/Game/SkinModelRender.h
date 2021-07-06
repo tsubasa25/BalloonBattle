@@ -22,7 +22,7 @@ public:
 	void UpdateModel();
 
 	
-	void Render(RenderContext& rc)override;
+	void Render(RenderContext& rc, Camera* camera)override;
 	/**
 		 * @brief モデルの描画
 		 * @param rc レンダーコンテキスト

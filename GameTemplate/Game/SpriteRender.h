@@ -22,7 +22,7 @@ public:
 	 * @param rc レンダーコンテキスト
 	 * @param camera 描画するカメラ
 	*/
-	void Render(RenderContext& rc) override;
+	void Render(RenderContext& rc, Camera* camera) override;
 
 	/**
 	 * @brief スプライトの描画　モデル等を描ききった後に呼ばれる
