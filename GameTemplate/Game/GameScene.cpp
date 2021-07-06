@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameScene.h"
 #include "Player.h"
+#include "BackGround.h"
 GameScene::~GameScene()
 {
 

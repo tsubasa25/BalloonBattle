@@ -78,7 +78,7 @@ bool Player::Start()
 		m_breakEff.Init(u"Assets/effect/BalloonBreak00.efk");
 	}
 	else if (GetPlayerNum() == 1) {
-		m_breakEff.Init(u"Assets/effect/BalloonBreak001.efk");
+		m_breakEff.Init(u"Assets/effect/BalloonBreak01.efk");
 	}
 	else if (GetPlayerNum() == 2) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak02.efk");
@@ -141,6 +141,9 @@ void Player::Move()//移動
 		|| fabsf(m_position.z) > OVER_STAGE_LINE.z	//ステージから大きく離れたら。
 		) {
 		PlayerDeath();
+		SoundSource* ss = NewGO<SoundSource>(0);
+		ss->Init(L"Assets/sound/風船が落ちて死んだ音.wav");
+		ss->Play(false);
 	}
 
 	//ほどんど動いていないとき、移動速度を0にする。
@@ -158,6 +161,11 @@ void Player::HitWall()//壁にあたったとき
 {			
 	if (m_charaCon.GetIsHitWall() == true) {
 		m_moveSpeed = ReboundSpeed();
+
+		//SEを再生
+		SoundSource* ss = NewGO<SoundSource>(0);
+		ss->Init(L"Assets/sound/風船の跳ねる音.wav");
+		ss->Play(false);
 	}
 }
 
@@ -176,6 +184,14 @@ void Player::HitPlayer()
 			m_moveSpeed = diff*(tmp.Length() * ((INI_AIR_VOLUME) /m_myAirVolume));//自分は大きさに反比例してふっとばされやすくなる
 		
 			m_myAir->BleedAir(m_myAirVolume * 0.1f);
+
+			if (m_enemy[i]->GetPlayerNum() > m_playerNum)
+			{
+				//SEを再生
+				SoundSource* ss = NewGO<SoundSource>(0);
+				ss->Init(L"Assets/sound/風船の跳ねる音.wav");
+				ss->Play(false);
+			}
 		}		
 	}
 }
@@ -325,7 +341,11 @@ void Player::PlayerDeath()
 
 void Player::BreakBalloon()
 {
-	m_breakEff.Play();
 	m_breakEff.SetPosition(m_position);
+	//エフェクトのサイズを風船のサイズに合わせる。
+	Vector3 size = { m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE, };
+	size *= 20.0f;	//エフェクトのサイズを大きくする。
+	m_breakEff.SetScale(size);
+	m_breakEff.Play();
 	m_breakEff.Update();
 }
