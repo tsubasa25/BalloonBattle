@@ -51,7 +51,7 @@ void SpriteRender::Update()
 	//m_spriteSupporter.SpriteSupporter_Update();
 }
 
-void SpriteRender::Render(RenderContext& rc)
+void SpriteRender::Render(RenderContext& rc, Camera* camera)
 {
 
 		m_sprite.Draw(rc);

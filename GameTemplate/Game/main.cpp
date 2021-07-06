@@ -6,8 +6,8 @@
 #include "TitleScene.h"
 namespace
 {
-    const Vector3 LIGHTCAMERA_POSITION = { 0.0f, 1200.0f, -1800.0f };
-    const Vector3 LIGHTCAMERA_TARGET = { 0,0,-300 };
+    const Vector3 LIGHTCAMERA_POSITION = { 0.0f, 1500.0f,0.0f };
+    const Vector3 LIGHTCAMERA_TARGET = { 0,0,0 };
     const Vector3 LIGHTCAMERA_UP = { 1.0f,0.0f,0.0f };
     const float LIGHTCAMERA_WIDTH = 2000.0f;
     const float LIGHTCAMERA_HEIGHT = 2000.0f;
@@ -32,9 +32,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     LightManager::GetInstance()->SetLightCameraPosition(LIGHTCAMERA_POSITION);
     LightManager::GetInstance()->SetLightCameraTarget(LIGHTCAMERA_TARGET);
     LightManager::GetInstance()->SetLightCameraUp(LIGHTCAMERA_UP);
-    LightManager::GetInstance()->SetLightCameraUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Ortho); //
-    LightManager::GetInstance()->SetLightCameraWidth(LIGHTCAMERA_WIDTH);
-    LightManager::GetInstance()->SetLightCameraHeight(LIGHTCAMERA_HEIGHT);
+    LightManager::GetInstance()->SetLightCameraUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Perspective); //enUpdateProjMatrixFunc_Ortho
+   /* LightManager::GetInstance()->SetLightCameraWidth(LIGHTCAMERA_WIDTH);
+    LightManager::GetInstance()->SetLightCameraHeight(LIGHTCAMERA_HEIGHT);*/
 
     //リソースマネージャのインスタンスを作成
     ResourceBankManager::CreateInstance();
@@ -60,7 +60,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
     g_camera3D->SetPosition({ 0.0f, 1200.0f, -1800.0f });
     g_camera3D->SetTarget({ 0,0,-300 });
-    g_camera3D->SetFar(50000.0f);
+    g_camera3D->SetFar(10000.0f);
     //////////////////////////////////////
     // 初期化を行うコードを書くのはここまで！！！
     //////////////////////////////////////

@@ -49,7 +49,6 @@ private:
 	int m_ligCameraDataSize = sizeof(m_ligCameraData);
 
 	Camera m_lightCamera;//シャドウマップ用のライトの位置のカメラ。とりあえずテスト。
-
 public:
 
 	static LightManager* m_instance;

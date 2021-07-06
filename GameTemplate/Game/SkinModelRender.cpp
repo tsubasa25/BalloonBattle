@@ -1,5 +1,5 @@
 #include "stdafx.h"
-//#include "SkinModelRender.h"
+#include "SkinModelRender.h"
 //#include "DirectionLight.h"
 //#include "SpotLight.h"
 //#include "PointLight.h"
@@ -45,12 +45,14 @@ void SkinModelRender::Init(const char* modelPath, const char* skeletonPath, Anim
 	}
 	//カラーバッファのフォーマットを指定
 	initData.m_colorBufferFormat = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	
+	shadowModelInitData.m_colorBufferFormat = DXGI_FORMAT_R32G32_FLOAT;
+
 	//モデルデータの上方向の軸を指定
 	initData.m_modelUpAxis = enModelUpAxisZ;
+	shadowModelInitData.m_modelUpAxis = enModelUpAxisZ;
 
 	//モデルに影を落とすために影のテクスチャを紐付ける
-	initData.m_expandShaderResoruceView = &PostEffectManager::GetInstance()->GetBlurShadowMap();
+	initData.m_expandShaderResoruceView = &PostEffectManager::GetInstance()->GetShadowMap();
 	
 	//定数バッファをモデルに紐付ける
 	initData.m_expandConstantBufferSize[0] = LightManager::GetInstance()->GetLigDataSize();
@@ -86,20 +88,20 @@ void SkinModelRender::Init(const char* modelPath)
 {
 	Init(modelPath, nullptr, nullptr, 0);
 }
-void SkinModelRender::Render(RenderContext& rc)
+void SkinModelRender::Render(RenderContext& rc, Camera* camera)
 {
 	//レンダーコンテキストの描画先で分岐
 	switch (rc.GetRenderStep()) {
 	case RenderContext::eStep_Render:
 		//画面1に描画
-		m_model[eModel].Draw(rc);
+		m_model[eModel].Draw(rc, camera);
 		break;
 	
 	case RenderContext::eStep_RenderShadowMap:
 		//影を作るモデルの時だけ影を描画
 		if (m_isShadowCaster)
 		{
-			m_model[eModel_Shadow].Draw(rc);
+			m_model[eModel_Shadow].Draw(rc, camera);
 		}
 		break;
 	}
@@ -111,7 +113,7 @@ void SkinModelRender::UpdateModel()
 	for (auto& model : m_model) {
 		model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
 		m_skeleton.Update(model.GetWorldMatrix());
-	}
+	}	
 }
 
 void SkinModelRender::SetPosition(Vector3 pos)

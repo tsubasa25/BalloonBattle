@@ -15,15 +15,16 @@ bool BackGround::Start()
     //ステージは影を発生させる
     m_skinModelRender->SetShadowCasterFlag(true);
     
-    m_skinModelRender->Init("Assets/modelData/SkyIsland.tkm");
-   
+    //m_skinModelRender->Init("Assets/modelData/SkyIsland.tkm");
+    m_skinModelRender->Init("Assets/modelData/BuildingStage.tkm");
+
     //ステージのモデルの静的物理モデルを作成    
     m_physicsStaticObject.CreateFromModel(m_skinModelRender->GetModel(), m_skinModelRender->GetModel().GetWorldMatrix());
 
     m_directionLight = nullptr;
     m_directionLight = NewGO<DirectionLight>(0);
     m_directionLight->SetColor({ 1.0f,1.0f,1.0f });
-    m_directionLight->SetDirection({0.0f, -1.0f, 1.0f}); // 
+    m_directionLight->SetDirection({0.0f, -1.0f, 0.0f}); // 
 
     m_gameScene = FindGO<GameScene>("gameScene");
 
