@@ -8,6 +8,15 @@ BackGround::~BackGround()
 {
     DeleteGO(m_skinModelRender);
     DeleteGO(m_directionLight);
+
+    QueryGOs<WindTurbine>("windTurbine", [this](WindTurbine* windTurbine)->bool {
+        DeleteGO(windTurbine);
+        return true;
+        });
+    QueryGOs<GimmickNeedle>("gimmickNeedle", [this](GimmickNeedle* gimmickNeedle)->bool {
+        DeleteGO(gimmickNeedle);
+        return true;
+        });
 }
 bool BackGround::Start()
 {
@@ -80,7 +89,7 @@ bool BackGround::Start()
                     GimmickNeedle* gimmickNeedle = NewGO<GimmickNeedle>(0, "gimmickNeedle");
                     gimmickNeedle->SetPosition(objData.position);
                 }
-                NewGO<WindTurbine>(0);
+                NewGO<WindTurbine>(0, "windTurbine");
                 return true;
             }
             else

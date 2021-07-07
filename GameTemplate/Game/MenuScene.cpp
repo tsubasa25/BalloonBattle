@@ -8,6 +8,7 @@ MenuScene::~MenuScene()
 {
 	DeleteGO(m_plCountFontRender);
 	DeleteGO(m_stageSelectFontRender);
+	DeleteGO(m_cursorFontRender);
 }
 
 bool MenuScene::Start()

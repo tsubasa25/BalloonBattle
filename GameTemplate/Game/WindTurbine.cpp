@@ -3,7 +3,8 @@
 #include "Player.h"
 WindTurbine::~WindTurbine()
 {
-
+	DeleteGO(m_WTBaseModelRender);
+	DeleteGO(m_WTBladesModelRender);
 }
 
 bool WindTurbine::Start()
