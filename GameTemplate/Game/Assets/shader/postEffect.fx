@@ -62,7 +62,7 @@ float4 TestPS(PSInput In) : SV_Target0
 
 float4 PSSamplingLuminance(PSInput In) : SV_Target0
 {
-    // step-13 輝度を抽出するピクセルシェーダーを実装
+    //輝度を抽出するピクセルシェーダーを実装
     //メインレンダリングターゲットからカラーをサンプリング
     float4 color = sceneTexture.Sample(Sampler,In.uv);
     //サンプリングしたカラーの明るさを計算

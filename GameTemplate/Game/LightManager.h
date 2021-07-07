@@ -49,6 +49,7 @@ private:
 	int m_ligCameraDataSize = sizeof(m_ligCameraData);
 
 	Camera m_lightCamera;//シャドウマップ用のライトの位置のカメラ。とりあえずテスト。
+	
 public:
 
 	static LightManager* m_instance;
@@ -245,5 +246,7 @@ public:
 		m_lightCamera.SetHeight(height);
 		m_lightCamera.Update();
 		m_ligCameraData.lightCameraProjectionMatrix = m_lightCamera.GetViewProjectionMatrix();
+		
 	}
+
 };

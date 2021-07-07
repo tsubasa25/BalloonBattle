@@ -32,13 +32,15 @@ private:
 	FontRender* m_PosY_font = NewGO<FontRender>(0);
 	FontRender* m_PosZ_font = NewGO<FontRender>(0);
 	FontRender* m_Size_font = NewGO<FontRender>(0);
-	PointLight* pointLight = NewGO<PointLight>(0);	
+	PointLight* pointLight = NewGO<PointLight>(0);
 	
 	Vector3 m_position = { Vector3::Zero };
 	Vector3 m_iniPos= { Vector3::Zero };
 	Vector3 m_resPos = { Vector3::Zero };	//リスポーン位置
 	Vector3 m_decele = { Vector3::Zero };
 	Vector3 m_moveSpeed = { Vector3::Zero };
+
+	Vector3 m_lightPos = m_position;
 
 	CharacterController m_charaCon;//プレイヤーのキャラコン
 

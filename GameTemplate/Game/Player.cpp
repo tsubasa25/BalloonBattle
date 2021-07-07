@@ -29,7 +29,7 @@ bool Player::Start()
 	m_skinModelRenderArrow->Init("Assets/modelData/arrow.tkm");
 
 	m_skinModelRender = NewGO<SkinModelRender>(0);
-	m_skinModelRender->SetShadowCasterFlag(true);
+	m_skinModelRender->SetShadowCasterFlag(false);
 
 	//m_skinModelRender->Init("Assets/modelData/Balloon0.tkm");
 	if (GetPlayerNum() == 0) {
@@ -69,10 +69,11 @@ bool Player::Start()
 	//キャラコンの初期化
 	m_charaCon.Init((m_myAirVolume/2), m_position);
 
-	//m_charaCon.Init(100, m_bulloonSize, m_position);
-	/*pointLight->SetColor(POINTLIGHT_COLOR);
+	pointLight->SetColor(POINTLIGHT_COLOR);
 	pointLight->SetRange(POINTLIGHT_RANGE);
-	pointLight->SetPosition({ m_position });*/
+	m_lightPos = m_position;
+	m_lightPos.y += m_myAirVolume;
+	pointLight->SetPosition({ m_lightPos });
 
 	if (GetPlayerNum() == 0) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak00.efk");
@@ -108,7 +109,7 @@ void Player::Update()
 	HitPlayer();
 	Debug(GetPlayerNum());
 	SetScale({ m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE, });
-	//m_charaCon.ReInit((m_myAirVolume / 2), m_position);	
+	m_charaCon.ReInit((m_myAirVolume / 2), m_position);	
 }
 
 Vector3 Player::Decele(Vector3 speed)//減速
@@ -154,7 +155,9 @@ void Player::Move()//移動
 	}
 	
 	SetPosition(m_position);//位置を設定する
-	pointLight->SetPosition({ m_position });
+	m_lightPos = m_position;
+	m_lightPos.y += m_myAirVolume;
+	pointLight->SetPosition({ m_lightPos });
 }
 
 void Player::HitWall()//壁にあたったとき
@@ -281,8 +284,9 @@ void Player::Debug(int pNum)//デバッグ用
 
 		m_rot.SetRotationY(angleX);//ｘ度だけY軸を回す
 		m_skinModelRenderArrow->SetRotation(m_rot);//角度を設定する
-
-		m_skinModelRenderArrow->SetPosition(m_position);
+		Vector3 ArrowPos = m_position;
+		ArrowPos.y+=50;
+		m_skinModelRenderArrow->SetPosition(ArrowPos);
 
 		m_arrowSize.x = m_arrowSize.z = m_moveSpeed.Length() / 3;
 		m_skinModelRenderArrow->SetScale(m_arrowSize);

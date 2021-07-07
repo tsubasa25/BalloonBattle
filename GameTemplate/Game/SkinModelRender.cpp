@@ -45,7 +45,7 @@ void SkinModelRender::Init(const char* modelPath, const char* skeletonPath, Anim
 	}
 	//カラーバッファのフォーマットを指定
 	initData.m_colorBufferFormat = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	shadowModelInitData.m_colorBufferFormat = DXGI_FORMAT_R32G32_FLOAT;
+	shadowModelInitData.m_colorBufferFormat = DXGI_FORMAT_R32_FLOAT;
 
 	//モデルデータの上方向の軸を指定
 	initData.m_modelUpAxis = enModelUpAxisZ;
@@ -77,7 +77,6 @@ void SkinModelRender::Init(const char* modelPath, const char* skeletonPath, Anim
 	{
 		m_animation.Init(m_skeleton, m_animationClips, m_animationClipNum);
 	}
-	
 }
 void SkinModelRender::Init(const char* modelPath, const char* skeletonPath)
 {
@@ -119,7 +118,6 @@ void SkinModelRender::UpdateModel()
 void SkinModelRender::SetPosition(Vector3 pos)
 {
 	m_position = pos;
-
 	UpdateModel();
 }
 void SkinModelRender::SetPositionX(float posX)
@@ -136,14 +134,12 @@ void SkinModelRender::SetPositionZ(float posZ)
 void SkinModelRender::SetRotation(Quaternion qRot)
 {
 	m_qRot = qRot;
-
 	UpdateModel();
 }
 
 void SkinModelRender::SetScale(Vector3 scale)
 {
 	m_scale = scale;
-
 	UpdateModel();
 }
 void SkinModelRender::PreLoadModel(const char* tkmFilePath)
