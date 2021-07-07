@@ -11,7 +11,8 @@ public:
 private:
 	FontRender* m_font;
 	Quaternion m_rot = {0.0f,1.0f,0.0f, 0.0f};
-	SkinModelRender* m_skinModelRender = nullptr;
+	SkinModelRender* m_WTBaseModelRender = nullptr;
+	SkinModelRender* m_WTBladesModelRender = nullptr;
 	Vector3 m_position = { Vector3::Zero };
 	
 

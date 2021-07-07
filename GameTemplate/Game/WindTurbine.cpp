@@ -8,10 +8,14 @@ WindTurbine::~WindTurbine()
 
 bool WindTurbine::Start()
 {
-	m_skinModelRender = NewGO<SkinModelRender>(0);
-	m_skinModelRender->Init("Assets/modelData/WindTurbine.tkm");
+	m_WTBaseModelRender = NewGO<SkinModelRender>(0);
+	m_WTBaseModelRender->Init("Assets/modelData/WindTurbineBase.tkm");
+	m_WTBaseModelRender->SetPosition(m_position);
 
-	m_skinModelRender->SetPosition(m_position);
+	m_WTBladesModelRender = NewGO<SkinModelRender>(0);
+	m_WTBladesModelRender->Init("Assets/modelData/WindTurbineBlades.tkm");
+	m_WTBladesModelRender->SetPosition(m_position);
+
 	return true;
 }
 
@@ -42,5 +46,6 @@ void WindTurbine::Update()
 
 		return true;
 	});
-	m_skinModelRender->SetRotation(m_rot);	
+	m_WTBaseModelRender->SetRotation(m_rot);	
+	m_WTBladesModelRender->SetRotation(m_rot);
 }
