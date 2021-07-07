@@ -2,6 +2,8 @@
 class BalloonAir;
 class BackGround;
 class UIDisplay;
+class ResultScene;
+
 #include<vector>
 #include "BalloonAir.h"
 namespace
@@ -60,9 +62,10 @@ private:
 
 	Effect m_breakEff;
 
-public:
+	ResultScene* m_resultScene = nullptr;
+	bool m_gameSetFlag = false;
 
-	
+public:
 	~Player();
 	bool Start();
 	void Update();

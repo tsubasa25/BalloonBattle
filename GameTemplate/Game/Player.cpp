@@ -3,6 +3,8 @@
 #include "GameScene.h"
 #include "BackGround.h"
 #include "UIDisplay.h"
+#include "ResultScene.h"
+
 Player::~Player()
 {
 	DeleteGO(m_skinModelRender);
@@ -103,6 +105,9 @@ bool Player::Start()
 }
 void Player::Update()
 {
+	if (m_gameSetFlag == true)
+		return;
+
 	Move();
 	Tilt();
 	HitWall();
@@ -110,6 +115,13 @@ void Player::Update()
 	Debug(GetPlayerNum());
 	SetScale({ m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE, });
 	m_charaCon.ReInit((m_myAirVolume / 2), m_position);	
+
+	if (m_enemy.size() == 0)
+	{
+		m_resultScene = NewGO<ResultScene>(0, "resultScene");
+		m_resultScene->SetWinner(this);
+		m_gameSetFlag = true;
+	}
 }
 
 Vector3 Player::Decele(Vector3 speed)//Œ¸‘¬
@@ -353,3 +365,4 @@ void Player::BreakBalloon()
 	m_breakEff.Play();
 	m_breakEff.Update();
 }
+

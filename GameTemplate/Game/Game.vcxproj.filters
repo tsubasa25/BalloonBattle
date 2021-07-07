@@ -305,11 +305,16 @@
     <ClCompile Include="..\..\MiniEngine\RenderTarget.cpp">
       <Filter>MiniEngine</Filter>
     </ClCompile>
- <ClCompile Include="MenuScene.cpp">
+    <ClCompile Include="MenuScene.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>  <ClCompile Include="PostEffectManager.cpp">
+    </ClCompile>
+    <ClCompile Include="PostEffectManager.cpp">
       <Filter>ソース ファイル\prefab</Filter>
-    </ClCompile>  </ItemGroup>
+    </ClCompile>
+    <ClCompile Include="ResultScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
       <Filter>ヘッダー ファイル\system</Filter>
@@ -590,9 +595,14 @@
     <ClInclude Include="..\..\MiniEngine\RenderTarget.h">
       <Filter>MiniEngine</Filter>
     </ClInclude>
- <ClInclude Include="MenuScene.h">
+    <ClInclude Include="MenuScene.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>  <ClInclude Include="PostEffectManager.h">
+    </ClInclude>
+    <ClInclude Include="PostEffectManager.h">
       <Filter>ヘッダー ファイル\prefab</Filter>
-    </ClInclude>  </ItemGroup>
+    </ClInclude>
+    <ClInclude Include="ResultScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
