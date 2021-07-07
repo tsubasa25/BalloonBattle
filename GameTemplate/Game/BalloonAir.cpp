@@ -76,6 +76,20 @@ void BalloonAir::Air()
 
 			//空気が一定量抜ける。
 			BleedAir(AIR_COST_BOOST);
+
+			if (AccelFlg == false) {
+				AccelFlg = true;
+				ss = NewGO<SoundSource>(0);
+				ss->Init(L"Assets/sound/風船が加速する音.wav");
+				ss->Play(true);
+			}
+		}
+	}
+	if (!g_pad[m_parentNum]->IsPress(enButtonA))
+		{
+		if (AccelFlg == true) {
+			DeleteGO(ss);
+			AccelFlg = false;
 		}
 	}
 	if (g_pad[m_parentNum]->IsPress(enButtonY))
@@ -103,7 +117,7 @@ void  BalloonAir::BleedAir(float air)
 	if (m_airVolume < MIN_AIR_VOLUME)	//最小サイズより小さくなったら、死亡する。
 	{
 		m_parent->PlayerDeath();
-		SoundSource* ss = NewGO<SoundSource>(0);
+		ss = NewGO<SoundSource>(0);
 		ss->Init(L"Assets/sound/風船の萎んで死んだ音.wav");
 		ss->Play(false);
 	}

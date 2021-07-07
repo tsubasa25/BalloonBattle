@@ -22,6 +22,9 @@ private:
 	float m_airVolume = 0.0f;//風船の大きさ(幅)
 	SoundSource* ss = nullptr;
 
+	bool InflateFlg = false;
+	bool AccelFlg = false;
+
 public:
 	bool Start();
 	void Update();
@@ -34,7 +37,5 @@ public:
 	void BleedAir(float air);	//airの値分、空気を抜く
 
 	void SetAirVolume(float air) { m_airVolume = air; };
-
-	bool InflateFlg = false;
 };
 
