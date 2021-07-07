@@ -16,6 +16,7 @@ bool GimmickNeedle::Start()
 	m_needleBoardModelRender = NewGO<SkinModelRender>(0);
 	m_needleBoardModelRender->Init("Assets/modelData/NeedleBoard.tkm");
 
+	m_needleBoardModelRender->SetShadowCasterFlag(true);
 	//j‚ÍA”Â‚æ‚è‰º‚ÌˆÊ’u‚Åˆø‚Á‚ñ‚Å‚¢‚éB
 	m_needlePos = { m_needleBoardPos.x, m_needleBoardPos.y - NEEDLE_HEIGHT, m_needleBoardPos.z };
 

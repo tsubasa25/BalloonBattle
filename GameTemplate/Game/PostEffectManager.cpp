@@ -70,17 +70,14 @@ void PostEffectManager::Init(bool bloomMode, bool shadowMode)
 		//シャドウマップの作成。
 		float clearColor[4] = { 1.0f,1.0f,1.0f,1.0f };
 		m_shadowMap.Create(
-			4096,
-			4096,
+			1024,
+			1024,
 			1,
 			1,
 			DXGI_FORMAT_R32_FLOAT,
 			DXGI_FORMAT_D32_FLOAT,
 			clearColor
-		);
-
-		//VSM用にテクスチャをぼかす。
-		//m_shadowBlur.Init(&m_shadowMap.GetRenderTargetTexture());
+		);		
 	}
 
 	//最終的な画面に出力されるスプライト。
@@ -105,8 +102,8 @@ void PostEffectManager::ShadowRender(RenderContext& rc)
 		D3D12_RECT shadowRect;
 		shadowRect.left = 0;
 		shadowRect.top = 0;
-		shadowRect.right = 4096;
-		shadowRect.bottom = 4096;
+		shadowRect.right = 1024;
+		shadowRect.bottom = 1024;
 		rc.SetScissorRect(shadowRect);
 	}
 }

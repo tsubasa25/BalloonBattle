@@ -27,12 +27,12 @@ bool BackGround::Start()
     m_directionLight = nullptr;
     m_directionLight = NewGO<DirectionLight>(0);
     m_directionLight->SetColor({ 1.0f,1.0f,1.0f });
-    m_directionLight->SetDirection({0.0f, -1.0f, 0.0f}); // 
+    m_directionLight->SetDirection({-1.0f, -1.0f, 0.5f});
 
     m_gameScene = FindGO<GameScene>("gameScene");
 
     m_level.Init("Assets/modelData/Level/Level00.tkl", [&](LevelObjectData& objData)
-        {
+    {
             if (strcmp(objData.name, "SpawnP0") == 0)
             {
                 m_spawnPos[0] = objData.position;
@@ -89,7 +89,7 @@ bool BackGround::Start()
             }               
 
             return false;
-        });
+    });
         QueryGOs<Player>("player", [this](Player* player)->bool {
             switch (player->GetPlayerNum())
             {
@@ -129,13 +129,6 @@ void BackGround::Update()
 {
 
 }
-
-//Vector3 BackGround::GetIniSpawnPosition()
-//{
-//
-//
-//    return 
-//}
 
 //リスポーン地点を割り出す関数
 Vector3 BackGround::GetRespawnPosition(int ResPlNum)

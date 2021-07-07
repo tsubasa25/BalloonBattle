@@ -69,21 +69,9 @@ void GameObjectManager::ExecuteRender(RenderContext& rc)
 
 	//ポストエフェクト用。Render前の処理
 	PostEffectManager::GetInstance()->BeforeRender(rc);
-
-
-	//1画面のスプライトのアスペクト比に合わせる。
-	//g_camera2D->SetWidth(g_graphicsEngine->GetFrameBufferWidth());
-
+	
 	rc.SetStep(RenderContext::eStep_Render);
-	D3D12_VIEWPORT viewport;
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
-	viewport.Width = g_graphicsEngine->GetFrameBufferWidth();
-	viewport.Height = g_graphicsEngine->GetFrameBufferHeight();
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
-	rc.SetViewport(viewport);
-	//1P側の画面のカメラは1Pのカメラ(g_camera3D[0])
+	
 	LightManager::GetInstance()->UpdateEyePos();
 	//g_camera3D->SetAspect(1);
 	for (auto& goList : m_gameObjectListArray) {
@@ -97,7 +85,6 @@ void GameObjectManager::ExecuteRender(RenderContext& rc)
 	//1画面オンリーのエフェクト描画
 	EffectEngine::GetInstance()->Draw();
 
-
 	//Level2D用　
 	//レベル2Dは全部スプライトなのでExecuteRenderにはいらないのでは?
 	//だがviewportをセットしないと画面が半分のままなのでセットはしてみる。
@@ -105,24 +92,15 @@ void GameObjectManager::ExecuteRender(RenderContext& rc)
 		g_camera2D->SetWidth(g_graphicsEngine->GetFrameBufferWidth());
 
 		rc.SetStep(RenderContext::eStep_Render);
-		D3D12_VIEWPORT viewport;
-		viewport.TopLeftX = 0;
-		viewport.TopLeftY = 0;
-		viewport.Width = g_graphicsEngine->GetFrameBufferWidth();
-		viewport.Height = g_graphicsEngine->GetFrameBufferHeight();
-		viewport.MinDepth = 0.0f;
-		viewport.MaxDepth = 1.0f;
-		rc.SetViewport(viewport);
+		
 		for (auto& goList : m_gameObjectListArray) {
 			for (auto& go : goList) {
 				go->RenderWrapper(rc, g_camera3D);
 			}
 		}
 	}
-
 	//ポストエフェクト用。Render後の処理
 	PostEffectManager::GetInstance()->AfterRender(rc);
-
 }
 
 void GameObjectManager::ExecutePostRender(RenderContext& rc)
@@ -130,23 +108,9 @@ void GameObjectManager::ExecutePostRender(RenderContext& rc)
 	if (m_rc == nullptr) {
 		m_rc = &rc;
 	}
-
-
-
-	////1画面のスプライトのアスペクト比に合わせる。
-	//g_camera2D->SetWidth(g_graphicsEngine->GetFrameBufferWidth());
-
+	
 	rc.SetStep(RenderContext::eStep_Render);
-	/*D3D12_VIEWPORT viewport;
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;                                   
-	viewport.Width = g_graphicsEngine->GetFrameBufferWidth();
-	viewport.Height = g_graphicsEngine->GetFrameBufferHeight();
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;*/
-	//rc.SetViewport(viewport);
-	//1P側の画面のカメラは1Pのカメラ(g_camera3D[0])
-	//LightManager::GetInstance()->UpdateEyePos();
+	
 	for (auto& goList : m_gameObjectListArray) {
 		for (auto& go : goList) {
 			go->PostRenderWrapper(rc);
@@ -157,23 +121,11 @@ void GameObjectManager::ExecutePostRender(RenderContext& rc)
 		g_camera2D->SetWidth(g_graphicsEngine->GetFrameBufferWidth());
 
 		rc.SetStep(RenderContext::eStep_Render);
-		D3D12_VIEWPORT viewport;
-		viewport.TopLeftX = 0;
-		viewport.TopLeftY = 0;
-		viewport.Width = g_graphicsEngine->GetFrameBufferWidth();
-		viewport.Height = g_graphicsEngine->GetFrameBufferHeight();
-		viewport.MinDepth = 0.0f;
-		viewport.MaxDepth = 1.0f;
-		rc.SetViewport(viewport);
+		
 		for (auto& goList : m_gameObjectListArray) {
 			for (auto& go : goList) {
 				go->PostRenderWrapper(rc);
 			}
 		}
-
-		////2Dエフェクト更新
-		//EffectEngine::GetInstance()->Update2D(GameTime::GetInstance().GetFrameDeltaTime());
-		////2Dエフェクト描画
-		//EffectEngine::GetInstance()->Draw2D();
 	}
 }

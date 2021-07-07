@@ -67,8 +67,7 @@ struct SSkinVSIn {
 struct SVSIn {
 	float4 pos 		: POSITION;		//モデルの頂点座標。
 	float3 normal	: NORMAL;		//法線
-	float2 uv 		: TEXCOORD0;	//UV座標。
-	SSkinVSIn skinVert;				//スキン用のデータ。
+	float2 uv 		: TEXCOORD0;	//UV座標。	
 };
 //ピクセルシェーダーへの入力。
 struct SPSIn {
@@ -93,68 +92,47 @@ sampler g_sampler : register(s0);	//サンプラステート。
 ////////////////////////////////////////////////
 
 /// <summary>
-//スキン行列を計算する。
-/// </summary>
-float4x4 CalcSkinMatrix(SSkinVSIn skinVert)
-{
-	float4x4 skinning = 0;
-	float w = 0.0f;
-	[unroll]
-	for (int i = 0; i < 3; i++)
-	{
-		skinning += g_boneMatrix[skinVert.Indices[i]] * skinVert.Weights[i];
-		w += skinVert.Weights[i];
-	}
-
-	skinning += g_boneMatrix[skinVert.Indices[3]] * (1.0f - w);
-
-	return skinning;
-}
-
-/// <summary>
 /// 頂点シェーダーのコア関数。
 /// </summary>
 SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
 {
+	//SPSIn psIn;
+	//float4x4 m;
+	//
+	//m = mWorld;
+	//psIn.pos = mul(m, vsIn.pos);
+	//
+	//psIn.worldPos = psIn.pos;
+
+	//psIn.pos = mul(mView, psIn.pos);
+	//psIn.pos = mul(mProj, psIn.pos);
+	//psIn.normal = mul(m, vsIn.normal);
+	//psIn.normal = normalize(psIn.normal);
+
+	//psIn.normalInView = mul(mView, psIn.normal);
+
+	//psIn.uv = vsIn.uv;
+
+	//psIn.posInLVP = mul(mLVP,float4(psIn.worldPos, 1.0f));
+	//
+	////本来の比較用の距離はこっち
+	//psIn.posInLVP.z = length(psIn.worldPos - lightCameraPos) / 2000.0f;	
+	//
+	//return psIn;
+	//シャドウレシーバー用の頂点シェーダーを実装。
 	SPSIn psIn;
-	float4x4 m;
-	/*if (hasSkin) {
-		m = CalcSkinMatrix(vsIn.skinVert);
-	}
-	else {
-		m = mWorld;
-	}*/
-	m = mWorld;
-	psIn.pos = mul(m, vsIn.pos);
-	
+	//ここは通常の座標変換
+	float4 worldPos = mul(mWorld, vsIn.pos);
+	psIn.pos = mul(mWorld, vsIn.pos);
 	psIn.worldPos = psIn.pos;
-
-	psIn.pos = mul(mView, psIn.pos);
+	
+	psIn.pos = mul(mView, worldPos);
 	psIn.pos = mul(mProj, psIn.pos);
-	psIn.normal = mul(m, vsIn.normal);
-	psIn.normal = normalize(psIn.normal);
-
-	psIn.normalInView = mul(mView, psIn.normal);
-
 	psIn.uv = vsIn.uv;
 
-	psIn.posInLVP = mul(mLVP,float4(psIn.worldPos, 1.0f));
-	
-	//本来の比較用の距離はこっち
-	psIn.posInLVP.z = length(psIn.worldPos - lightCameraPos) / 2000.0f;
-
-	//通常の座標変換
-	//SPSIn psIn;
-	//float4 worldPos = mul(mWorld, vsIn.pos);
-	//psIn.pos = mul(mView, worldPos);
-	//psIn.pos = mul(mProj, psIn.pos);
-	//psIn.uv = vsIn.uv;
-	//psIn.normal = mul(mWorld, vsIn.normal);
-
-	//// ライトビュースクリーン空間の座標を計算する
-	//psIn.posInLVP = mul(mLVP, worldPos);
-
-	
+	//ここからライトビュースクリーン空間での座標を計算している。
+	psIn.posInLVP = mul(mLVP, worldPos);
+	psIn.normal = mul(mWorld, vsIn.normal);
 	return psIn;
 }
 
@@ -201,7 +179,7 @@ float3 CalcPhongSpecular(float3 ligDir, float3 ligColor, float3 worldPos, float3
 		t = 0;
 	}
 
-	t = pow(t, 5.0f);
+	t = pow(t, 2.0f);
 
 	return ligColor * t;
 }
@@ -363,7 +341,7 @@ float4 PSMain(SPSIn psIn) : SV_Target0
 	if (shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
 		&& shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f)
 	{
-		// step-3 シャドウマップに描き込まれているZ値と比較する
+		// シャドウマップに描き込まれているZ値と比較する
 		// 計算したUV座標を使って、シャドウマップから深度値をサンプリング
 		float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).r;
 		if (zInLVP > zInShadowMap)

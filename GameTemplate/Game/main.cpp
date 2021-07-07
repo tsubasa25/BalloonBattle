@@ -6,7 +6,7 @@
 #include "TitleScene.h"
 namespace
 {
-    const Vector3 LIGHTCAMERA_POSITION = { 0.0f, 1500.0f,0.0f };
+    const Vector3 LIGHTCAMERA_POSITION = { 0.0f, 2000.0f,0.0f };
     const Vector3 LIGHTCAMERA_TARGET = { 0,0,0 };
     const Vector3 LIGHTCAMERA_UP = { 1.0f,0.0f,0.0f };
     const float LIGHTCAMERA_WIDTH = 2000.0f;
