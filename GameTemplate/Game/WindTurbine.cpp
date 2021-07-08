@@ -73,6 +73,7 @@ void WindTurbine::Update()
 				}
 				if (m_angle <= 1.0f && m_angle >= -1.0f) {
 					player->AddMoveSpeed(m_frontY / 2);
+					//player->AddMoveSpeed(m_frontY * player->GetAirVolume() / 20);
 				}
 			}
 
