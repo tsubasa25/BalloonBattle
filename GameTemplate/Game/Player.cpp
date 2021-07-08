@@ -328,6 +328,10 @@ void Player::PlayerDeath()
 {
 	m_stock--;//ストックを減らす
 	m_UIDisplay->SetPlayerDecStock(m_playerNum);//UIにストックが減ったことを伝える
+
+	m_myAir->AcceleSEStop();
+	m_myAir->riseSEStop();
+
 	if (m_stock > 0) {//ストックが残っていたら
 		m_resPos = m_backGround->GetRespawnPosition(m_playerNum);
 		m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
