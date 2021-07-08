@@ -101,11 +101,16 @@ bool Player::Start()
 	else if (GetPlayerNum() == 7) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak07.efk");
 	}
+
+	SetPosition(m_position);//à íuÇê›íËÇ∑ÇÈ
+	SetScale({ m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE, });
+	m_charaCon.ReInit((m_myAirVolume / 2), m_position);
+
 	return true;
 }
 void Player::Update()
 {
-	if (m_gameSetFlag == true)
+	if (m_canMove == false)
 		return;
 
 	Move();
@@ -120,7 +125,7 @@ void Player::Update()
 	{
 		m_resultScene = NewGO<ResultScene>(0, "resultScene");
 		m_resultScene->SetWinner(this);
-		m_gameSetFlag = true;
+		m_canMove = false;
 	}
 }
 

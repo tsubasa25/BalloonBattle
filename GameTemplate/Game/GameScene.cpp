@@ -31,12 +31,31 @@ bool GameScene::Start()
     //eff = NewGO<Effect>(0);
     eff.Init(u"Assets/effect/BalloonBreak07.efk");
     
+    m_gameSceneState = GAME_STATE_START_CALL;
 
+    m_gameStartFontRender = NewGO<FontRender>(1);
+    m_gameStartFontRender->SetPosition({ -100.0f,0.0f });
+    m_gameStartFontRender->SetScale(3.0f);
+    m_gameStartFontRender->SetShadowFlag(true);
+    m_gameStartFontRender->SetShadowColor({0.0f,0.0f,0.0f,1.0f});
 
 	return true;
 }
 void GameScene::Update()
 {
+    switch (m_gameSceneState)
+    {
+    case GAME_STATE_START_CALL:
+        GameStartCall();
+        break;
+
+    case GAME_STATE_BATTLE:
+        break;
+
+    default:
+        break;
+    }
+
     if (g_pad[0]->IsPress(enButtonRB1)&&aa==true) {//ƒ‰ƒCƒg‚ÌŽÀŒ±
         for (int i = 0; i < 10; i++) {
             pointLight[i] = NewGO<PointLight>(0);
@@ -77,12 +96,35 @@ void GameScene::Update()
     //    }
     //}
 
-    if (g_pad[0]->IsTrigger(enButtonLB2))
+    /*if (g_pad[0]->IsTrigger(enButtonLB2))
     {
         eff.Play();
         eff.SetPosition({ 0.0f,50.0f,0.0f });
         eff.SetScale({30.0f, 30.0f, 30.0f});
         eff.Update();
-    }
+    }*/
     
+}
+
+void GameScene::GameStartCall()
+{
+   
+    if (m_gameStartCallTimer == 150)
+    {
+        m_gameStartFontRender->SetText(L"READY");
+    }
+    else if (m_gameStartCallTimer == 50)
+    {
+        m_gameStartFontRender->SetText(L"GO!!");
+    }
+    else if (m_gameStartCallTimer <= 0)
+    {
+        QueryGOs<Player>("player", [this](Player* player)->bool {
+            player->SetCanMove(true);
+            return true;
+            });
+        m_gameSceneState = GAME_STATE_BATTLE;
+        DeleteGO(m_gameStartFontRender);
+    }
+        m_gameStartCallTimer--;
 }

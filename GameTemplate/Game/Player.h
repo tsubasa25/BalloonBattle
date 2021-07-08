@@ -26,6 +26,8 @@ class Player:public IGameObject
 {
 private:
 	
+	bool m_canMove = false;
+
 	Vector3 m_scale = { Vector3::Zero };
 	int m_playerNum = 0;//プレイヤー番号
 	int m_stock = 3;//ストック
@@ -63,12 +65,13 @@ private:
 	Effect m_breakEff;
 
 	ResultScene* m_resultScene = nullptr;
-	bool m_gameSetFlag = false;
 
 public:
 	~Player();
 	bool Start();
 	void Update();
+
+	void SetCanMove(bool can) { m_canMove = can; };
 
 	void SetPlayerNum(int num) { m_playerNum = num; }//プレイヤー番号を設定する
 	int GetPlayerNum() { return m_playerNum; }//プレイヤー番号を入手する

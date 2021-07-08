@@ -1,5 +1,10 @@
 #pragma once
 #include "Player.h"
+namespace
+{
+	const int GAME_STATE_START_CALL = 1;
+	const int GAME_STATE_BATTLE = 2;
+}
 class GameScene:public IGameObject
 {
 public:
@@ -21,11 +26,17 @@ private:
 	//エフェクト実験用
 	Effect eff;
 
+	FontRender* m_gameStartFontRender = nullptr;
+	int m_gameSceneState = 0;
+
+	int m_gameStartCallTimer = 170;
 
 public:
 	Vector3 GetIniPos(int i) { return m_iniPos[i]; }
 	void SetPlayerCount(int num) { m_playerCount = num; }
 	int GetPlayerCount() { return m_playerCount; }
 	void SetIsAlive(int pNum, bool alive) { m_IsAlive[pNum] = alive; }
+
+	void GameStartCall();
 };
 
