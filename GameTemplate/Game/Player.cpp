@@ -17,8 +17,8 @@ Player::~Player()
 		DeleteGO(m_skinModelRenderArrow);
 	}
 	GameScene* gameScene = FindGO<GameScene>("gameScene");
-	gameScene->SetIsAlive(m_playerNum, false);
-	gameScene->SetPlayerCount(gameScene->GetPlayerCount() - 1);
+	//gameScene->SetIsAlive(m_playerNum, false);
+	//gameScene->SetPlayerCount(gameScene->GetPlayerCount() - 1);
 	
 	DeleteGO(m_myAir);
 }

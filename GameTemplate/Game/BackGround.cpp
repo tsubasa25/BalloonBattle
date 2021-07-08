@@ -7,16 +7,6 @@
 BackGround::~BackGround()
 {
     DeleteGO(m_skinModelRender);
-    DeleteGO(m_directionLight);
-
-    QueryGOs<WindTurbine>("windTurbine", [this](WindTurbine* windTurbine)->bool {
-        DeleteGO(windTurbine);
-        return true;
-        });
-    QueryGOs<GimmickNeedle>("gimmickNeedle", [this](GimmickNeedle* gimmickNeedle)->bool {
-        DeleteGO(gimmickNeedle);
-        return true;
-        });
 }
 bool BackGround::Start()
 {
@@ -33,10 +23,6 @@ bool BackGround::Start()
        //ステージのモデルの静的物理モデルを作成    
     m_physicsStaticObject.CreateFromModel(m_skinModelRender->GetModel(), m_skinModelRender->GetModel().GetWorldMatrix());
 
-    m_directionLight = nullptr;
-    m_directionLight = NewGO<DirectionLight>(0);
-    m_directionLight->SetColor({ 1.0f,1.0f,1.0f });
-    m_directionLight->SetDirection({-1.0f, -1.0f, 0.5f});
 
     m_gameScene = FindGO<GameScene>("gameScene");
 
@@ -187,4 +173,40 @@ Vector3 BackGround::GetRespawnPosition(int ResPlNum)
      ResPos.y += RESPAWN_POSITION_HEIGHT;
     
     return ResPos;
+}
+
+void BackGround::Retri()
+{
+    QueryGOs<Player>("player", [this](Player* player)->bool {
+        switch (player->GetPlayerNum())
+        {
+        case 0:
+            player->SetIniPosition(m_spawnPos[0]);
+            break;
+        case 1:
+            player->SetIniPosition(m_spawnPos[1]);
+            break;
+        case 2:
+            player->SetIniPosition(m_spawnPos[2]);
+            break;
+        case 3:
+            player->SetIniPosition(m_spawnPos[3]);
+            break;
+        case 4:
+            player->SetIniPosition(m_spawnPos[4]);
+            break;
+        case 5:
+            player->SetIniPosition(m_spawnPos[5]);
+            break;
+        case 6:
+            player->SetIniPosition(m_spawnPos[6]);
+            break;
+        case 7:
+            player->SetIniPosition(m_spawnPos[7]);
+            break;
+        default:
+            break;
+        }
+        return true;
+        });
 }
