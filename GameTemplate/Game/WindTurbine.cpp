@@ -28,7 +28,7 @@ bool WindTurbine::Start()
 
 void WindTurbine::Update()
 {
-	m_frontY = { 0.0f, 0.0f, 0.0f };//基準ベクトル（最初に向いている向き::これ必要）
+	m_frontY = { 0.0f, 0.0f, -1.0f };//基準ベクトル（最初に向いている向き::これ必要）
 	a += 0.01f;//回すスピード
 	m_rotY.SetRotation(Vector3::AxisY, a);//aの分だけYを回す
 	m_frontZ.y = 0;
@@ -67,7 +67,7 @@ void WindTurbine::Update()
 					m_angle *= -1;
 				}
 				if (m_angle <= 0.3 && m_angle >= -0.3) {
-					player->AddMoveSpeed(m_frontY / 2);
+					player->AddMoveSpeed(m_frontY / 4);
 				}
 			}
 
