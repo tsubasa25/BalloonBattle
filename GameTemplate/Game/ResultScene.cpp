@@ -92,6 +92,6 @@ void ResultScene::Menu()
 		DeleteGO(m_winnerPl);
 		
 		DeleteGO(this);
-		NewGO<TitleScene>(0, "title");
+		NewGO<TitleScene>(0, "titleScene");
 	}
 }
