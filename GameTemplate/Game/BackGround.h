@@ -17,8 +17,10 @@ public:
 	~BackGround();
 	bool Start();
 	void Update();
+
 Vector3 GetRespawnPosition(int ResPlNum);	//リスポーンしたいプレイヤーの番号を渡すことで、リスポーン位置を計算する。
-void SetStageNum(int num) { m_stageNum = num; }
+void SetStageNum(int num) { m_stageNum = num; };
+Vector3 GetWTBladesPos() { return m_WTBladesPos; };
 	//Vector3 GetIniSpawnPosition();
 
 
@@ -33,6 +35,8 @@ private:
 	Level m_level;
 
 	Vector3 m_spawnPos[RESPAWN_POSITION_NUM]{Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero, };
+
+	Vector3 m_WTBladesPos = {Vector3::Zero};
 
 	Vector3 m_enemyMiddlePos = { Vector3::Zero };	//他プレイヤーのポジションの平均地点
 

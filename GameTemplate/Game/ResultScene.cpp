@@ -22,8 +22,11 @@ ResultScene::~ResultScene()
 bool ResultScene::Start()
 {
 	m_gameSetFontRender = NewGO<FontRender>(0);
+	m_gameSetFontRender->SetPosition({-200.0f,0.0f});
 	m_gameSetFontRender->SetScale(2.0f);
 	m_gameSetFontRender->SetText(L"GAME SET");
+	m_gameSetFontRender->SetShadowFlag(true);
+	m_gameSetFontRender->SetShadowColor({0.0f,0.0f,0.0f,1.0f});
 
 	m_mode = MODE_GAME_SET;
 
@@ -60,6 +63,10 @@ void ResultScene::GameSet()
 		m_winFontRender = NewGO<FontRender>(0);
 		m_winFontRender->SetScale(2.0f);
 		m_winFontRender->SetText(L"PLAYER " + std::to_wstring(m_winnerPl->GetPlayerNum() + 1) + L"  WIN!!");
+		m_winFontRender->SetPosition({ -300.0f,0.0f });
+		m_winFontRender->SetShadowFlag(true);
+		m_winFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
+
 		m_winnerPl->SetPosition(m_winnerPos);
 		QueryGOs<UIDisplay>("UIdisplay", [this](UIDisplay* UIdisplay)->bool {
 			DeleteGO(UIdisplay);
@@ -81,7 +88,7 @@ void ResultScene::ZoomWinner()
 		DeleteGO(m_winFontRender);
 		m_selectTitleFontRender = NewGO<FontRender>(0);
 		m_selectTitleFontRender->SetText(L"A ƒ^ƒCƒgƒ‹‚Ö–ß‚é");
-		m_selectTitleFontRender->SetPosition({0.0f, -50.0f});
+		m_selectTitleFontRender->SetPosition({-200.0f, -50.0f});
 	}
 }
 
