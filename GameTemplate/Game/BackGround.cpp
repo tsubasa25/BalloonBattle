@@ -82,14 +82,27 @@ bool BackGround::Start()
                 m_spawnPos[7] = objData.position;
                 return true;
             }
+            else if (strcmp(objData.name, "WTBasePoint")== 0)
+            {
+                if (m_stageNum == 1)
+                {             
+                    WindTurbine* windTurbine = NewGO<WindTurbine>(0, "windTurbine");
+                    windTurbine->SetPosition(objData.position);                    
+                }
+                return true;
+            }
+            else if (strcmp(objData.name, "WTBladesPoint") == 0)
+            {
+                m_WTBladesPos = objData.position;
+                return true;
+            }
             else if (strcmp(objData.name, "NeedlePoint") == 0)
             {
                 if (m_stageNum == 3)
                 {
                     GimmickNeedle* gimmickNeedle = NewGO<GimmickNeedle>(0, "gimmickNeedle");
                     gimmickNeedle->SetPosition(objData.position);
-                }
-                NewGO<WindTurbine>(0, "windTurbine");
+                }        
                 return true;
             }
             else

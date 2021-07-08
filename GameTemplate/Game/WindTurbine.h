@@ -1,7 +1,7 @@
 #pragma once
 namespace
 {
-	const int WT_NOT_MOVE_INTERVAL = 100;	//風車が動いていない時間
+	const int WT_NOT_MOVE_INTERVAL = 400;	//風車が動いていない時間
 	const int WT_MOVE_INTERVAL = 250;		//風車が動いている時間
 }
 class WindTurbine :public IGameObject
@@ -33,7 +33,7 @@ private:
 	float b = 0.0f;
 	Vector3 m_diff;//プレイヤーとの距離
 	
-	Vector3 m_WTBladesPos = { 0.0f, 200.0f, 0.0f};//ブレードの位置
+	Vector3 m_WTBladesPos = { 0.0f, 0.0f, 0.0f};//ブレードの位置
 	int WTMoveTimer = 0;//ループカウント
 	bool WTMoveFlag = false;//風車が動くかどうか
 	Quaternion m_bladesRot = { 0.0f,0.0f,1.0f, 0.0f };//X軸の回転とY軸の回転

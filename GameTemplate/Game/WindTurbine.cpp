@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "WindTurbine.h"
 #include "Player.h"
+#include "BackGround.h"
 WindTurbine::~WindTurbine()
 {
 	DeleteGO(m_WTBaseModelRender);
@@ -9,6 +10,9 @@ WindTurbine::~WindTurbine()
 
 bool WindTurbine::Start()
 {
+	BackGround* backGround = FindGO<BackGround>("backGround");
+	m_WTBladesPos = backGround->GetWTBladesPos();
+
 	m_WTBaseModelRender = NewGO<SkinModelRender>(0);
 	m_WTBaseModelRender->Init("Assets/modelData/WindTurbineBase.tkm");
 	m_WTBaseModelRender->SetPosition(m_position);
@@ -35,6 +39,7 @@ void WindTurbine::Update()
 	m_rotY.Apply(m_frontY);
 	m_rot.Multiply(m_rotZ, m_rotY);
 	m_WTBladesModelRender->SetRotation(m_rot);
+	m_WTBaseModelRender->SetRotation(m_rotY);
 
 	WTMoveTimer++;//ループカウント
 	if (WTMoveFlag == false)//
@@ -66,8 +71,8 @@ void WindTurbine::Update()
 				if (m_diff.z < 0) {
 					m_angle *= -1;
 				}
-				if (m_angle <= 0.3 && m_angle >= -0.3) {
-					player->AddMoveSpeed(m_frontY / 4);
+				if (m_angle <= 1.0f && m_angle >= -1.0f) {
+					player->AddMoveSpeed(m_frontY / 2);
 				}
 			}
 
