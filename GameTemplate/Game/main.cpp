@@ -12,6 +12,8 @@ namespace
     const float LIGHTCAMERA_WIDTH = 2000.0f;
     const float LIGHTCAMERA_HEIGHT = 2000.0f;
 }
+void PreLoad();
+
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数
 ///////////////////////////////////////////////////////////////////
@@ -53,6 +55,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     //FPS固定用ストップウォッチ
     Stopwatch stopwatch;
 
+    PreLoad();
     
     TitleScene* titleScene = NewGO<TitleScene>(0, "titleScene");
    /* GameScene*gameScene=NewGO<GameScene>(0,"gameScene");*/   
@@ -97,4 +100,21 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
         g_engine->EndFrame();
     }
     return 0;
+}
+
+void PreLoad()
+{
+    SkinModelRender::PreLoadModel("Assets/modelData/Balloon0.tkm");
+    SkinModelRender::PreLoadModel("Assets/modelData/Balloon1.tkm");
+    SkinModelRender::PreLoadModel("Assets/modelData/Balloon2.tkm");
+    SkinModelRender::PreLoadModel("Assets/modelData/Balloon3.tkm");
+    SkinModelRender::PreLoadModel("Assets/modelData/Balloon4.tkm");
+    SkinModelRender::PreLoadModel("Assets/modelData/Balloon5.tkm"); 
+    SkinModelRender::PreLoadModel("Assets/modelData/Balloon6.tkm");
+    SkinModelRender::PreLoadModel("Assets/modelData/Balloon7.tkm");
+
+    SkinModelRender::PreLoadModel("Assets/modelData/Needle.tkm");
+    SkinModelRender::PreLoadModel("Assets/modelData/NeedleBoard.tkm");
+    SkinModelRender::PreLoadModel("Assets/modelData/WindTurbineBase.tkm");
+    SkinModelRender::PreLoadModel("Assets/modelData/WindTurbineBlades.tkm");
 }
