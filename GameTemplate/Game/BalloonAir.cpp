@@ -37,17 +37,17 @@ void BalloonAir::Air()
 			
 			if (InflateFlg == false ) {
 				InflateFlg = true;
-				ss = NewGO<SoundSource>(0);
-				ss->Init(L"Assets/sound/風船を膨らませる音.wav");
-				ss->Play(true);
+				ssInflate = NewGO<SoundSource>(0);
+				ssInflate->Init(L"Assets/sound/風船を膨らませる音.wav");
+				ssInflate->Play(true);
 			}
 			if (m_airVolume >= MAX_AIR_VOLUME) {
-				DeleteGO(ss);
+				DeleteGO(ssInflate);
 			}
 		}
 	}
 	else if (InflateFlg == true) {
-		DeleteGO(ss);
+		DeleteGO(ssInflate);
 		InflateFlg = false;
 	}
 
@@ -76,8 +76,26 @@ void BalloonAir::Air()
 
 			//空気が一定量抜ける。
 			BleedAir(AIR_COST_BOOST);
+
+			if (m_accelSECanPlay == true) {
+				m_accelSECanPlay = false;
+				ssAccel = NewGO<SoundSource>(0);
+				ssAccel->Init(L"Assets/sound/風船が加速する音.wav");
+				ssAccel->Play(true);
+			}
 		}
 	}
+	if (!g_pad[m_parentNum]->IsPress(enButtonA))
+	{
+		m_accelSEStopFlag = true;
+	}
+	if (m_accelSEStopFlag == true)
+	{
+		DeleteGO(ssAccel);
+		m_accelSEStopFlag = false;
+		m_accelSECanPlay = true;
+	}
+	
 	if (g_pad[m_parentNum]->IsPress(enButtonY))
 	{
 
@@ -85,8 +103,25 @@ void BalloonAir::Air()
 		
 		//空気が一定量抜ける。
 		BleedAir(AIR_COST_RISE_BOOST);
+		if (m_riseSECanPlay == true) {
+			m_riseSECanPlay = false;
+			ssRise = NewGO<SoundSource>(0);
+			ssRise->Init(L"Assets/sound/風船が加速する音.wav");
+			ssRise->Play(true);
+		}
+	}
+	if (!g_pad[m_parentNum]->IsPress(enButtonY))
+	{
+		m_riseSEStopFlag = true;
+	}
+	if (m_riseSEStopFlag == true)
+	{
+		DeleteGO(ssRise);
+		m_riseSEStopFlag = false;
+		m_riseSECanPlay = true;
 	}
 }
+
 
 //airの値分、風船に空気を加える
 void BalloonAir::AddAir(float air)
@@ -103,8 +138,8 @@ void  BalloonAir::BleedAir(float air)
 	if (m_airVolume < MIN_AIR_VOLUME)	//最小サイズより小さくなったら、死亡する。
 	{
 		m_parent->PlayerDeath();
-		SoundSource* ss = NewGO<SoundSource>(0);
-		ss->Init(L"Assets/sound/風船の萎んで死んだ音.wav");
-		ss->Play(false);
+		ssDeath = NewGO<SoundSource>(0);
+		ssDeath->Init(L"Assets/sound/風船の萎んで死んだ音.wav");
+		ssDeath->Play(false);
 	}
 }

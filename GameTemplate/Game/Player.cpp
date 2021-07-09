@@ -3,6 +3,8 @@
 #include "GameScene.h"
 #include "BackGround.h"
 #include "UIDisplay.h"
+#include "ResultScene.h"
+
 Player::~Player()
 {
 	DeleteGO(m_skinModelRender);
@@ -15,8 +17,8 @@ Player::~Player()
 		DeleteGO(m_skinModelRenderArrow);
 	}
 	GameScene* gameScene = FindGO<GameScene>("gameScene");
-	gameScene->SetIsAlive(m_playerNum, false);
-	gameScene->SetPlayerCount(gameScene->GetPlayerCount() - 1);
+	//gameScene->SetIsAlive(m_playerNum, false);
+	//gameScene->SetPlayerCount(gameScene->GetPlayerCount() - 1);
 	
 	DeleteGO(m_myAir);
 }
@@ -99,10 +101,18 @@ bool Player::Start()
 	else if (GetPlayerNum() == 7) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak07.efk");
 	}
+
+	SetPosition(m_position);//位置を設定する
+	SetScale({ m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE, });
+	m_charaCon.ReInit((m_myAirVolume / 2), m_position);
+
 	return true;
 }
 void Player::Update()
 {
+	if (m_canMove == false)
+		return;
+
 	Move();
 	Tilt();
 	HitWall();
@@ -110,6 +120,13 @@ void Player::Update()
 	Debug(GetPlayerNum());
 	SetScale({ m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE, });
 	m_charaCon.ReInit((m_myAirVolume / 2), m_position);	
+
+	if (m_enemy.size() == 0)
+	{
+		m_resultScene = NewGO<ResultScene>(0, "resultScene");
+		m_resultScene->SetWinner(this);
+		m_canMove = false;
+	}
 }
 
 Vector3 Player::Decele(Vector3 speed)//減速
@@ -316,6 +333,10 @@ void Player::PlayerDeath()
 {
 	m_stock--;//ストックを減らす
 	m_UIDisplay->SetPlayerDecStock(m_playerNum);//UIにストックが減ったことを伝える
+
+	m_myAir->AcceleSEStop();
+	m_myAir->riseSEStop();
+
 	if (m_stock > 0) {//ストックが残っていたら
 		m_resPos = m_backGround->GetRespawnPosition(m_playerNum);
 		m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
@@ -353,3 +374,4 @@ void Player::BreakBalloon()
 	m_breakEff.Play();
 	m_breakEff.Update();
 }
+

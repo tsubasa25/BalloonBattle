@@ -2,6 +2,8 @@
 class BalloonAir;
 class BackGround;
 class UIDisplay;
+class ResultScene;
+
 #include<vector>
 #include "BalloonAir.h"
 namespace
@@ -24,6 +26,8 @@ class Player:public IGameObject
 {
 private:
 	
+	bool m_canMove = false;
+
 	Vector3 m_scale = { Vector3::Zero };
 	int m_playerNum = 0;//プレイヤー番号
 	int m_stock = 3;//ストック
@@ -60,12 +64,14 @@ private:
 
 	Effect m_breakEff;
 
-public:
+	ResultScene* m_resultScene = nullptr;
 
-	
+public:
 	~Player();
 	bool Start();
 	void Update();
+
+	void SetCanMove(bool can) { m_canMove = can; };
 
 	void SetPlayerNum(int num) { m_playerNum = num; }//プレイヤー番号を設定する
 	int GetPlayerNum() { return m_playerNum; }//プレイヤー番号を入手する
@@ -99,6 +105,7 @@ public:
 	
 	Vector3 ReboundSpeed();//モデルの法線から反射する方向を求めて移動方向を決定する
 
+	float GetAirVolume() { return m_myAirVolume; };
 	void SetAirVolume(float air) { m_myAirVolume = air; };	//風船の空気の量を設定
 
 	void Tilt();	//風船の傾きを決める。

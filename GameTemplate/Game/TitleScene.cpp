@@ -110,9 +110,6 @@ void TitleScene::Update()
 	case 1:
 		m_selectLoopCount += 0.05f;
 		m_startPos.y = BALLOON_INI_POSY + (sin(m_selectLoopCount)) * 40.0f;
-		break;
-
-	default:
 		m_exitPos.y = BALLOON_INI_POSY;
 		m_optionPos.y = BALLOON_INI_POSY;
 		break;
@@ -123,9 +120,35 @@ void TitleScene::Update()
 		m_exitPos.y = BALLOON_INI_POSY;
 		m_startPos.y = BALLOON_INI_POSY;
 		break;
+
+	default:
+		break;
+	}
+
+	if (FloatingFlg == true) {
+		FloatingFlg = false;
+		ss = NewGO<SoundSource>(0);
+		ss->Init(L"Assets/sound/•—‘D‚Ì•‚—V‚·‚é‰¹.wav");
+		ss->SetVolume(0.2);
+		ss->Play(true);
+	}
+
+	if (g_pad[0]->IsTrigger(enButtonRight) || g_pad[0]->IsTrigger(enButtonLeft)) {
+
+		if (FloatingFlg == false) {
+			DeleteGO(ss);
+			FloatingFlg = true;
+		}
+		SoundSource* ss = NewGO<SoundSource>(0);
+		ss->Init(L"Assets/sound/‘I‘ð‰¹.wav");
+		ss->Play(false);
 	}
 
 	if (m_selectNum == 1 && g_pad[0]->IsTrigger(enButtonA)) {
+		DeleteGO(ss);
+		SoundSource* ss = NewGO<SoundSource>(0);
+		ss->Init(L"Assets/sound/Œˆ’è‰¹.wav");
+		ss->Play(false);
 		NewGO<MenuScene>(0, "menuScene");
 		DeleteGO(this);
 	}

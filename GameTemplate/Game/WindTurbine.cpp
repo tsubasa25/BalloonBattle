@@ -1,13 +1,18 @@
 #include "stdafx.h"
 #include "WindTurbine.h"
 #include "Player.h"
+#include "BackGround.h"
 WindTurbine::~WindTurbine()
 {
-
+	DeleteGO(m_WTBaseModelRender);
+	DeleteGO(m_WTBladesModelRender);
 }
 
 bool WindTurbine::Start()
 {
+	BackGround* backGround = FindGO<BackGround>("backGround");
+	m_WTBladesPos = backGround->GetWTBladesPos();
+
 	m_WTBaseModelRender = NewGO<SkinModelRender>(0);
 	m_WTBaseModelRender->Init("Assets/modelData/WindTurbineBase.tkm");
 	m_WTBaseModelRender->SetPosition(m_position);
@@ -27,13 +32,14 @@ bool WindTurbine::Start()
 
 void WindTurbine::Update()
 {
-	m_frontY = { 0.0f, 0.0f, 0.0f };//基準ベクトル（最初に向いている向き::これ必要）
+	m_frontY = { 0.0f, 0.0f, -1.0f };//基準ベクトル（最初に向いている向き::これ必要）
 	a += 0.01f;//回すスピード
 	m_rotY.SetRotation(Vector3::AxisY, a);//aの分だけYを回す
 	m_frontZ.y = 0;
 	m_rotY.Apply(m_frontY);
 	m_rot.Multiply(m_rotZ, m_rotY);
 	m_WTBladesModelRender->SetRotation(m_rot);
+	m_WTBaseModelRender->SetRotation(m_rotY);
 
 	WTMoveTimer++;//ループカウント
 	if (WTMoveFlag == false)//
@@ -65,8 +71,9 @@ void WindTurbine::Update()
 				if (m_diff.z < 0) {
 					m_angle *= -1;
 				}
-				if (m_angle <= 0.3 && m_angle >= -0.3) {
+				if (m_angle <= 1.0f && m_angle >= -1.0f) {
 					player->AddMoveSpeed(m_frontY / 2);
+					//player->AddMoveSpeed(m_frontY * player->GetAirVolume() / 20);
 				}
 			}
 

@@ -8,6 +8,7 @@ MenuScene::~MenuScene()
 {
 	DeleteGO(m_plCountFontRender);
 	DeleteGO(m_stageSelectFontRender);
+	DeleteGO(m_cursorFontRender);
 }
 
 bool MenuScene::Start()
@@ -50,7 +51,7 @@ void MenuScene::Update()
 	}
 }
 
-//カーソルの位置を決める。(今はまだカーソルなし。)
+//カーソルの位置を決める。
 void MenuScene::SetSelectNum()
 {
 	if (g_pad[0]->IsTrigger(enButtonDown))

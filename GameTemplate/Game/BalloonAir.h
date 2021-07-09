@@ -20,7 +20,16 @@ private:
 	Player* m_parent = nullptr;
 	int m_parentNum = 0;
 	float m_airVolume = 0.0f;//ïóëDÇÃëÂÇ´Ç≥(ïù)
-	SoundSource* ss = nullptr;
+	SoundSource* ssAccel = nullptr;
+	SoundSource* ssInflate = nullptr;
+	SoundSource* ssRise = nullptr;
+	SoundSource* ssDeath = nullptr;
+
+	bool InflateFlg = false;
+	bool m_accelSECanPlay = true;
+	bool m_accelSEStopFlag = false;
+	bool m_riseSECanPlay = true;
+	bool m_riseSEStopFlag = false;
 
 public:
 	bool Start();
@@ -35,6 +44,7 @@ public:
 
 	void SetAirVolume(float air) { m_airVolume = air; };
 
-	bool InflateFlg = false;
+	void AcceleSEStop() { m_accelSEStopFlag = true; };
+	void riseSEStop() { m_riseSEStopFlag = true; };
 };
 

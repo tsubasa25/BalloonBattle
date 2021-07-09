@@ -4,7 +4,21 @@
 #include "Player.h"
 UIDisplay::~UIDisplay()
 {
-
+	for (int i = 0; i < 8; i++)
+	{
+		if (m_playerUI_Sprite[i] != nullptr)
+		{
+			DeleteGO(m_playerUI_Sprite[i]);
+		}
+		if (m_playerstock_Sprite[i] != nullptr)
+		{
+			DeleteGO(m_playerstock_Sprite[i]);
+		}
+		if (m_playerstock_FontRender[i] != nullptr)
+		{
+			DeleteGO(m_playerstock_FontRender[i]);
+		}
+	}
 }
 bool UIDisplay::Start()
 {
