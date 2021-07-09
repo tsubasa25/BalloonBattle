@@ -7,6 +7,16 @@
 
 TitleScene::~TitleScene()
 {
+	DeleteGO(m_back_Sprite);
+	DeleteGO(m_cloud1_Sprite);
+	DeleteGO(m_cloud2_Sprite);
+	DeleteGO(m_undercloud01_Sprite);
+	DeleteGO(m_undercloud02_Sprite);
+	DeleteGO(m_undercloud11_Sprite);
+	DeleteGO(m_undercloud12_Sprite);
+	DeleteGO(m_undercloud21_Sprite);
+	DeleteGO(m_undercloud22_Sprite);
+	
 	DeleteGO(m_title_Sprite);
 	DeleteGO(m_start_Sprite);
 	DeleteGO(m_option_Sprite);
@@ -14,20 +24,48 @@ TitleScene::~TitleScene()
 }
 bool TitleScene::Start()
 {
-	m_title_Sprite = NewGO<SpriteRender>(0);
-	m_title_Sprite->Init("Assets/Image/TITLE01.dds", 1280, 720);
+	m_back_Sprite = NewGO<SpriteRender>(0);
+	m_back_Sprite->Init("Assets/Image/back.dds", 1280, 720);
+	
+	m_cloud1_Sprite = NewGO<SpriteRender>(0);
+	m_cloud1_Sprite->Init("Assets/Image/cloud.dds", 1280, 720);
+	m_cloud2_Sprite = NewGO<SpriteRender>(0);
+	m_cloud2_Sprite->Init("Assets/Image/cloud.dds", 1280, 720);
+	m_cloud2_Sprite->SetPosition({ m_cloud2Pos });
 
-	m_exit_Sprite = NewGO<SpriteRender>(1);
+	m_undercloud21_Sprite = NewGO<SpriteRender>(0);
+	m_undercloud21_Sprite->Init("Assets/Image/under_cloud2.dds", 1282, 730);
+	m_undercloud22_Sprite = NewGO<SpriteRender>(0);
+	m_undercloud22_Sprite->Init("Assets/Image/under_cloud2.dds", 1282, 730);
+	m_undercloud22_Sprite->SetPosition({ m_undercloud22Pos });
+	
+	m_undercloud11_Sprite = NewGO<SpriteRender>(0);
+	m_undercloud11_Sprite->Init("Assets/Image/under_cloud1.dds", 1282, 740);
+	m_undercloud12_Sprite = NewGO<SpriteRender>(0);
+	m_undercloud12_Sprite->Init("Assets/Image/under_cloud1.dds", 1282, 740);
+	m_undercloud12_Sprite->SetPosition({ m_undercloud12Pos });
+
+	m_undercloud01_Sprite = NewGO<SpriteRender>(0);
+	m_undercloud01_Sprite->Init("Assets/Image/under_cloud0.dds", 1282, 750);
+	m_undercloud02_Sprite = NewGO<SpriteRender>(0);
+	m_undercloud02_Sprite->Init("Assets/Image/under_cloud0.dds", 1282, 750);
+	m_undercloud02_Sprite->SetPosition({ m_undercloud02Pos });
+	
+
+	m_title_Sprite = NewGO<SpriteRender>(2);
+	m_title_Sprite->Init("Assets/Image/titleLogo.dds", 1280, 720);
+
+	m_exit_Sprite = NewGO<SpriteRender>(3);
 	m_exit_Sprite->Init("Assets/Image/EXIT.dds", 252, 420);
 	m_exit_Sprite->SetScale(BALLOON_SIZE);
 	m_exit_Sprite->SetPosition(EXIT_INI_POS);
 
-	m_start_Sprite = NewGO<SpriteRender>(1);
+	m_start_Sprite = NewGO<SpriteRender>(3);
 	m_start_Sprite->Init("Assets/Image/START.dds", 252, 420);
 	m_start_Sprite->SetScale(BALLOON_SIZE);
 	m_start_Sprite->SetPosition(START_INI_POS);
 
-	m_option_Sprite = NewGO<SpriteRender>(1);
+	m_option_Sprite = NewGO<SpriteRender>(3);
 	m_option_Sprite->Init("Assets/Image/OPTION.dds", 252, 420);
 	m_option_Sprite->SetScale(BALLOON_SIZE);
 	m_option_Sprite->SetPosition(OPTION_INI_POS);
@@ -43,6 +81,9 @@ bool TitleScene::Start()
 
 void TitleScene::Update()
 {
+
+	BackMove();
+
 	if (g_pad[0]->IsTrigger(enButtonRight)) {
 		m_selectNum += 1;
 		m_selectLoopCount = 0;
@@ -114,4 +155,54 @@ void TitleScene::Update()
 	m_option_Sprite->SetPosition(m_optionPos);
 	m_start_Sprite->SetPosition(m_startPos);
 	m_exit_Sprite->SetPosition(m_exitPos);
+}
+
+void TitleScene::BackMove()
+{
+	if (m_cloud1Pos.x < -1280) {
+		m_cloud1Pos.x = 1280;
+	}
+	if (m_cloud2Pos.x < -1280) {
+		m_cloud2Pos.x = 1280;
+	}
+	if (m_undercloud01Pos.x > 1280) {
+		m_undercloud01Pos.x = -1280;
+	}
+	if (m_undercloud02Pos.x > 1280) {
+		m_undercloud02Pos.x = -1280;
+	}
+	if (m_undercloud11Pos.x > 1280) {
+		m_undercloud11Pos.x = -1280;
+	}
+	if (m_undercloud12Pos.x > 1280) {
+		m_undercloud12Pos.x = -1280;
+	}
+	if (m_undercloud21Pos.x > 1280) {
+		m_undercloud21Pos.x = -1280;
+	}
+	if (m_undercloud22Pos.x > 1280) {
+		m_undercloud22Pos.x = -1280;
+	}
+
+
+	m_cloud1Pos.x-= m_BM_MoveSpeed;
+	m_cloud2Pos.x-= m_BM_MoveSpeed;
+	m_undercloud21Pos.x+=m_BM_MoveSpeed;
+	m_undercloud22Pos.x+=m_BM_MoveSpeed;
+	m_undercloud11Pos.x+=m_BM_MoveSpeed*2;
+	m_undercloud12Pos.x+=m_BM_MoveSpeed*2;
+	m_undercloud01Pos.x+=m_BM_MoveSpeed*3;
+	m_undercloud02Pos.x+=m_BM_MoveSpeed*3;
+
+	m_cloud1_Sprite->SetPosition({ m_cloud1Pos });
+	m_cloud2_Sprite->SetPosition({ m_cloud2Pos });
+
+	m_undercloud21_Sprite->SetPosition({ m_undercloud21Pos });
+	m_undercloud22_Sprite->SetPosition({ m_undercloud22Pos });
+	m_undercloud11_Sprite->SetPosition({ m_undercloud11Pos });
+	m_undercloud12_Sprite->SetPosition({ m_undercloud12Pos });
+	m_undercloud01_Sprite->SetPosition({ m_undercloud01Pos });
+	m_undercloud02_Sprite->SetPosition({ m_undercloud02Pos });
+	
+
 }

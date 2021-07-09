@@ -31,7 +31,7 @@ bool Player::Start()
 	m_skinModelRenderArrow->Init("Assets/modelData/arrow.tkm");
 
 	m_skinModelRender = NewGO<SkinModelRender>(0);
-	m_skinModelRender->SetShadowCasterFlag(false);
+	m_skinModelRender->SetShadowCasterFlag(true);
 
 	//m_skinModelRender->Init("Assets/modelData/Balloon0.tkm");
 	if (GetPlayerNum() == 0) {
