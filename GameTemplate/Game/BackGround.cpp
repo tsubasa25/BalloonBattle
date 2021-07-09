@@ -7,6 +7,9 @@
 BackGround::~BackGround()
 {
     DeleteGO(m_skinModelRender);
+    DeleteGO(m_map1BGM);
+    DeleteGO(m_map2BGM);
+    DeleteGO(m_map3BGM);
 }
 bool BackGround::Start()
 {
@@ -14,12 +17,27 @@ bool BackGround::Start()
     //ステージは影を発生させる
     m_skinModelRender->SetShadowCasterFlag(false);
     
-     if (m_stageNum == 1)
+    if (m_stageNum == 1) {
         m_skinModelRender->Init("Assets/modelData/SkyIsland.tkm");
-    else if (m_stageNum == 2)
+        m_map1BGM = NewGO<SoundSource>(0);
+        m_map1BGM->Init(L"Assets/sound/マップ1BGM.wav", SoundType::enBGM);
+        m_map1BGM->SetVolume(SOUND_MAP_BGM_VOLUME);
+        m_map1BGM->Play(true);
+    }
+    else if (m_stageNum == 2) {
         m_skinModelRender->Init("Assets/modelData/BuildingStage.tkm");
-    else if (m_stageNum == 3)
+        m_map2BGM = NewGO<SoundSource>(0);
+        m_map2BGM->Init(L"Assets/sound/マップ2BGM.wav", SoundType::enBGM);
+        m_map2BGM->SetVolume(SOUND_MAP_BGM_VOLUME);
+        m_map2BGM->Play(true);
+    }
+    else if (m_stageNum == 3) {
         m_skinModelRender->Init("Assets/modelData/TrapStage.tkm");
+        m_map3BGM = NewGO<SoundSource>(0);
+        m_map3BGM->Init(L"Assets/sound/マップ3BGM.wav", SoundType::enBGM);
+        m_map3BGM->SetVolume(SOUND_MAP_BGM_VOLUME);
+        m_map3BGM->Play(true);
+    }
        //ステージのモデルの静的物理モデルを作成    
     m_physicsStaticObject.CreateFromModel(m_skinModelRender->GetModel(), m_skinModelRender->GetModel().GetWorldMatrix());
 

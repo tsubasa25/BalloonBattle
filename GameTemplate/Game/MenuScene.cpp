@@ -9,6 +9,7 @@ MenuScene::~MenuScene()
 	DeleteGO(m_plCountFontRender);
 	DeleteGO(m_stageSelectFontRender);
 	DeleteGO(m_cursorFontRender);
+	DeleteGO(m_menuBGM);
 }
 
 bool MenuScene::Start()
@@ -24,6 +25,11 @@ bool MenuScene::Start()
 	m_stageSelectFontRender = NewGO<FontRender>(0);
 	m_stageSelectFontRender->SetPosition(STAGE_NUM_FONT_POS);
 	m_stageSelectFontRender->SetText(L"ステージ  : " + std::to_wstring(m_stageNum) + L" SkyIslandStage");
+
+	m_menuBGM = NewGO<SoundSource>(0);
+	m_menuBGM->Init(L"Assets/sound/マップ選択画面BGM.wav", SoundType::enBGM);
+	m_menuBGM->SetVolume(SOUND_MENU_BGM_VOLUME);
+	m_menuBGM->Play(true);
 
 	return true;
 }

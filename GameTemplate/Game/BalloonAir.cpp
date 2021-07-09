@@ -34,9 +34,9 @@ void BalloonAir::Air()
 		{
 			//止まっているときにBボタンを押すと、膨む。
 			AddAir(ADD_AIR_TO_BALLOON_POWER);
-			
-			if (InflateFlg == false ) {
-				InflateFlg = true;
+
+			if (m_inflateSECanPlay == true ) {
+				m_inflateSECanPlay = false;
 				ssInflate = NewGO<SoundSource>(0);
 				ssInflate->Init(L"Assets/sound/風船を膨らませる音.wav");
 				ssInflate->Play(true);
@@ -46,9 +46,15 @@ void BalloonAir::Air()
 			}
 		}
 	}
-	else if (InflateFlg == true) {
+	if (!g_pad[m_parentNum]->IsPress(enButtonB))
+	{
+		m_inflateSEStopFlag = true;
+	}
+	if (m_inflateSEStopFlag == true)
+	{
 		DeleteGO(ssInflate);
-		InflateFlg = false;
+		m_inflateSEStopFlag = false;
+		m_inflateSECanPlay = true;
 	}
 
 	//プレイヤーがスティックを倒しているとき

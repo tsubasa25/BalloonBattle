@@ -11,6 +11,7 @@ TitleScene::~TitleScene()
 	DeleteGO(m_start_Sprite);
 	DeleteGO(m_option_Sprite);
 	DeleteGO(m_exit_Sprite);
+	DeleteGO(m_titleBGM);
 }
 bool TitleScene::Start()
 {
@@ -34,7 +35,7 @@ bool TitleScene::Start()
 
 	//BGMを再生
 	m_titleBGM = NewGO<SoundSource>(0);
-	m_titleBGM->Init(L"Assets/sound/タイトル曲.wav", SoundType::enBGM);
+	m_titleBGM->Init(L"Assets/sound/タイトルBGM.wav", SoundType::enBGM);
 	m_titleBGM->SetVolume(SOUND_BGM_TITLE_VOLUME);
 	m_titleBGM->Play(true);
 
