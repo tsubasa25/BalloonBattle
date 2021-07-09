@@ -74,6 +74,7 @@ public:
 	void Update();
 
 	void SetCanMove(bool can) { m_canMove = can; };
+	bool GetCanMove() { return m_canMove; };
 
 	void SetPlayerNum(int num) { m_playerNum = num; }//プレイヤー番号を設定する
 	int GetPlayerNum() { return m_playerNum; }//プレイヤー番号を入手する
