@@ -37,6 +37,7 @@ private:
 	int m_gameStartCallTimer = INI_GAME_START_CALL_TIME;
 	int m_lookStageTimer = INI_LOOK_STAGE_TIME;
 	FontRender* m_stageNameFontRender = nullptr;
+	Vector2 m_stageNamePos = {Vector2::Zero};
 
 	DirectionLight* m_directionLight = nullptr;
 
@@ -53,5 +54,6 @@ public:
 
 	void Retri();
 	void SetGameState(int num) { m_gameSceneState = num; };
+	int GetGameState() { return m_gameSceneState; };
 };
 

@@ -116,28 +116,39 @@ void GameScene::Update()
 
 void GameScene::LookStage()
 {
+    //最初の処理
     if (m_lookStageTimer == INI_LOOK_STAGE_TIME)
     {
-        g_camera3D->SetPosition({ 0.0f,500.0f,-5000.0f });
+        g_camera3D->SetPosition({ -4000.0f,500.0f,0.0f });
 
         m_stageNameFontRender = NewGO<FontRender>(1);
 
         BackGround* backGround = FindGO<BackGround>("backGround");
         std::wstring stageName = backGround->GetStageName();
         m_stageNameFontRender->SetText(stageName);
-
-        m_stageNameFontRender->SetPosition({-550.0f,-200.0f});
+        m_stageNamePos = { -1800.0f,-200.0f };
+        m_stageNameFontRender->SetPosition(m_stageNamePos);
         m_stageNameFontRender->SetScale(1.0f);
         m_stageNameFontRender->SetShadowFlag(true);
         m_stageNameFontRender->SetShadowColor({0.0f,0.0f,0.0f,1.0f});
     }
+    //ステージ名の動き
+    if (m_stageNamePos.x < -500.0f)
+        m_stageNamePos.x += 40.0f;
+    else if (m_stageNamePos.x < -350)
+        m_stageNamePos.x += 1.0f;
+    else 
+        m_stageNamePos.x += 80.0f;
 
+    m_stageNameFontRender->SetPosition(m_stageNamePos);
+
+    //カメラの動き
     Vector3 right = g_camera3D->GetRight();
     Vector3 cameraPos = g_camera3D->GetPosition();
-    cameraPos += right * 30.0f;
-
+    cameraPos += right * 40.0f;
     g_camera3D->SetPosition(cameraPos);
 
+    //次の処理へ
     if (g_pad[0]->IsTrigger(enButtonA) || m_lookStageTimer <= 0)
     {
         DeleteGO(m_stageNameFontRender);
@@ -154,10 +165,12 @@ void GameScene::GameStartCall()
     if (m_gameStartCallTimer == INI_GAME_START_CALL_TIME)
     {
         m_gameStartFontRender->SetText(L"READY");
+        m_gameStartFontRender->SetPosition({-200.0f, 0.0f});
     }
     else if (m_gameStartCallTimer == 50)
     {
         m_gameStartFontRender->SetText(L"GO!!");
+        m_gameStartFontRender->SetPosition({ -150.0f, 0.0f });
     }
     else if(m_gameStartCallTimer <= 0)
     {

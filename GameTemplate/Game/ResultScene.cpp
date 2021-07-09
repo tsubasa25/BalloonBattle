@@ -190,9 +190,24 @@ void ResultScene::SetCursorPos()
 	{
 		AddSelectMenuNum(-1);
 	}
+
+	//カーソルの左右の動き
+	m_cursorMoveSpeedX -= 0.1f;
+
+	if(m_cursorMoveSpeedX > 0)
+		m_cursorPos.x -= m_cursorMoveSpeedX * m_cursorMoveSpeedX;
+	else 
+		m_cursorPos.x += m_cursorMoveSpeedX * m_cursorMoveSpeedX;
+
+	if (m_cursorPos.x > RESULT_CURSOR_FONT_INI_POS.x)	//カーソルの動きをリセットする。
+	{
+		m_cursorMoveSpeedX = INI_CURSOR_MOVE_SPEED_X;
+		m_cursorPos.x = RESULT_CURSOR_FONT_INI_POS.x;
+	}
+	m_cursorFontRender->SetPosition(m_cursorPos);
 }
 
-//カーソルの位置をずらす。
+//カーソルの位置を上下に移動する。
 void ResultScene::AddSelectMenuNum(int num)
 {
 	m_selectMenuNum += num;
@@ -214,5 +229,4 @@ void ResultScene::AddSelectMenuNum(int num)
 		m_cursorPos.y = BACK_TIRLE_FONT_POS.y;
 		break;
 	}
-	m_cursorFontRender->SetPosition(m_cursorPos);
 }
