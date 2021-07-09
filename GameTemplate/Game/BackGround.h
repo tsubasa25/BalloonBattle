@@ -8,10 +8,10 @@ namespace
 {
 	const int RESPAWN_POSITION_NUM = 8;	//リスポーン地点の総数
 	const float RESPAWN_POSITION_HEIGHT = 800.0f;	//リスポーンするときにプレイヤーが降りてくる高さ。
-const std::wstring STAGE_ONE_NAME = { L"SkyIsLand Stage" };
+	const std::wstring STAGE_ONE_NAME = { L"SkyIsLand Stage" };
 	const std::wstring STAGE_TWO_NAME = { L"Building Stage" };
 	const std::wstring STAGE_THREE_NAME = { L"Trap Stage" };
-const float SOUND_MAP_BGM_VOLUME = 0.2f;
+	const float SOUND_MAP_BGM_VOLUME = 0.2f;
 }
 
 
@@ -52,8 +52,10 @@ private:
 
 	GimmickNeedle* m_needle = nullptr;
 
-std::wstring m_stageName = {L"Hoge"};
-SoundSource* m_map1BGM = nullptr;
+	std::wstring m_stageName = {L"Hoge"};
+
+	SoundSource* m_map1BGM = nullptr;
 	SoundSource* m_map2BGM = nullptr;
-	SoundSource* m_map3BGM = nullptr;};
+	SoundSource* m_map3BGM = nullptr;
+};
 
