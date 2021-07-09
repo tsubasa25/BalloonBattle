@@ -68,6 +68,9 @@ void ResultScene::GameSet()
 		m_winFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
 
 		m_winnerPl->SetPosition(m_winnerPos);
+		m_winnerPl->SetMoveSpeed(Vector3::Zero);
+		m_winnerPl->Tilt();
+
 		QueryGOs<UIDisplay>("UIdisplay", [this](UIDisplay* UIdisplay)->bool {
 			DeleteGO(UIdisplay);
 			return true;
@@ -82,7 +85,7 @@ void ResultScene::GameSet()
 			});
 
 		g_camera3D->SetPosition(m_cameraPos);
-		g_camera3D->SetTarget({0.0f,50.0f, 0.0f});
+		g_camera3D->SetTarget({0.0f,100.0f, 0.0f});
 	}
 }
 
@@ -93,9 +96,9 @@ void ResultScene::ZoomWinner()
 		m_winFontTimer--;
 		m_cameraMoveSpeed = m_cameraMoveSpeed * 1.05f;
 		m_cameraPos.z += m_cameraMoveSpeed;
-		if (m_cameraPos.z > -200.0f)
+		if (m_cameraPos.z > -500.0f)
 		{
-			m_cameraPos.z = -200.0f;
+			m_cameraPos.z = -500.0f;
 		}
 		g_camera3D->SetPosition(m_cameraPos);
 		return;

@@ -8,6 +8,8 @@ bool BalloonAir::Start()
 
 void BalloonAir::Update()
 {
+	if (m_parent->GetCanMove() == false)
+		return;
 	Air();	
 	m_parent->SetAirVolume(m_airVolume);
 }

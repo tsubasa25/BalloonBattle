@@ -53,9 +53,9 @@ void SpriteRender::Update()
 
 void SpriteRender::Render(RenderContext& rc, Camera* camera)
 {
-
+	if (rc.GetRenderStep() == RenderContext::eStep_Render) {
 		m_sprite.Draw(rc);
-	
+	}
 }
 
 //void SpriteRender::PostRender(RenderContext& rc)

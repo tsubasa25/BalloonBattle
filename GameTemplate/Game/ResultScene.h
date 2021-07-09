@@ -27,7 +27,7 @@ private:
 	ResultScene* m_resultScene = nullptr;
 
 	int m_mode = 0;
-	Vector3 m_cameraPos = { 0.0f, 100.0f, -10000.0f };
+	Vector3 m_cameraPos = { 0.0f, 300.0f, -10000.0f };
 	float m_cameraMoveSpeed = 1.0f;
 
 	Vector2 m_cursorPos = { RESULT_CURSOR_FONT_INI_POS };
