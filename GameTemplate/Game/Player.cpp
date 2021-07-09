@@ -106,6 +106,8 @@ bool Player::Start()
 	SetScale({ m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE, });
 	m_charaCon.ReInit((m_myAirVolume / 2), m_position);
 
+	m_hitEff.Init(u"Assets/effect/HitEff.efk");
+
 	return true;
 }
 void Player::Update()
@@ -204,6 +206,8 @@ void Player::HitPlayer()
 			m_moveSpeed = diff*(tmp.Length() * ((INI_AIR_VOLUME) /m_myAirVolume));//自分は大きさに反比例してふっとばされやすくなる
 		
 			m_myAir->BleedAir(m_myAirVolume * 0.1f);
+
+			PlayEffHit();
 
 			if (m_enemy[i]->GetPlayerNum() > m_playerNum)
 			{
@@ -375,3 +379,30 @@ void Player::BreakBalloon()
 	m_breakEff.Update();
 }
 
+//衝突時のエフェクトを再生する
+void Player::PlayEffHit()
+{
+	//エフェクトの向きを計算
+	Vector3 front = m_moveSpeed;
+	front.Normalize();
+	float n = front.Dot(Vector3::AxisZ);
+	float angle = acosf(n);
+	if (front.z < 0) {
+		angle *= -1;
+	}
+	Quaternion qRot;
+	qRot.SetRotation(Vector3::AxisY, angle);
+	m_hitEff.SetRotation(qRot);
+
+	//エフェクトの位置を計算
+	Vector3 pos = m_position;
+	pos += front * 3.0f;
+	pos.y += 20.0f;
+	m_hitEff.SetPosition(pos);
+
+	//エフェクトのサイズ
+	m_hitEff.SetScale({ m_myAirVolume / 3,m_myAirVolume / 3,m_myAirVolume / 3 });
+	
+	m_hitEff.Play();
+	m_hitEff.Update();
+}

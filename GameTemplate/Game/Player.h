@@ -66,6 +66,8 @@ private:
 
 	ResultScene* m_resultScene = nullptr;
 
+	Effect m_hitEff;
+
 public:
 	~Player();
 	bool Start();
@@ -112,6 +114,7 @@ public:
 
 	void PlayerDeath();	//キャラクターが死亡したときの処理
 	void BreakBalloon();	//風船破裂の処理。引数の位置で破裂エフェクトを表示
+	void PlayEffHit();	//プレイヤーの衝突時のエフェクト再生
 
 	//デバッグ用
 	void Debug(int pNum);
