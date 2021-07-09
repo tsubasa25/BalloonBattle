@@ -14,12 +14,21 @@ bool BackGround::Start()
     //ステージは影を発生させる
     m_skinModelRender->SetShadowCasterFlag(false);
     
-     if (m_stageNum == 1)
+    if (m_stageNum == 1)
+    {
         m_skinModelRender->Init("Assets/modelData/SkyIsland.tkm");
+        m_stageName = STAGE_ONE_NAME;
+    }
     else if (m_stageNum == 2)
+    {
         m_skinModelRender->Init("Assets/modelData/BuildingStage.tkm");
+        m_stageName = STAGE_TWO_NAME;
+    }
     else if (m_stageNum == 3)
+    {
         m_skinModelRender->Init("Assets/modelData/TrapStage.tkm");
+        m_stageName = STAGE_THREE_NAME;
+    }
        //ステージのモデルの静的物理モデルを作成    
     m_physicsStaticObject.CreateFromModel(m_skinModelRender->GetModel(), m_skinModelRender->GetModel().GetWorldMatrix());
 
