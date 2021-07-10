@@ -12,6 +12,7 @@ namespace
 	const Vector2 RETRI_FONT_POS = { -200.0f,30.0f };
 	const Vector2 BACK_MENU_FONT_POS = { -200.0f,-30.0f };
 	const Vector2 BACK_TIRLE_FONT_POS = { -200.0f, -90.0f };
+	const float INI_CURSOR_MOVE_SPEED_X = 2.0f;
 }
 
 class ResultScene : public IGameObject
@@ -27,10 +28,11 @@ private:
 	ResultScene* m_resultScene = nullptr;
 
 	int m_mode = 0;
-	Vector3 m_cameraPos = { 0.0f, 100.0f, -10000.0f };
+	Vector3 m_cameraPos = { 0.0f, 300.0f, -10000.0f };
 	float m_cameraMoveSpeed = 1.0f;
 
 	Vector2 m_cursorPos = { RESULT_CURSOR_FONT_INI_POS };
+	float m_cursorMoveSpeedX = INI_CURSOR_MOVE_SPEED_X;
 	FontRender* m_cursorFontRender = nullptr;
 
 	FontRender* m_retriFontRender = nullptr;

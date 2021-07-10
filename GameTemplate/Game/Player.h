@@ -66,12 +66,15 @@ private:
 
 	ResultScene* m_resultScene = nullptr;
 
+	Effect m_hitEff;
+
 public:
 	~Player();
 	bool Start();
 	void Update();
 
 	void SetCanMove(bool can) { m_canMove = can; };
+	bool GetCanMove() { return m_canMove; };
 
 	void SetPlayerNum(int num) { m_playerNum = num; }//プレイヤー番号を設定する
 	int GetPlayerNum() { return m_playerNum; }//プレイヤー番号を入手する
@@ -114,6 +117,7 @@ public:
 
 	void PlayerDeath();	//キャラクターが死亡したときの処理
 	void BreakBalloon();	//風船破裂の処理。引数の位置で破裂エフェクトを表示
+	void PlayEffHit();	//プレイヤーの衝突時のエフェクト再生
 
 	//デバッグ用
 	void Debug(int pNum);

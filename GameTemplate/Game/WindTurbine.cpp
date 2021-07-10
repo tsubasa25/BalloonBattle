@@ -2,6 +2,7 @@
 #include "WindTurbine.h"
 #include "Player.h"
 #include "BackGround.h"
+#include "GameScene.h"
 WindTurbine::~WindTurbine()
 {
 	DeleteGO(m_WTBaseModelRender);
@@ -10,6 +11,8 @@ WindTurbine::~WindTurbine()
 
 bool WindTurbine::Start()
 {
+	m_gameScene = FindGO<GameScene>("gameScene");
+
 	BackGround* backGround = FindGO<BackGround>("backGround");
 	m_WTBladesPos = backGround->GetWTBladesPos();
 
@@ -32,6 +35,9 @@ bool WindTurbine::Start()
 
 void WindTurbine::Update()
 {
+	if (m_gameScene->GetGameState() != GAME_STATE_BATTLE)
+		WTMoveTimer = 0;
+
 	m_frontY = { 0.0f, 0.0f, -1.0f };//基準ベクトル（最初に向いている向き::これ必要）
 	a += 0.01f;//回すスピード
 	m_rotY.SetRotation(Vector3::AxisY, a);//aの分だけYを回す

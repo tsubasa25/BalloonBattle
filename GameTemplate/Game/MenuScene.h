@@ -6,6 +6,7 @@ namespace
 	const Vector2 CURSOR_FONT_INI_POS = { -350.0f,30.0f };	//ステージ選択のテキストの位置
 	const Vector2 PLYAER_COUNT_FONT_POS = { -300.0f,30.0f };	//プレイ人数のテキストの位置
 	const Vector2 STAGE_NUM_FONT_POS = { -300.0f,-30.0f };	//ステージ選択のテキストの位置
+	const float SOUND_MENU_BGM_VOLUME = 0.2f;
 }
 
 class MenuScene : public IGameObject
@@ -35,5 +36,7 @@ private:
 	Vector2 m_cursorPos = { CURSOR_FONT_INI_POS };
 
 	BackGround* m_backGround = nullptr;
+
+	SoundSource* m_menuBGM = nullptr;
 };
 

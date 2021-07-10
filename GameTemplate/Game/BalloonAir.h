@@ -25,7 +25,8 @@ private:
 	SoundSource* ssRise = nullptr;
 	SoundSource* ssDeath = nullptr;
 
-	bool InflateFlg = false;
+	bool m_inflateSECanPlay = true;
+	bool m_inflateSEStopFlag = false;
 	bool m_accelSECanPlay = true;
 	bool m_accelSEStopFlag = false;
 	bool m_riseSECanPlay = true;
@@ -45,6 +46,7 @@ public:
 	void SetAirVolume(float air) { m_airVolume = air; };
 
 	void AcceleSEStop() { m_accelSEStopFlag = true; };
-	void riseSEStop() { m_riseSEStopFlag = true; };
+	void RiseSEStop() { m_riseSEStopFlag = true; };
+	void InflateSEStop() { m_riseSEStopFlag = true; };
 };
 

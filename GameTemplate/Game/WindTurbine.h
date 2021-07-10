@@ -1,4 +1,5 @@
 #pragma once
+class GameScene;
 namespace
 {
 	const int WT_NOT_MOVE_INTERVAL = 400;	//風車が動いていない時間
@@ -40,5 +41,7 @@ private:
 	float m_bladesSpinPower = 0.01f;//回転スピード
 	float m_WTBladesAngle = 0.0f;//
 	Effect eff;
+
+	GameScene* m_gameScene = nullptr;
 };
 

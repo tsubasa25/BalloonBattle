@@ -7,6 +7,9 @@
 BackGround::~BackGround()
 {
     DeleteGO(m_skinModelRender);
+    DeleteGO(m_map1BGM);
+    DeleteGO(m_map2BGM);
+    DeleteGO(m_map3BGM);
 }
 bool BackGround::Start()
 {
@@ -18,14 +21,22 @@ bool BackGround::Start()
     switch (m_stageNum)
     {
     case 0://空島ステージ
-        m_skinModelRender->Init("Assets/modelData/SkyIsland.tkm");
-        break;
+        m_skinModelRender->Init("Assets/modelData/SkyIsland.tkm"); break;
     case 1://ビルステージ
-        m_skinModelRender->Init("Assets/modelData/BuildingStage.tkm");
-        break;
+        m_stageName = STAGE_TWO_NAME;
+        m_map2BGM = NewGO<SoundSource>(0);
+        m_map2BGM->Init(L"Assets/sound/マップ2BGM.wav", SoundType::enBGM);
+        m_map2BGM->SetVolume(SOUND_MAP_BGM_VOLUME);
+        m_map2BGM->Play(true);
+        m_skinModelRender->Init("Assets/modelData/BuildingStage.tkm");     break;
     case 2://トラップステージ
+        m_stageName = STAGE_THREE_NAME;
+        m_map3BGM = NewGO<SoundSource>(0);
+        m_map3BGM->Init(L"Assets/sound/マップ3BGM.wav", SoundType::enBGM);
+        m_map3BGM->SetVolume(SOUND_MAP_BGM_VOLUME);
+        m_map3BGM->Play(true);
         m_skinModelRender->Init("Assets/modelData/TrapStage.tkm");
-        break;
+    break;
     case 3://ランダムで決める
     {
         int randNum = 0;
@@ -51,8 +62,7 @@ bool BackGround::Start()
     
     }
    
-     //ステージのモデルの静的物理モデルを作成    
-    m_physicsStaticObject.CreateFromModel(m_skinModelRender->GetModel(), m_skinModelRender->GetModel().GetWorldMatrix());
+     //ステージのモデルの静的物理モデルを作成        m_physicsStaticObject.CreateFromModel(m_skinModelRender->GetModel(), m_skinModelRender->GetModel().GetWorldMatrix());
 
 
     m_gameScene = FindGO<GameScene>("gameScene");

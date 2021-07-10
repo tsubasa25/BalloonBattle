@@ -68,6 +68,9 @@ void ResultScene::GameSet()
 		m_winFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
 
 		m_winnerPl->SetPosition(m_winnerPos);
+		m_winnerPl->SetMoveSpeed(Vector3::Zero);
+		m_winnerPl->Tilt();
+
 		QueryGOs<UIDisplay>("UIdisplay", [this](UIDisplay* UIdisplay)->bool {
 			DeleteGO(UIdisplay);
 			return true;
@@ -82,7 +85,7 @@ void ResultScene::GameSet()
 			});
 
 		g_camera3D->SetPosition(m_cameraPos);
-		g_camera3D->SetTarget({0.0f,50.0f, 0.0f});
+		g_camera3D->SetTarget({0.0f,100.0f, 0.0f});
 	}
 }
 
@@ -93,9 +96,9 @@ void ResultScene::ZoomWinner()
 		m_winFontTimer--;
 		m_cameraMoveSpeed = m_cameraMoveSpeed * 1.05f;
 		m_cameraPos.z += m_cameraMoveSpeed;
-		if (m_cameraPos.z > -200.0f)
+		if (m_cameraPos.z > -500.0f)
 		{
-			m_cameraPos.z = -200.0f;
+			m_cameraPos.z = -500.0f;
 		}
 		g_camera3D->SetPosition(m_cameraPos);
 		return;
@@ -187,9 +190,24 @@ void ResultScene::SetCursorPos()
 	{
 		AddSelectMenuNum(-1);
 	}
+
+	//カーソルの左右の動き
+	m_cursorMoveSpeedX -= 0.1f;
+
+	if(m_cursorMoveSpeedX > 0)
+		m_cursorPos.x -= m_cursorMoveSpeedX * m_cursorMoveSpeedX;
+	else 
+		m_cursorPos.x += m_cursorMoveSpeedX * m_cursorMoveSpeedX;
+
+	if (m_cursorPos.x > RESULT_CURSOR_FONT_INI_POS.x)	//カーソルの動きをリセットする。
+	{
+		m_cursorMoveSpeedX = INI_CURSOR_MOVE_SPEED_X;
+		m_cursorPos.x = RESULT_CURSOR_FONT_INI_POS.x;
+	}
+	m_cursorFontRender->SetPosition(m_cursorPos);
 }
 
-//カーソルの位置をずらす。
+//カーソルの位置を上下に移動する。
 void ResultScene::AddSelectMenuNum(int num)
 {
 	m_selectMenuNum += num;
@@ -211,5 +229,4 @@ void ResultScene::AddSelectMenuNum(int num)
 		m_cursorPos.y = BACK_TIRLE_FONT_POS.y;
 		break;
 	}
-	m_cursorFontRender->SetPosition(m_cursorPos);
 }
