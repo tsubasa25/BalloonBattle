@@ -27,7 +27,7 @@ private:
 	Vector3 m_optionPos = { 300,-200,0 };
 	
 	SoundSource* ss = nullptr;
-
+	
 	int m_selectNum = 1;
 	float m_selectLoopCount = 0;
 

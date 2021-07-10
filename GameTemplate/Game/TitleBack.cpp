@@ -51,7 +51,7 @@ bool TitleBack::Start()
 
 	//BGMを再生
 	m_titleBGM = NewGO<SoundSource>(0);
-	m_titleBGM->Init(L"Assets/sound/タイトル曲.wav", SoundType::enBGM);
+	m_titleBGM->Init(L"Assets/sound/タイトルBGM.wav", SoundType::enBGM);
 	m_titleBGM->SetVolume(SOUND_BGM_TITLE_VOLUME);
 	m_titleBGM->Play(true);
 
