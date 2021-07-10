@@ -309,6 +309,7 @@
     <ClCompile Include="PostEffectManager.cpp" />
     <ClCompile Include="ResourceBankManager.cpp" />
     <ClCompile Include="ResultScene.cpp" />
+    <ClCompile Include="SelectScene.cpp" />
     <ClCompile Include="SkinModelRender.cpp" />
     <ClCompile Include="SoundEngine.cpp" />
     <ClCompile Include="SoundSource.cpp" />
@@ -324,6 +325,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="system\system.cpp" />
+    <ClCompile Include="TitleBack.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="tklFile.cpp" />
     <ClCompile Include="UIDisplay.cpp" />
@@ -413,6 +415,7 @@
     <ClInclude Include="PostEffectManager.h" />
     <ClInclude Include="ResourceBankManager.h" />
     <ClInclude Include="ResultScene.h" />
+    <ClInclude Include="SelectScene.h" />
     <ClInclude Include="SkinModelRender.h" />
     <ClInclude Include="SoundEngine.h" />
     <ClInclude Include="SoundSource.h" />
@@ -422,6 +425,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Stopwatch.h" />
     <ClInclude Include="system\system.h" />
+    <ClInclude Include="TitleBack.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="tklFile.h" />
     <ClInclude Include="UIDisplay.h" />

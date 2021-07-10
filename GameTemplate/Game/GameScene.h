@@ -12,8 +12,9 @@ public:
 	bool Start();
 	void Update();
 private:
-	int m_playerCount = 4;
-	
+	int m_playerCount = 0;
+	int m_stock = 0;
+
 	Player* player[8] = { nullptr,nullptr, nullptr, nullptr,nullptr,nullptr, nullptr, nullptr };
 	Vector3 m_iniPos[8] = { {-600,50,600} ,{600,50,600} ,{-600,50,-600} ,{600,50,-600},	{-400,50,400} ,{400,50,400} ,{-400,50,-400} ,{400,50,-400} };//èâä˙à íu
 	PointLight* pointLight[10] = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
@@ -37,6 +38,9 @@ public:
 	void SetPlayerCount(int num) { m_playerCount = num; }
 	int GetPlayerCount() { return m_playerCount; }
 	//void SetIsAlive(int pNum, bool alive) { m_IsAlive[pNum] = alive; }
+
+	void SetStock(int num) { m_stock = num; }
+	int GetStock() { return m_stock; }
 
 	void GameStartCall();
 

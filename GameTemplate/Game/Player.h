@@ -75,6 +75,8 @@ public:
 
 	void SetPlayerNum(int num) { m_playerNum = num; }//プレイヤー番号を設定する
 	int GetPlayerNum() { return m_playerNum; }//プレイヤー番号を入手する
+	
+	void SetPlayerStock(int num) { m_stock = num; }
 	int GetPlayerStock() { return m_stock; }//プレイヤーのストック数を入手する
 
 	void SetPlayerCount(int num) { m_playerCount = num; }//プレイヤー人数を設定する
