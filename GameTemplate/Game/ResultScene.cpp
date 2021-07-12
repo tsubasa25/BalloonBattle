@@ -6,7 +6,8 @@
 #include "GameScene.h"
 #include "BackGround.h"
 #include "GimmickNeedle.h"
-#include "MenuScene.h"
+#include "SelectScene.h"
+#include "TitleBack.h"
 
 ResultScene::~ResultScene()
 {
@@ -165,7 +166,8 @@ void ResultScene::Menu()
 				
 			DeleteGO(m_winnerPl);
 			DeleteGO(this);
-			NewGO<MenuScene>(0, "menuScene");
+			NewGO<SelectScene>(0, "selectScene");
+			NewGO<TitleBack>(0, "titleBack");
 		}
 		else if (m_selectMenuNum == 2)
 		{
@@ -176,6 +178,7 @@ void ResultScene::Menu()
 			DeleteGO(m_winnerPl);
 			DeleteGO(this);
 			NewGO<TitleScene>(0, "titleScene");
+			NewGO<TitleBack>(0, "titleBack");
 		}
 	}
 }

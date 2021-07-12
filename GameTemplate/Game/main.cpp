@@ -4,6 +4,7 @@
 #include "GameScene.h"
 #include "BackGround.h"
 #include "TitleBack.h"
+#include "TitleScene.h"
 namespace
 {
     const Vector3 LIGHTCAMERA_POSITION = { 0.0f, 2000.0f,0.0f };
@@ -56,7 +57,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     Stopwatch stopwatch;
 
     PreLoad();
-    
+    TitleScene* titleScene = NewGO<TitleScene>(0, "titleScene");
     TitleBack* titleBack = NewGO<TitleBack>(0, "titleBack");
    /* GameScene*gameScene=NewGO<GameScene>(0,"gameScene");*/   
    /* NewGO<BackGround>(0);*/

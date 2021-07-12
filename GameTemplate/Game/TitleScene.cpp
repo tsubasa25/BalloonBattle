@@ -5,6 +5,7 @@
 #include "UIDisplay.h"
 #include "MenuScene.h"
 #include "SelectScene.h"
+
 TitleScene::~TitleScene()
 {
 	
@@ -16,7 +17,6 @@ TitleScene::~TitleScene()
 }
 bool TitleScene::Start()
 {	
-
 	m_title_Sprite = NewGO<SpriteRender>(2);
 	m_title_Sprite->Init("Assets/Image/titleLogo.dds", 1280, 720);
 

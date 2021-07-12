@@ -289,12 +289,12 @@ void SelectScene::Update()
 	else if (m_titleState==enStageSelect)
 	{
 		if (g_pad[0]->IsTrigger(enButtonA))
-		{
-			BackGround* backGround = NewGO<BackGround>(0,"backGround");
-			backGround->SetStageNum(m_stageNum);
+		{	
 			GameScene* gameScene = NewGO<GameScene>(0, "gameScene");
 			gameScene->SetPlayerCount(m_playerCount);
 			gameScene->SetStock(m_playerStock);
+			BackGround* backGround = NewGO<BackGround>(0, "backGround");
+			backGround->SetStageNum(m_stageNum);
 			NewGO<UIDisplay>(0, "UIdisplay");//= UIDisplay* UIdisplay 
 			TitleBack*titleBack = FindGO<TitleBack>("titleBack");
 			titleBack->SetDestroy(true);

@@ -19,9 +19,6 @@ TitleBack::~TitleBack()
 
 bool TitleBack::Start()
 {
-	titleScene = NewGO<TitleScene>(0,"titleScene");
-
-
 	m_back_Sprite = NewGO<SpriteRender>(0);
 	m_back_Sprite->Init("Assets/Image/back.dds", 1280, 720);
 
