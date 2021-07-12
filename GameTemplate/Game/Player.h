@@ -21,6 +21,7 @@ namespace
 	const float GRAVITY_INDEX = 2.0f;//落下スピードにかける指数
 	const float PAI = 3.14159f;//円周率
 	const Vector3 OVER_STAGE_LINE = {4000.0f, -2000.0f, 4000.0f};	//ステージから遠ざかりすぎた時に死亡する距離。
+	const float SOUND_BALLOON_SE_VOLUME = 0.4f;
 }
 class Player:public IGameObject
 {

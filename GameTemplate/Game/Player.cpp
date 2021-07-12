@@ -187,6 +187,7 @@ void Player::HitWall()//•Ç‚É‚ ‚½‚Á‚½‚Æ‚«
 		//SE‚ğÄ¶
 		SoundSource* ss = NewGO<SoundSource>(0);
 		ss->Init(L"Assets/sound/•—‘D‚Ì’µ‚Ë‚é‰¹.wav");
+		ss->SetVolume(SOUND_BALLOON_SE_VOLUME);
 		ss->Play(false);
 	}
 }
