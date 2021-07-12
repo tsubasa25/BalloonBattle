@@ -76,6 +76,9 @@ bool UIDisplay::Start()
 				m_playerstock_FontRender[i]->SetColor(STOCKNUM_COLOR);
 				m_playerstock_FontRender[i]->SetPosition(PL_STOCKNUM_POS[i]);
 				m_playerstock_FontRender[i]->SetScale({ STOCKNUM_SIZE });
+				m_playerstock_FontRender[i]->SetText(L"x" + std::to_wstring(player->GetPlayerStock()));
+
+
 				break;
 			}
 		}
@@ -478,3 +481,10 @@ void UIDisplay::Update()
 	}*/
 }
  
+void UIDisplay::SetPlayerStock(int stock, int plNum)
+{
+	m_playerstock_FontRender[plNum]->SetText(L"x" + std::to_wstring(stock));
+
+	m_PlDecStock[plNum] = true;
+
+}
