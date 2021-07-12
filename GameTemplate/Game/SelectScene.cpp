@@ -103,7 +103,7 @@ void SelectScene::Update()
 			m_arrowLoopCount = 0;
 			m_arrowPlayer_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
 			m_selectSE = NewGO<SoundSource>(0);
-			m_selectSE->Init(L"Assets/sound/決定音2.wav");
+			m_selectSE->Init(L"Assets/sound/セレクト決定音.wav");
 			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
 			m_selectSE->Play(false);
 		}
@@ -240,7 +240,7 @@ void SelectScene::Update()
 			m_titleState = enStageSelect;
 			m_arrowPlayer_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
 			m_selectSE = NewGO<SoundSource>(0);
-			m_selectSE->Init(L"Assets/sound/決定音2.wav");
+			m_selectSE->Init(L"Assets/sound/セレクト決定音.wav");
 			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
 			m_selectSE->Play(false);
 		}
@@ -330,7 +330,7 @@ void SelectScene::Update()
 		if (g_pad[0]->IsTrigger(enButtonA))
 		{	
 			m_selectSE = NewGO<SoundSource>(0);
-			m_selectSE->Init(L"Assets/sound/決定音2.wav");
+			m_selectSE->Init(L"Assets/sound/セレクト決定音.wav");
 			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
 			m_selectSE->Play(false);
 			DeleteGO(m_selectBGM);

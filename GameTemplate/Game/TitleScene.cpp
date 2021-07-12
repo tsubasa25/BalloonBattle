@@ -127,7 +127,7 @@ void TitleScene::Update()
 		if (m_selectNum == 1 && g_pad[0]->IsTrigger(enButtonA)) {
 			DeleteGO(ss);
 			SoundSource* ss = NewGO<SoundSource>(0);
-			ss->Init(L"Assets/sound/Œˆ’è‰¹.wav");
+			ss->Init(L"Assets/sound/ƒ^ƒCƒgƒ‹Œˆ’è‰¹.wav");
 			ss->SetVolume(SOUND_TITLE_SE_VOLUME);
 			ss->Play(false);
 
