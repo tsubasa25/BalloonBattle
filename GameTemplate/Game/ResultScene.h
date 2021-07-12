@@ -8,10 +8,10 @@ namespace
 	const int MODE_ZOOM_WINNER = 2;
 	const int MODE_MENU = 3;
 
-	const Vector2 RESULT_CURSOR_FONT_INI_POS = { -250.0f,30.0f };
-	const Vector2 RETRI_FONT_POS = { -200.0f,30.0f };
-	const Vector2 BACK_MENU_FONT_POS = { -200.0f,-30.0f };
-	const Vector2 BACK_TIRLE_FONT_POS = { -200.0f, -90.0f };
+	const Vector2 RESULT_CURSOR_FONT_INI_POS = { -200.0f,30.0f };
+	const Vector2 RETRI_FONT_POS = { -150.0f,30.0f };
+	const Vector2 BACK_MENU_FONT_POS = { -150.0f,-30.0f };
+	const Vector2 BACK_TIRLE_FONT_POS = { -150.0f, -90.0f };
 	const float INI_CURSOR_MOVE_SPEED_X = 2.0f;
 }
 

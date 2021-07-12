@@ -128,7 +128,7 @@ void GameScene::LookStage()
         m_stageNameFontRender->SetText(stageName);
         m_stageNamePos = { -1800.0f,-200.0f };
         m_stageNameFontRender->SetPosition(m_stageNamePos);
-        m_stageNameFontRender->SetScale(1.0f);
+        m_stageNameFontRender->SetScale(1.5f);
         m_stageNameFontRender->SetShadowFlag(true);
         m_stageNameFontRender->SetShadowColor({0.0f,0.0f,0.0f,1.0f});
     }
@@ -165,12 +165,12 @@ void GameScene::GameStartCall()
     if (m_gameStartCallTimer == INI_GAME_START_CALL_TIME)
     {
         m_gameStartFontRender->SetText(L"READY");
-        m_gameStartFontRender->SetPosition({-200.0f, 0.0f});
+        m_gameStartFontRender->SetPosition({-200.0f, 50.0f});
     }
     else if (m_gameStartCallTimer == 50)
     {
         m_gameStartFontRender->SetText(L"GO!!");
-        m_gameStartFontRender->SetPosition({ -150.0f, 0.0f });
+        m_gameStartFontRender->SetPosition({ -150.0f, 50.0f });
     }
     else if(m_gameStartCallTimer <= 0)
     {
