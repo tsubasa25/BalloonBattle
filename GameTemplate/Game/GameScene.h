@@ -5,6 +5,7 @@ namespace
 	const int GAME_STATE_LOOK_STAGE = 1;
 	const int GAME_STATE_START_CALL = 2;
 	const int GAME_STATE_BATTLE = 3;
+	const int GAME_STATE_RESULT = 4;
 	const Vector3 INI_CAMERA_POS = { 0.0f, 1200.0f, -1800.0f };
 	const Vector3 INI_CAMERA_TARGET_POS = { 0,0,-300 };
 	const int INI_GAME_START_CALL_TIME = 150;
@@ -50,9 +51,12 @@ public:
 	int GetPlayerCount() { return m_playerCount; }
 	//void SetIsAlive(int pNum, bool alive) { m_IsAlive[pNum] = alive; }
 
-void LookStage();
-void SetStock(int num) { m_stock = num; }
-	int GetStock() { return m_stock; }	void GameStartCall();
+	void LookStage();
+	void GameStartCall();
+	void Battle();
+
+	void SetStock(int num) { m_stock = num; }
+	int GetStock() { return m_stock; }	
 
 	void Retri();
 	void SetGameState(int num) { m_gameSceneState = num; };

@@ -2,6 +2,8 @@
 #include "GameScene.h"
 #include "Player.h"
 #include "BackGround.h"
+#include "GameTimer.h"
+
 GameScene::~GameScene()
 {
     DeleteGO(m_directionLight);
@@ -43,6 +45,8 @@ bool GameScene::Start()
     m_gameStartFontRender->SetShadowFlag(true);
     m_gameStartFontRender->SetShadowColor({0.0f,0.0f,0.0f,1.0f});
 
+    NewGO<GameTimer>(0, "gameTimer");
+
 	return true;
 }
 void GameScene::Update()
@@ -58,6 +62,10 @@ void GameScene::Update()
         break;
 
     case GAME_STATE_BATTLE:
+        Battle();
+        break;
+
+    case GAME_STATE_RESULT:
         break;
 
     default:
@@ -184,6 +192,10 @@ void GameScene::GameStartCall()
         m_gameStartCallTimer--;
 }
 
+void GameScene::Battle()
+{
+}
+
 void GameScene::Retri()
 {
     m_gameSceneState = GAME_STATE_LOOK_STAGE;
@@ -215,4 +227,6 @@ void GameScene::Retri()
             }
         }
     }
+
+    NewGO<GameTimer>(0, "gameTimer");
 }

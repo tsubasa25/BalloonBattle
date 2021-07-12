@@ -132,6 +132,8 @@ void Player::Update()
 
 	if (m_enemy.size() == 0)
 	{
+		GameScene* gameScene = FindGO<GameScene>("gameScene");
+		gameScene->SetGameState(GAME_STATE_RESULT);
 		m_resultScene = NewGO<ResultScene>(0, "resultScene");
 		m_resultScene->SetWinner(this);
 		m_canMove = false;

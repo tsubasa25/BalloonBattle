@@ -8,6 +8,7 @@
 #include "GimmickNeedle.h"
 #include "SelectScene.h"
 #include "TitleBack.h"
+#include "GameTimer.h"
 
 ResultScene::~ResultScene()
 {
@@ -87,6 +88,10 @@ void ResultScene::GameSet()
 			});
 		QueryGOs<GimmickNeedle>("gimmickNeedle", [this](GimmickNeedle* gimmickNeedle)->bool {
 			DeleteGO(gimmickNeedle);
+			return true;
+			});
+		QueryGOs<GameTimer>("gameTimer", [this](GameTimer* gameTimer)->bool {
+			DeleteGO(gameTimer);
 			return true;
 			});
 
