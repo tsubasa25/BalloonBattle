@@ -13,8 +13,6 @@ TitleBack::~TitleBack()
 	DeleteGO(m_undercloud12_Sprite);
 	DeleteGO(m_undercloud21_Sprite);
 	DeleteGO(m_undercloud22_Sprite);
-
-	DeleteGO(m_titleBGM);
 }
 
 bool TitleBack::Start()
@@ -46,12 +44,7 @@ bool TitleBack::Start()
 	m_undercloud02_Sprite->Init("Assets/Image/under_cloud0.dds", 1282, 750);
 	m_undercloud02_Sprite->SetPosition({ m_undercloud02Pos });
 
-	//BGM‚ğÄ¶
-	m_titleBGM = NewGO<SoundSource>(0);
-	m_titleBGM->Init(L"Assets/sound/ƒ^ƒCƒgƒ‹BGM.wav", SoundType::enBGM);
-	m_titleBGM->SetVolume(SOUND_BGM_TITLE_VOLUME);
-	m_titleBGM->Play(true);
-
+	
 	return true;
 }
 
