@@ -29,6 +29,7 @@ bool Player::Start()
 	m_skinModelRenderArrow->SetShadowCasterFlag(false);
 
 	m_skinModelRenderArrow->Init("Assets/modelData/arrow.tkm");
+	m_skinModelRenderArrow->SetScale({ Vector3::Zero });
 
 	m_skinModelRender = NewGO<SkinModelRender>(0);
 	m_skinModelRender->SetShadowCasterFlag(true);
@@ -113,7 +114,13 @@ bool Player::Start()
 void Player::Update()
 {
 	if (m_canMove == false)
+	{
+		if (m_respawnFlag == true)
+		{
+			Respawn();
+		}
 		return;
+	}
 
 	Move();
 	Tilt();
@@ -336,20 +343,21 @@ void Player::Tilt()
 void Player::PlayerDeath()
 {
 	m_stock--;//ストックを減らす
-	m_UIDisplay->SetPlayerDecStock(m_playerNum);//UIにストックが減ったことを伝える
+	//m_UIDisplay->SetPlayerDecStock(m_playerNum);//UIにストックが減ったことを伝える
+	m_UIDisplay->SetPlayerStock(m_stock, m_playerNum);
 
 	m_myAir->AcceleSEStop();
 	m_myAir->RiseSEStop();
 	m_myAir->InflateSEStop();
 
 	if (m_stock > 0) {//ストックが残っていたら
-		m_resPos = m_backGround->GetRespawnPosition(m_playerNum);
-		m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
-		m_charaCon.SetPosition(m_resPos);	//キャラコンに座標を設定
-		SetPosition(m_resPos);	//初期座標に飛ばす。
-		
+		m_respawnFlag = true;
+		m_respawnInterval = 100;
+
 		m_myAirVolume = INI_AIR_VOLUME;
 		m_myAir->SetAirVolume(INI_AIR_VOLUME);
+
+		m_canMove = false;
 	}
 	else {			
 			m_UIDisplay->SetPlayerDeath(m_playerNum);//UIに死亡したことを伝える			
@@ -406,4 +414,29 @@ void Player::PlayEffHit()
 	
 	m_hitEff.Play();
 	m_hitEff.Update();
+}
+
+void Player::Respawn()
+{
+	m_respawnInterval--;
+
+	//サイズを小さくして見えなくする。
+	m_skinModelRender->SetScale({ Vector3::Zero });
+	m_charaCon.ReInit((m_myAirVolume / 2), m_position);
+	m_skinModelRenderArrow->SetScale({ Vector3::Zero });
+
+	if (m_respawnInterval <= 0)
+	{
+		m_resPos = m_backGround->GetRespawnPosition(m_playerNum);
+		m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
+		m_charaCon.SetPosition(m_resPos);	//キャラコンに座標を設定
+		SetPosition(m_resPos);	//初期座標に飛ばす。
+
+		m_myAirVolume = INI_AIR_VOLUME;
+		m_myAir->SetAirVolume(INI_AIR_VOLUME);
+
+		m_respawnFlag = false;
+
+		m_canMove = true;
+	}
 }
