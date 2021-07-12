@@ -90,8 +90,8 @@ void TitleBack::Update()
 	}
 
 
-	m_cloud1Pos.x -= m_BM_MoveSpeed;
-	m_cloud2Pos.x -= m_BM_MoveSpeed;
+	m_cloud1Pos.x -= m_BM_MoveSpeed ;
+	m_cloud2Pos.x -= m_BM_MoveSpeed ;
 	m_undercloud21Pos.x += m_BM_MoveSpeed;
 	m_undercloud22Pos.x += m_BM_MoveSpeed;
 	m_undercloud11Pos.x += m_BM_MoveSpeed * 2;

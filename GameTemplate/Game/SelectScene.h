@@ -79,5 +79,9 @@ private:
 	int m_YNum = 0;
 	float m_selectLoopCount = 0;
 	int m_stageNum = 0;
+	int m_arrowLoopCount = 0;
+	bool m_arrowFlag = false;
+	int m_arrowSwichTime = 20;
+
 };
 

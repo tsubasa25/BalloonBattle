@@ -34,7 +34,7 @@ private:
 
 	SoundSource* m_titleBGM = nullptr;	//BGMのサウンドソース
 
-	float m_BM_MoveSpeed = 1.0; public:
+	float m_BM_MoveSpeed = 1.0;
 	bool m_destroy = false;
 };
 

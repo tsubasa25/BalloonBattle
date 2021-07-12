@@ -44,10 +44,10 @@ bool SelectScene::Start()
 	m_cStockNum_Sprite->SetPosition(m_cStockNumPos);
 
 	m_arrowPlayer_Sprite=NewGO<SpriteRender>(0);
-	m_arrowPlayer_Sprite->Init("Assets/Image/selectArrow.dds", 100, 200);
+	m_arrowPlayer_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
 	m_arrowPlayer_Sprite->SetPosition(m_arrowPlayerPos);
 	m_arrowStock_Sprite=NewGO<SpriteRender>(0);
-	m_arrowStock_Sprite->Init("Assets/Image/selectArrow.dds", 100, 200);
+	m_arrowStock_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
 	m_arrowStock_Sprite->SetPosition(m_arrowStockPos);
 
 	for (int i = 0; i<4;i++)
@@ -80,13 +80,14 @@ bool SelectScene::Start()
 		m_playerUI_Sprite[i]->SetPosition(m_playerUIPos[i]);
 		m_playerUI_Sprite[i]->SetScale(Vector3::Zero);
 	}
-
+	m_playerUI_Sprite[0]->SetScale(Vector3::One);
+	m_playerUI_Sprite[1]->SetScale(Vector3::One);
 	return true;
 }
 
 void SelectScene::Update()
 {
-	if (m_titleState==enPlayerNum)
+	if (m_titleState==TitleState::enPlayerNum)
 	{
 		if (g_pad[0]->IsTrigger(enButtonA))
 		{
@@ -94,6 +95,8 @@ void SelectScene::Update()
 			m_okPlayer_Sprite->Init("Assets/Image/OK!.dds", 240, 135);
 			m_okPlayer_Sprite->SetPosition(m_okPlayerPos);
 			m_titleState = enPlayerStock;
+			m_arrowLoopCount = 0;
+			m_arrowPlayer_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
 		}
 		if (g_pad[0]->IsTrigger(enButtonUp))
 		{
@@ -111,84 +114,100 @@ void SelectScene::Update()
 				m_playerCount = 8;
 			}
 		}
-		switch (m_playerCount)
+		if (g_pad[0]->IsTrigger(enButtonUp) || g_pad[0]->IsTrigger(enButtonDown))
 		{
-		case 2:
-			m_cPlayerCount_Sprite->Init("Assets/Image/c2.dds", 70, 140);
-			for (int i = 0; i < m_playerCount; i++)
+			switch (m_playerCount)
 			{
-				m_playerUI_Sprite[i]->SetScale({ Vector3::One });
+			case 2:
+				m_cPlayerCount_Sprite->Init("Assets/Image/c2.dds", 70, 140);
+				for (int i = 0; i < m_playerCount; i++)
+				{
+					m_playerUI_Sprite[i]->SetScale({ Vector3::One });
+				}
+				for (int i = 7; i >= m_playerCount; i--)
+				{
+					m_playerUI_Sprite[i]->SetScale({ Vector3::Zero });
+				}
+				break;
+			case 3:
+				m_cPlayerCount_Sprite->Init("Assets/Image/c3.dds", 70, 140);
+				for (int i = 0; i < m_playerCount; i++)
+				{
+					m_playerUI_Sprite[i]->SetScale({ Vector3::One });
+				}
+				for (int i = 7; i >= m_playerCount; i--)
+				{
+					m_playerUI_Sprite[i]->SetScale({ Vector3::Zero });
+				}
+				break;
+			case 4:
+				m_cPlayerCount_Sprite->Init("Assets/Image/c4.dds", 70, 140);
+				for (int i = 0; i < m_playerCount; i++)
+				{
+					m_playerUI_Sprite[i]->SetScale({ Vector3::One });
+				}
+				for (int i = 7; i >= m_playerCount; i--)
+				{
+					m_playerUI_Sprite[i]->SetScale({ Vector3::Zero });
+				}
+				break;
+			case 5:
+				m_cPlayerCount_Sprite->Init("Assets/Image/c5.dds", 70, 140);
+				for (int i = 0; i < m_playerCount; i++)
+				{
+					m_playerUI_Sprite[i]->SetScale({ Vector3::One });
+				}
+				for (int i = 7; i >= m_playerCount; i--)
+				{
+					m_playerUI_Sprite[i]->SetScale({ Vector3::Zero });
+				}
+				break;
+			case 6:
+				m_cPlayerCount_Sprite->Init("Assets/Image/c6.dds", 70, 140);
+				for (int i = 0; i < m_playerCount; i++)
+				{
+					m_playerUI_Sprite[i]->SetScale({ Vector3::One });
+				}
+				for (int i = 7; i >= m_playerCount; i--)
+				{
+					m_playerUI_Sprite[i]->SetScale({ Vector3::Zero });
+				}
+				break;
+			case 7:
+				m_cPlayerCount_Sprite->Init("Assets/Image/c7.dds", 70, 140);
+				for (int i = 0; i < m_playerCount; i++)
+				{
+					m_playerUI_Sprite[i]->SetScale({ Vector3::One });
+				}
+				for (int i = 7; i >= m_playerCount; i--)
+				{
+					m_playerUI_Sprite[i]->SetScale({ Vector3::Zero });
+				}
+				break;
+			case 8:
+				m_cPlayerCount_Sprite->Init("Assets/Image/c8.dds", 70, 140);
+				for (int i = 0; i < m_playerCount; i++)
+				{
+					m_playerUI_Sprite[i]->SetScale({ Vector3::One });
+				}
+				break;
+			default:
+				break;
 			}
-			for (int i = 7; i >= m_playerCount; i--)
-			{
-				m_playerUI_Sprite[i]->SetScale({ Vector3::Zero });
-			}
-			break;
-		case 3:
-			m_cPlayerCount_Sprite->Init("Assets/Image/c3.dds", 70, 140);
-			for (int i = 0; i < m_playerCount; i++)
-			{
-				m_playerUI_Sprite[i]->SetScale({ Vector3::One });
-			}
-			for (int i = 7; i >= m_playerCount; i--)
-			{
-				m_playerUI_Sprite[i]->SetScale({ Vector3::Zero });
-			}
-			break;
-		case 4:
-			m_cPlayerCount_Sprite->Init("Assets/Image/c4.dds", 70, 140);
-			for (int i = 0; i < m_playerCount; i++)
-			{
-				m_playerUI_Sprite[i]->SetScale({ Vector3::One });
-			}
-			for (int i = 7; i >= m_playerCount; i--)
-			{
-				m_playerUI_Sprite[i]->SetScale({ Vector3::Zero });
-			}
-			break;
-		case 5:
-			m_cPlayerCount_Sprite->Init("Assets/Image/c5.dds", 70, 140);
-			for (int i = 0; i < m_playerCount; i++)
-			{
-				m_playerUI_Sprite[i]->SetScale({ Vector3::One });
-			}
-			for (int i = 7; i >= m_playerCount; i--)
-			{
-				m_playerUI_Sprite[i]->SetScale({ Vector3::Zero });
-			}
-			break;
-		case 6:
-			m_cPlayerCount_Sprite->Init("Assets/Image/c6.dds", 70, 140);
-			for (int i = 0; i < m_playerCount; i++)
-			{
-				m_playerUI_Sprite[i]->SetScale({ Vector3::One });
-			}
-			for (int i = 7; i >= m_playerCount; i--)
-			{
-				m_playerUI_Sprite[i]->SetScale({ Vector3::Zero });
-			}
-			break;
-		case 7:
-			m_cPlayerCount_Sprite->Init("Assets/Image/c7.dds", 70, 140);
-			for (int i = 0; i < m_playerCount; i++)
-			{
-				m_playerUI_Sprite[i]->SetScale({ Vector3::One });
-			}
-			for (int i = 7; i >= m_playerCount; i--)
-			{
-				m_playerUI_Sprite[i]->SetScale({ Vector3::Zero });
-			}
-			break;
-		case 8:
-			m_cPlayerCount_Sprite->Init("Assets/Image/c8.dds", 70, 140);
-			for (int i = 0; i < m_playerCount; i++)
-			{
-				m_playerUI_Sprite[i]->SetScale({ Vector3::One });
-			}
-			break;
-		default:
-			break;
 		}
+		m_arrowLoopCount++;
+		if (m_arrowLoopCount % m_arrowSwichTime == 0)
+		{
+			if (m_arrowFlag == true)
+				m_arrowFlag = false;
+			else
+				m_arrowFlag = true;
+			if(m_arrowFlag==true)
+				m_arrowPlayer_Sprite->Init("Assets/Image/selectArrow.dds", 100, 200);
+			else
+				m_arrowPlayer_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
+		}
+		
 	}
 	else if (m_titleState == enPlayerStock)
 	{
@@ -198,6 +217,7 @@ void SelectScene::Update()
 		m_okStok_Sprite->Init("Assets/Image/OK!.dds", 240, 135);
 		m_okStok_Sprite->SetPosition(m_okStockPos);
 		m_titleState = enStageSelect;
+		m_arrowPlayer_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
 	}
 		if (g_pad[0]->IsTrigger(enButtonUp))
 		{
@@ -215,40 +235,55 @@ void SelectScene::Update()
 				m_playerStock = 9;
 			}
 		}
-		switch (m_playerStock)
+		if (g_pad[0]->IsTrigger(enButtonUp) || g_pad[0]->IsTrigger(enButtonDown))
 		{
-		case 0:
-			m_cStockNum_Sprite->Init("Assets/Image/c0.dds", 70, 140);
-			break;
-		case 1:
-			m_cStockNum_Sprite->Init("Assets/Image/c1.dds", 70, 140);
-			break;
-		case 2:
-			m_cStockNum_Sprite->Init("Assets/Image/c2.dds", 70, 140);
-			break;
-		case 3:
-			m_cStockNum_Sprite->Init("Assets/Image/c3.dds", 70, 140);
-			break;
-		case 4:
-			m_cStockNum_Sprite->Init("Assets/Image/c4.dds", 70, 140);
-			break;
-		case 5:
-			m_cStockNum_Sprite->Init("Assets/Image/c5.dds", 70, 140);
-			break;
-		case 6:
-			m_cStockNum_Sprite->Init("Assets/Image/c6.dds", 70, 140);
-			break;
-		case 7:
-			m_cStockNum_Sprite->Init("Assets/Image/c7.dds", 70, 140);
-			break;
-		case 8:
-			m_cStockNum_Sprite->Init("Assets/Image/c8.dds", 70, 140);
-			break;
-		case 9:
-			m_cStockNum_Sprite->Init("Assets/Image/c9.dds", 70, 140);
-			break;
-		default:
-			break;
+			switch (m_playerStock)
+			{
+			case 0:
+				m_cStockNum_Sprite->Init("Assets/Image/c0.dds", 70, 140);
+				break;
+			case 1:
+				m_cStockNum_Sprite->Init("Assets/Image/c1.dds", 70, 140);
+				break;
+			case 2:
+				m_cStockNum_Sprite->Init("Assets/Image/c2.dds", 70, 140);
+				break;
+			case 3:
+				m_cStockNum_Sprite->Init("Assets/Image/c3.dds", 70, 140);
+				break;
+			case 4:
+				m_cStockNum_Sprite->Init("Assets/Image/c4.dds", 70, 140);
+				break;
+			case 5:
+				m_cStockNum_Sprite->Init("Assets/Image/c5.dds", 70, 140);
+				break;
+			case 6:
+				m_cStockNum_Sprite->Init("Assets/Image/c6.dds", 70, 140);
+				break;
+			case 7:
+				m_cStockNum_Sprite->Init("Assets/Image/c7.dds", 70, 140);
+				break;
+			case 8:
+				m_cStockNum_Sprite->Init("Assets/Image/c8.dds", 70, 140);
+				break;
+			case 9:
+				m_cStockNum_Sprite->Init("Assets/Image/c9.dds", 70, 140);
+				break;
+			default:
+				break;
+			}
+		}
+		m_arrowLoopCount++;
+		if (m_arrowLoopCount % m_arrowSwichTime == 0)
+		{
+			if (m_arrowFlag == true)
+				m_arrowFlag = false;
+			else
+				m_arrowFlag = true;
+			if (m_arrowFlag == true)
+				m_arrowStock_Sprite->Init("Assets/Image/selectArrow.dds", 100, 200);
+			else
+				m_arrowStock_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
 		}
 	}
 	else if (m_titleState==enStageSelect)

@@ -127,5 +127,4 @@ void TitleScene::Update()
 		m_option_Sprite->SetPosition(m_optionPos);
 		m_start_Sprite->SetPosition(m_startPos);
 		m_exit_Sprite->SetPosition(m_exitPos);
-
 }
