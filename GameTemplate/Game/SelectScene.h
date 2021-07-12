@@ -16,6 +16,8 @@ namespace
 	const Vector3 P7_POS = { -270,-80,0 };
 	const Vector3 P8_POS = { -130,-80,0 };
 
+	const float SOUND_SELECT_BGM_VOLUME = 0.2f;
+	const float SOUND_SELECT_SE_VOLUME = 0.8f;
 }
 class SelectScene:public IGameObject
 {
@@ -64,6 +66,9 @@ private:
 	Vector3 m_stageBalloonPos[4] = { {SKY_BALL_POS},{BUIL_BALL_POS},{TRAP_BALL_POS},{RANDAM_BALL_POS} };
 
 	Vector3 m_playerUIPos[8] = { { P1_POS },{ P2_POS },{ P3_POS },{ P4_POS },{ P5_POS },{ P6_POS },{ P7_POS },{ P8_POS } };
+
+	SoundSource* m_selectBGM = nullptr;
+	SoundSource* m_selectSE = nullptr;
 
 	enum TitleState
 	{

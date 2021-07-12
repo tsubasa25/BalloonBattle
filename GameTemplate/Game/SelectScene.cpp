@@ -82,6 +82,11 @@ bool SelectScene::Start()
 	}
 	m_playerUI_Sprite[0]->SetScale(Vector3::One);
 	m_playerUI_Sprite[1]->SetScale(Vector3::One);
+
+	m_selectBGM = NewGO<SoundSource>(0);
+	m_selectBGM->Init(L"Assets/sound/マップ選択画面BGM.wav", SoundType::enBGM);
+	m_selectBGM->SetVolume(SOUND_SELECT_BGM_VOLUME);
+	m_selectBGM->Play(true);
 	return true;
 }
 
@@ -97,6 +102,10 @@ void SelectScene::Update()
 			m_titleState = enPlayerStock;
 			m_arrowLoopCount = 0;
 			m_arrowPlayer_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
+			m_selectSE = NewGO<SoundSource>(0);
+			m_selectSE->Init(L"Assets/sound/決定音2.wav");
+			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_selectSE->Play(false);
 		}
 		if (g_pad[0]->IsTrigger(enButtonUp))
 		{
@@ -104,6 +113,10 @@ void SelectScene::Update()
 			if (m_playerCount > 8)
 			{
 				m_playerCount = 2;
+				m_selectSE = NewGO<SoundSource>(0);
+				m_selectSE->Init(L"Assets/sound/選択音.wav");
+				m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+				m_selectSE->Play(false);
 			}
 		}
 		if (g_pad[0]->IsTrigger(enButtonDown))
@@ -112,6 +125,10 @@ void SelectScene::Update()
 			if (m_playerCount < 2)
 			{
 				m_playerCount = 8;
+				m_selectSE = NewGO<SoundSource>(0);
+				m_selectSE->Init(L"Assets/sound/選択音.wav");
+				m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+				m_selectSE->Play(false);
 			}
 		}
 		if (g_pad[0]->IsTrigger(enButtonUp) || g_pad[0]->IsTrigger(enButtonDown))
@@ -194,6 +211,10 @@ void SelectScene::Update()
 			default:
 				break;
 			}
+			m_selectSE = NewGO<SoundSource>(0);
+			m_selectSE->Init(L"Assets/sound/選択音.wav");
+			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_selectSE->Play(false);
 		}
 		m_arrowLoopCount++;
 		if (m_arrowLoopCount % m_arrowSwichTime == 0)
@@ -211,14 +232,18 @@ void SelectScene::Update()
 	}
 	else if (m_titleState == enPlayerStock)
 	{
-	if (g_pad[0]->IsTrigger(enButtonA))
-	{
-		m_okStok_Sprite = NewGO<SpriteRender>(0);
-		m_okStok_Sprite->Init("Assets/Image/OK!.dds", 240, 135);
-		m_okStok_Sprite->SetPosition(m_okStockPos);
-		m_titleState = enStageSelect;
-		m_arrowPlayer_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
-	}
+		if (g_pad[0]->IsTrigger(enButtonA))
+		{
+			m_okStok_Sprite = NewGO<SpriteRender>(0);
+			m_okStok_Sprite->Init("Assets/Image/OK!.dds", 240, 135);
+			m_okStok_Sprite->SetPosition(m_okStockPos);
+			m_titleState = enStageSelect;
+			m_arrowPlayer_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
+			m_selectSE = NewGO<SoundSource>(0);
+			m_selectSE->Init(L"Assets/sound/決定音2.wav");
+			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_selectSE->Play(false);
+		}
 		if (g_pad[0]->IsTrigger(enButtonUp))
 		{
 			m_playerStock++;//人数を増やす
@@ -226,17 +251,30 @@ void SelectScene::Update()
 			{
 				m_playerStock = 0;
 			}
+			m_selectSE = NewGO<SoundSource>(0);
+			m_selectSE->Init(L"Assets/sound/選択音.wav");
+			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_selectSE->Play(false);
 		}
 		if (g_pad[0]->IsTrigger(enButtonDown))
 		{
+
 			m_playerStock--;//人数を減らす
 			if (m_playerStock < 0)
 			{
 				m_playerStock = 9;
 			}
+			m_selectSE = NewGO<SoundSource>(0);
+			m_selectSE->Init(L"Assets/sound/選択音.wav");
+			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_selectSE->Play(false);
 		}
 		if (g_pad[0]->IsTrigger(enButtonUp) || g_pad[0]->IsTrigger(enButtonDown))
 		{
+			m_selectSE = NewGO<SoundSource>(0);
+			m_selectSE->Init(L"Assets/sound/選択音.wav");
+			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_selectSE->Play(false);
 			switch (m_playerStock)
 			{
 			case 0:
@@ -271,25 +309,31 @@ void SelectScene::Update()
 				break;
 			default:
 				break;
+
 			}
-		}
-		m_arrowLoopCount++;
-		if (m_arrowLoopCount % m_arrowSwichTime == 0)
-		{
-			if (m_arrowFlag == true)
-				m_arrowFlag = false;
-			else
-				m_arrowFlag = true;
-			if (m_arrowFlag == true)
-				m_arrowStock_Sprite->Init("Assets/Image/selectArrow.dds", 100, 200);
-			else
-				m_arrowStock_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
+			m_arrowLoopCount++;
+			if (m_arrowLoopCount % m_arrowSwichTime == 0)
+			{
+				if (m_arrowFlag == true)
+					m_arrowFlag = false;
+				else
+					m_arrowFlag = true;
+				if (m_arrowFlag == true)
+					m_arrowStock_Sprite->Init("Assets/Image/selectArrow.dds", 100, 200);
+				else
+					m_arrowStock_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
+			}
 		}
 	}
 	else if (m_titleState==enStageSelect)
 	{
 		if (g_pad[0]->IsTrigger(enButtonA))
 		{	
+			m_selectSE = NewGO<SoundSource>(0);
+			m_selectSE->Init(L"Assets/sound/決定音2.wav");
+			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_selectSE->Play(false);
+			DeleteGO(m_selectBGM);
 			GameScene* gameScene = NewGO<GameScene>(0, "gameScene");
 			gameScene->SetPlayerCount(m_playerCount);
 			gameScene->SetStock(m_playerStock);
@@ -302,6 +346,10 @@ void SelectScene::Update()
 		}
 		if (g_pad[0]->IsTrigger(enButtonUp))
 		{
+			m_selectSE = NewGO<SoundSource>(0);
+			m_selectSE->Init(L"Assets/sound/選択音.wav");
+			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_selectSE->Play(false);
 			m_XNum++;
 			m_selectLoopCount = 0;
 			if (m_XNum > 1)
@@ -311,6 +359,10 @@ void SelectScene::Update()
 		}
 		if (g_pad[0]->IsTrigger(enButtonDown))
 		{
+			m_selectSE = NewGO<SoundSource>(0);
+			m_selectSE->Init(L"Assets/sound/選択音.wav");
+			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_selectSE->Play(false);
 			m_XNum--;
 			m_selectLoopCount = 0;
 			if (m_XNum < 0)
@@ -320,6 +372,10 @@ void SelectScene::Update()
 		}
 		if (g_pad[0]->IsTrigger(enButtonRight))
 		{
+			m_selectSE = NewGO<SoundSource>(0);
+			m_selectSE->Init(L"Assets/sound/選択音.wav");
+			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_selectSE->Play(false);
 			m_YNum++;
 			m_selectLoopCount = 0;
 			if (m_YNum > 1)
@@ -329,12 +385,20 @@ void SelectScene::Update()
 		}
 		if (g_pad[0]->IsTrigger(enButtonLeft))
 		{
+			m_selectSE = NewGO<SoundSource>(0);
+			m_selectSE->Init(L"Assets/sound/選択音.wav");
+			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_selectSE->Play(false);
 			m_YNum--;
 			m_selectLoopCount = 0;
 			if (m_YNum < 0)
 			{
 				m_YNum = 1;
 			}
+			m_selectSE = NewGO<SoundSource>(0);
+			m_selectSE->Init(L"Assets/sound/選択音.wav");
+			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_selectSE->Play(false);
 		}
 		m_selectNum[0][0] = false;
 		m_selectNum[0][1] = false;
