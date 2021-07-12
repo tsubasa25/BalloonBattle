@@ -296,6 +296,7 @@
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="GimmickNeedle.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -403,6 +404,7 @@
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="GameTimer.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="GimmickNeedle.h" />
     <ClInclude Include="Level.h" />
