@@ -166,8 +166,8 @@ void ResultScene::Menu()
 				
 			DeleteGO(m_winnerPl);
 			DeleteGO(this);
-			NewGO<SelectScene>(0, "selectScene");
 			NewGO<TitleBack>(0, "titleBack");
+			NewGO<SelectScene>(0, "selectScene");
 		}
 		else if (m_selectMenuNum == 2)
 		{
@@ -177,8 +177,8 @@ void ResultScene::Menu()
 				
 			DeleteGO(m_winnerPl);
 			DeleteGO(this);
-			NewGO<TitleScene>(0, "titleScene");
 			NewGO<TitleBack>(0, "titleBack");
+			NewGO<TitleScene>(0, "titleScene");
 		}
 	}
 }

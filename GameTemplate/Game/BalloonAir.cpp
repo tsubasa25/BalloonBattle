@@ -85,6 +85,13 @@ void BalloonAir::Air()
 			//空気が一定量抜ける。
 			BleedAir(AIR_COST_BOOST);
 
+			//エフェクト
+			Effect boostEff;
+			boostEff.Init(u"Assets/effect/BoostEff.efk");
+			boostEff.Play();
+			boostEff.SetPosition(m_parent->GetPosition());
+			boostEff.Update();
+
 			if (m_accelSECanPlay == true) {
 				m_accelSECanPlay = false;
 				ssAccel = NewGO<SoundSource>(0);
@@ -111,6 +118,20 @@ void BalloonAir::Air()
 		
 		//空気が一定量抜ける。
 		BleedAir(AIR_COST_RISE_BOOST);
+
+		//エフェクトがAボタンのブーストと被らないようにする。
+		if (!g_pad[m_parentNum]->IsPress(enButtonA))
+		{
+			Effect boostEff;
+			boostEff.Init(u"Assets/effect/BoostRiseEff.efk");
+			boostEff.Play();
+			boostEff.SetPosition(m_parent->GetPosition());
+			Quaternion effQRot;
+			effQRot.SetRotation(Vector3::AxisX, 90.0f);
+			boostEff.SetRotation(effQRot);
+			boostEff.Update();
+		}
+
 		if (m_riseSECanPlay == true) {
 			m_riseSECanPlay = false;
 			ssRise = NewGO<SoundSource>(0);

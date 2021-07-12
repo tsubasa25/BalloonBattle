@@ -118,4 +118,8 @@ void PreLoad()
     SkinModelRender::PreLoadModel("Assets/modelData/NeedleBoard.tkm");
     SkinModelRender::PreLoadModel("Assets/modelData/WindTurbineBase.tkm");
     SkinModelRender::PreLoadModel("Assets/modelData/WindTurbineBlades.tkm");
+
+    SkinModelRender::PreLoadModel("Assets/modelData/SkyIsland.tkm");
+    SkinModelRender::PreLoadModel("Assets/modelData/BuildingStage.tkm");
+    SkinModelRender::PreLoadModel("Assets/modelData/TrapStage.tkm");
 }
