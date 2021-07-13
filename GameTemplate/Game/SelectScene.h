@@ -17,7 +17,7 @@ namespace
 	const Vector3 P8_POS = { -130,-80,0 };
 
 	const float SOUND_SELECT_BGM_VOLUME = 0.2f;
-	const float SOUND_SELECT_SE_VOLUME = 0.8f;
+	const float SOUND_SELECT_SE_VOLUME = 0.6f;
 }
 class SelectScene:public IGameObject
 {

@@ -7,8 +7,8 @@ namespace
 	const Vector3 BALLOON_SIZE = { 0.7f,0.7f,1.0f };
 	const int BALLOON_INI_POSY = -200;
 
-	const float SOUND_TITLE_SE_VOLUME = 0.8f;
-	const float SOUND_TITLE_BGM_VOLUME = 0.3f;
+	const float SOUND_TITLE_SE_VOLUME = 1.0f;
+	const float SOUND_TITLE_BGM_VOLUME = 0.2f;
 	const float SOUND_TITLE_FLOAT_SE_VOLUME = 0.2f;
 }
 class TitleScene : public IGameObject

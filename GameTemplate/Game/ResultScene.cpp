@@ -16,6 +16,7 @@ ResultScene::~ResultScene()
 	DeleteGO(m_backMenuFontRender);
 	DeleteGO(m_backTitleFontRender);
 	DeleteGO(m_cursorFontRender);
+	DeleteGO(m_resultBGM);
 }
 
 bool ResultScene::Start()
@@ -36,10 +37,6 @@ bool ResultScene::Start()
 	else 
 		m_gameSetFontRender->SetText(L"H O  G E");
 
-	/*m_resultBGM = NewGO<SoundSource>(0);
-	m_resultBGM->Init(L"Assets/sound/.wav");
-	m_resultBGM->SetVolume(SOUND_RESULT_BGM_VOLUME);
-	m_resultBGM->Play(true);*/
 
 	//m_mode = MODE_GAME_SET;
 
@@ -108,19 +105,34 @@ void ResultScene::GameSet()
 			DeleteGO(gameTimer);
 			return true;
 			});
+		QueryGOs<SoundSource>("mapBGM", [this](SoundSource* mapBGM)->bool {
+			DeleteGO(mapBGM);
+			return true;
+			});
 
 		g_camera3D->SetPosition(m_cameraPos);
 		g_camera3D->SetTarget({0.0f,100.0f, 0.0f});
+
 	}
 }
 
 void ResultScene::ZoomWinner()
 {
+	if (m_resultBGMFlg == false)
+	{
+		m_resultBGMFlg = true;
+		m_resultBGM = NewGO<SoundSource>(0);
+		m_resultBGM->Init(L"Assets/sound/ƒŠƒUƒ‹ƒgBGM.wav");
+		m_resultBGM->SetVolume(SOUND_RESULT_BGM_VOLUME);
+		m_resultBGM->Play(true);
+	}
+	
 	if (m_winFontTimer > 0)
 	{
 		m_winFontTimer--;
 		m_cameraMoveSpeed = m_cameraMoveSpeed * 1.05f;
 		m_cameraPos.z += m_cameraMoveSpeed;
+		
 		if (m_cameraPos.z > -500.0f)
 		{
 			m_cameraPos.z = -500.0f;

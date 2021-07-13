@@ -27,7 +27,7 @@ bool BackGround::Start()
     {
     case 0://空島ステージ
         m_stageName = STAGE_ZERO_NAME;
-        m_map1BGM = NewGO<SoundSource>(0);
+        m_map1BGM = NewGO<SoundSource>(0,"mapBGM");
         m_map1BGM->Init(L"Assets/sound/マップ1BGM.wav", SoundType::enBGM);
         m_map1BGM->SetVolume(SOUND_MAP_BGM_VOLUME);
         m_map1BGM->Play(true);
@@ -35,14 +35,14 @@ bool BackGround::Start()
         break;
     case 1://ビルステージ
         m_stageName = STAGE_ONE_NAME;
-        m_map2BGM = NewGO<SoundSource>(0);
+        m_map2BGM = NewGO<SoundSource>(0,"mapBGM");
         m_map2BGM->Init(L"Assets/sound/マップ2BGM.wav", SoundType::enBGM);
         m_map2BGM->SetVolume(SOUND_MAP_BGM_VOLUME);
         m_map2BGM->Play(true);
         m_skinModelRender->Init("Assets/modelData/BuildingStage.tkm");     break;
     case 2://トラップステージ
         m_stageName = STAGE_TWO_NAME;
-        m_map3BGM = NewGO<SoundSource>(0);
+        m_map3BGM = NewGO<SoundSource>(0,"mapBGM");
         m_map3BGM->Init(L"Assets/sound/マップ3BGM.wav", SoundType::enBGM);
         m_map3BGM->SetVolume(SOUND_MAP_BGM_VOLUME);
         m_map3BGM->Play(true);
