@@ -49,7 +49,7 @@ struct SPSIn {
 Texture2D<float4> g_albedo : register(t0);				//アルベドマップ
 StructuredBuffer<float4x4> g_boneMatrix : register(t3);	//ボーン行列。
 sampler g_sampler : register(s0);	//サンプラステート。
-TextureCube<float4> g_skyCubeMap : register(t11);
+TextureCube<float4> g_skyCubeMap : register(t10);
 ////////////////////////////////////////////////
 // 関数定義。
 ////////////////////////////////////////////////
@@ -123,8 +123,8 @@ SPSIn VSSkinMain(SVSIn vsIn)
 /*!
  *@brief	空用のシェーダー。
  */
- float4 PSMain_SkyCube(SPSIn In) : SV_Target0
- {
+float4 PSMain_SkyCube(SPSIn In) : SV_Target0
+{
  	float4 color = g_skyCubeMap.Sample(g_sampler, In.normal);
  	//color.xyz += emissionColor;
 

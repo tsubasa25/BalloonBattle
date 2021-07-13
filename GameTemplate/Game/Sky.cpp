@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "Sky.h"
-void Sky::Init()
+void Sky::Init(const wchar_t* filePath)
 {
 	//モデルのファイルパスの指定
 	ModelInitData initData;
 	initData.m_tkmFilePath = "Assets/modelData/skyCube.tkm";
 
 	//シェーダーパスの指定
-	initData.m_fxFilePath = "Assets/shader/shadowReceiver.fx";
+	initData.m_fxFilePath = "Assets/shader/Sky.fx";
 	
 	//シェーダーの頂点シェーダーのエントリー関数名の指定
 	initData.m_vsEntryPointFunc = "VSMain";
@@ -23,11 +23,12 @@ void Sky::Init()
 	//モデルデータの上方向の軸を指定
 	initData.m_modelUpAxis = enModelUpAxisZ;
 
-	m_skyTexture.InitFromDDSFile(L"modelData/preset/sky.dds");//テクスチャのファイルパス
-	initData.m_expandShaderResoruceView[1] = &m_skyTexture;
+	m_skyTexture.InitFromDDSFile(filePath);//テクスチャのファイルパス
+	
+	initData.m_expandShaderResoruceView[0] = &m_skyTexture;
 
-	initData.m_expandConstantBuffer[0] = &m_skyTexture;
-	initData.m_expandConstantBufferSize[0] = sizeof(m_skyTexture);
+	//initData.m_expandConstantBuffer[0] = &m_skyTexture;
+	//initData.m_expandConstantBufferSize[0] = sizeof(m_skyTexture);
 
 	//モデルの初期化
 	m_model.Init(initData);
@@ -39,6 +40,6 @@ void Sky::Render(RenderContext& rc, Camera* camera)
 	}
 }
 void Sky::Update()
-{
+{	
 	m_model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
 }
