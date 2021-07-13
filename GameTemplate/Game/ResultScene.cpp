@@ -25,7 +25,7 @@ bool ResultScene::Start()
 	m_gameScene = FindGO<GameScene>("gameScene");
 
 	m_gameSetFontRender = NewGO<FontRender>(0);
-	m_gameSetFontRender->SetPosition({-200.0f,50.0f});
+	m_gameSetFontRender->SetPosition({-200.0f,0.0f});
 	m_gameSetFontRender->SetScale(2.0f);
 	m_gameSetFontRender->SetShadowFlag(true);
 	m_gameSetFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });

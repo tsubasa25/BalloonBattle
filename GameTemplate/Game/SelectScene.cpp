@@ -98,6 +98,7 @@ void SelectScene::Update()
 		{
 			m_okPlayer_Sprite = NewGO<SpriteRender>(0);
 			m_okPlayer_Sprite->Init("Assets/Image/OK!.dds", 240, 135);
+			m_okPlayer_Sprite->SetScale({ 1.0f, 1.0f, 1.0f });
 			m_okPlayer_Sprite->SetPosition(m_okPlayerPos);
 			m_titleState = enPlayerStock;
 			m_arrowLoopCount = 0;
@@ -232,6 +233,11 @@ void SelectScene::Update()
 	}
 	else if (m_titleState == enPlayerStock)
 	{
+		if (g_pad[0]->IsTrigger(enButtonB))
+		{
+			m_titleState = enPlayerNum;
+			m_okPlayer_Sprite->SetScale({ 0.0f, 0.0f, 0.0f });
+		}
 		if (g_pad[0]->IsTrigger(enButtonA))
 		{
 			m_okStok_Sprite = NewGO<SpriteRender>(0);
@@ -330,6 +336,11 @@ void SelectScene::Update()
 	}
 	else if (m_titleState==enStageSelect)
 	{
+		if (g_pad[0]->IsTrigger(enButtonB))
+		{
+			m_titleState = enPlayerStock;
+			m_okStok_Sprite->SetScale({ 0.0f, 0.0f, 0.0f });
+		}
 		if (g_pad[0]->IsTrigger(enButtonA))
 		{	
 			m_selectSE = NewGO<SoundSource>(0);

@@ -23,6 +23,14 @@ bool BackGround::Start()
     //ステージは影を発生させる
     m_skinModelRender->SetShadowCasterFlag(false);
     
+    if (m_stageNum == 3)
+    {
+        //ランダムで決める
+        int randNum = 0;
+        randNum = rand() % 3;
+        m_stageNum = randNum;
+    }
+
     switch (m_stageNum)
     {
     case 0://空島ステージ
@@ -39,7 +47,8 @@ bool BackGround::Start()
         m_map2BGM->Init(L"Assets/sound/マップ2BGM.wav", SoundType::enBGM);
         m_map2BGM->SetVolume(SOUND_MAP_BGM_VOLUME);
         m_map2BGM->Play(true);
-        m_skinModelRender->Init("Assets/modelData/BuildingStage.tkm");     break;
+        m_skinModelRender->Init("Assets/modelData/BuildingStage.tkm");     
+        break;
     case 2://トラップステージ
         m_stageName = STAGE_TWO_NAME;
         m_map3BGM = NewGO<SoundSource>(0,"mapBGM");
@@ -47,27 +56,7 @@ bool BackGround::Start()
         m_map3BGM->SetVolume(SOUND_MAP_BGM_VOLUME);
         m_map3BGM->Play(true);
         m_skinModelRender->Init("Assets/modelData/TrapStage.tkm");
-    break;
-    case 3://ランダムで決める
-    {
-        int randNum = 0;
-        randNum = rand() % 3;
-        switch (randNum)
-        {
-        case 0:
-            m_skinModelRender->Init("Assets/modelData/SkyIsland.tkm");
-            break;
-        case 1:
-            m_skinModelRender->Init("Assets/modelData/BuildingStage.tkm");
-            break;
-        case 2:
-            m_skinModelRender->Init("Assets/modelData/TrapStage.tkm");
-            break;
-        default:
-            break;
-        }
-        break;
-    }
+         break;
     default:
         break;
     
