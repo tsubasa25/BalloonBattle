@@ -46,6 +46,7 @@ private:
 	Vector2 m_stageNamePos = {Vector2::Zero};
 
 	DirectionLight* m_directionLight = nullptr;
+	
 
 	std::wstring m_stageName = {L"Hoge"};
 

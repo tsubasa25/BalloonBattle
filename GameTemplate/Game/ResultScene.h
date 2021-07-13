@@ -15,7 +15,7 @@ namespace
 	const Vector2 BACK_MENU_FONT_POS = { -150.0f,-30.0f };
 	const Vector2 BACK_TIRLE_FONT_POS = { -150.0f, -90.0f };
 	const float INI_CURSOR_MOVE_SPEED_X = 2.0f;
-	const float SOUND_RESULT_SE_VOLUME = 0.8f;
+	const float SOUND_RESULT_SE_VOLUME = 0.6f;
 	const float SOUND_RESULT_BGM_VOLUME = 0.3f;
 }
 
@@ -25,7 +25,7 @@ private:
 	Player* m_winnerPl = nullptr;
 	FontRender* m_gameSetFontRender = nullptr;
 	int m_gameSetFontTimer = 100;
-	int m_winFontTimer = 200;
+	int m_winFontTimer = 220;
 	Vector3 m_winnerPos = { Vector3::Zero };
 
 	FontRender* m_winFontRender = nullptr;
@@ -54,6 +54,8 @@ private:
 	Vector2 plFontPos = {-320.0f, 50.0f};
 
 	bool m_lookStageFlag = false;
+	bool m_resultBGMFlg = false;
+
 public:
 	~ResultScene();
 	bool Start();

@@ -9,6 +9,7 @@
 #include "SelectScene.h"
 #include "TitleBack.h"
 #include "GameTimer.h"
+#include "BalloonAir.h"
 
 ResultScene::~ResultScene()
 {
@@ -16,6 +17,7 @@ ResultScene::~ResultScene()
 	DeleteGO(m_backMenuFontRender);
 	DeleteGO(m_backTitleFontRender);
 	DeleteGO(m_cursorFontRender);
+	DeleteGO(m_resultBGM);
 }
 
 bool ResultScene::Start()
@@ -24,9 +26,10 @@ bool ResultScene::Start()
 	m_gameScene = FindGO<GameScene>("gameScene");
 
 	m_gameSetFontRender = NewGO<FontRender>(0);
-	m_gameSetFontRender->SetPosition({-200.0f,50.0f});
+	m_gameSetFontRender->SetPosition({-200.0f,0.0f});
 	m_gameSetFontRender->SetScale(2.0f);
 	m_gameSetFontRender->SetShadowFlag(true);
+	m_gameSetFontRender->SetShadowOffset(3.0f);
 	m_gameSetFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
 
 	if (m_mode == MODE_GAME_SET)
@@ -36,10 +39,11 @@ bool ResultScene::Start()
 	else 
 		m_gameSetFontRender->SetText(L"H O  G E");
 
-	/*m_resultBGM = NewGO<SoundSource>(0);
-	m_resultBGM->Init(L"Assets/sound/.wav");
-	m_resultBGM->SetVolume(SOUND_RESULT_BGM_VOLUME);
-	m_resultBGM->Play(true);*/
+	QueryGOs<BalloonAir>("ballloonAir", [this](BalloonAir* ballloonAir)->bool {
+		DeleteGO(ballloonAir);
+		return true;
+		});
+
 
 	//m_mode = MODE_GAME_SET;
 
@@ -85,6 +89,7 @@ void ResultScene::GameSet()
 		m_winFontRender->SetText(L"PLAYER " + std::to_wstring(m_winnerPl->GetPlayerNum() + 1) + L" WIN!!");
 		m_winFontRender->SetPosition({ -300.0f,0.0f });
 		m_winFontRender->SetShadowFlag(true);
+		m_winFontRender->SetShadowOffset(3.0f);
 		m_winFontRender->SetShadowColor({m_winnerPl->GetPlColor()});
 
 		m_winnerPl->SetPosition(m_winnerPos);
@@ -108,19 +113,34 @@ void ResultScene::GameSet()
 			DeleteGO(gameTimer);
 			return true;
 			});
+		QueryGOs<SoundSource>("mapBGM", [this](SoundSource* mapBGM)->bool {
+			DeleteGO(mapBGM);
+			return true;
+			});
 
 		g_camera3D->SetPosition(m_cameraPos);
 		g_camera3D->SetTarget({0.0f,100.0f, 0.0f});
+
 	}
 }
 
 void ResultScene::ZoomWinner()
 {
+	if (m_resultBGMFlg == false)
+	{
+		m_resultBGMFlg = true;
+		m_resultBGM = NewGO<SoundSource>(0);
+		m_resultBGM->Init(L"Assets/sound/リザルトBGM.wav");
+		m_resultBGM->SetVolume(SOUND_RESULT_BGM_VOLUME);
+		m_resultBGM->Play(true);
+	}
+	
 	if (m_winFontTimer > 0)
 	{
 		m_winFontTimer--;
 		m_cameraMoveSpeed = m_cameraMoveSpeed * 1.05f;
 		m_cameraPos.z += m_cameraMoveSpeed;
+		
 		if (m_cameraPos.z > -500.0f)
 		{
 			m_cameraPos.z = -500.0f;
@@ -208,6 +228,7 @@ void ResultScene::TimeUp()
 			plFont->SetPosition(plFontPos);
 			plFont->SetScale(1.5f);
 			plFont->SetShadowFlag(true);
+			plFont->SetShadowOffset(3.0f);
 			plFont->SetShadowColor(player->GetPlColor());
 
 			plFontPos.x += 80.0f;
@@ -377,9 +398,9 @@ void ResultScene::AddSelectMenuNum(int num)
 	m_selectMenuNum += num;
 	//0～2までしか選択できない。
 	if (m_selectMenuNum > 2)
-		m_selectMenuNum = 2;
-	else if (m_selectMenuNum < 0)
 		m_selectMenuNum = 0;
+	else if (m_selectMenuNum < 0)
+		m_selectMenuNum = 2;
 
 	switch (m_selectMenuNum)
 	{

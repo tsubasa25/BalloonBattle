@@ -5,7 +5,7 @@
 BalloonAir::~BalloonAir()
 {
 	DeleteGO(m_parent);
-	if(ssAccel != nullptr)
+if(ssAccel != nullptr)
 		DeleteGO(ssAccel);
 	if (ssInflate != nullptr)
 		DeleteGO(ssInflate);
@@ -14,8 +14,7 @@ BalloonAir::~BalloonAir()
 	if (ssBrake != nullptr)
 		DeleteGO(ssBrake);
 	if (ssDeath != nullptr)
-		DeleteGO(ssDeath);
-}
+		DeleteGO(ssDeath);}
 
 bool BalloonAir::Start()
 {
@@ -42,10 +41,10 @@ void BalloonAir::Air()
 		{
 			if (m_brakeSECanPlay == true) {
 				m_brakeSECanPlay = false;
-				ssBrake = NewGO<SoundSource>(0);
-				ssBrake->Init(L"Assets/sound/風船が加速する音.wav");
-				ssBrake->SetVolume(SOUND_AIR_SE_VOLUME);
-				ssBrake->Play(true);
+				m_ssBrake = NewGO<SoundSource>(0);
+				m_ssBrake->Init(L"Assets/sound/風船が加速する音.wav");
+				m_ssBrake->SetVolume(SOUND_AIR_SE_VOLUME);
+				m_ssBrake->Play(true);
 			}
 			//ブレーキをかける。
 			Vector3 brakeSpeed = m_parent->GetMoveSpeed();
@@ -57,19 +56,19 @@ void BalloonAir::Air()
 		}
 		else
 		{
-			DeleteGO(ssBrake);
+			DeleteGO(m_ssBrake);
 			//止まっているときにBボタンを押すと、膨む。
 			AddAir(ADD_AIR_TO_BALLOON_POWER);
 
 			if (m_inflateSECanPlay == true ) {
 				m_inflateSECanPlay = false;
-				ssInflate = NewGO<SoundSource>(0);
-				ssInflate->Init(L"Assets/sound/風船を膨らませる音.wav");
-				ssInflate->SetVolume(SOUND_AIR_SE_VOLUME);
-				ssInflate->Play(true);
+				m_ssInflate = NewGO<SoundSource>(0);
+				m_ssInflate->Init(L"Assets/sound/風船を膨らませる音.wav");
+				m_ssInflate->SetVolume(SOUND_AIR_SE_VOLUME);
+				m_ssInflate->Play(true);
 			}
 			if (m_airVolume >= MAX_AIR_VOLUME) {
-				DeleteGO(ssInflate);
+				DeleteGO(m_ssInflate);
 			}
 		}
 	}
@@ -80,13 +79,13 @@ void BalloonAir::Air()
 	}
 	if (m_brakeSEStopFlag == true)
 	{
-		DeleteGO(ssBrake);
+		DeleteGO(m_ssBrake);
 		m_brakeSEStopFlag = false;
 		m_brakeSECanPlay = true;
 	}
 	if (m_inflateSEStopFlag == true)
 	{
-		DeleteGO(ssInflate);
+		DeleteGO(m_ssInflate);
 		m_inflateSEStopFlag = false;
 		m_inflateSECanPlay = true;
 	}
@@ -126,10 +125,10 @@ void BalloonAir::Air()
 
 			if (m_accelSECanPlay == true) {
 				m_accelSECanPlay = false;
-				ssAccel = NewGO<SoundSource>(0);
-				ssAccel->Init(L"Assets/sound/風船が加速する音.wav");
-				ssAccel->SetVolume(SOUND_AIR_SE_VOLUME);
-				ssAccel->Play(true);
+				m_ssAccel = NewGO<SoundSource>(0);
+				m_ssAccel->Init(L"Assets/sound/風船が加速する音.wav");
+				m_ssAccel->SetVolume(SOUND_AIR_SE_VOLUME);
+				m_ssAccel->Play(true);
 			}
 		}
 	}
@@ -139,7 +138,7 @@ void BalloonAir::Air()
 	}
 	if (m_accelSEStopFlag == true)
 	{
-		DeleteGO(ssAccel);
+		DeleteGO(m_ssAccel);
 		m_accelSEStopFlag = false;
 		m_accelSECanPlay = true;
 	}
@@ -167,10 +166,10 @@ void BalloonAir::Air()
 
 		if (m_riseSECanPlay == true) {
 			m_riseSECanPlay = false;
-			ssRise = NewGO<SoundSource>(0);
-			ssRise->Init(L"Assets/sound/風船が加速する音.wav");
-			ssRise->SetVolume(SOUND_AIR_SE_VOLUME);
-			ssRise->Play(true);
+			m_ssRise = NewGO<SoundSource>(0);
+			m_ssRise->Init(L"Assets/sound/風船が加速する音.wav");
+			m_ssRise->SetVolume(SOUND_AIR_SE_VOLUME);
+			m_ssRise->Play(true);
 		}
 	}
 	if (!g_pad[m_parentNum]->IsPress(enButtonY))
@@ -179,7 +178,7 @@ void BalloonAir::Air()
 	}
 	if (m_riseSEStopFlag == true)
 	{
-		DeleteGO(ssRise);
+		DeleteGO(m_ssRise);
 		m_riseSEStopFlag = false;
 		m_riseSECanPlay = true;
 	}
@@ -201,17 +200,17 @@ void  BalloonAir::BleedAir(float air)
 	if (m_airVolume < MIN_AIR_VOLUME)	//最小サイズより小さくなったら、死亡する。
 	{
 		m_parent->PlayerDeath();
-		ssDeath = NewGO<SoundSource>(0);
-		ssDeath->Init(L"Assets/sound/風船の萎んで死んだ音.wav");
-		ssDeath->SetVolume(SOUND_AIR_SE_VOLUME);
-		ssDeath->Play(false);
+		m_ssDeath = NewGO<SoundSource>(0);
+		m_ssDeath->Init(L"Assets/sound/風船の萎んで死んだ音.wav");
+		m_ssDeath->SetVolume(SOUND_AIR_SE_VOLUME);
+		m_ssDeath->Play(false);
 
-		Effect soulEff;
+		/*Effect soulEff;
 		soulEff.Init(u"Assets/effect/SoulRise.efk");
 		soulEff.SetPosition(m_parent->GetPosition());
 		soulEff.SetScale({ 3.0f,3.0f,3.0f });
 		soulEff.Play();
-		soulEff.Update();
+		soulEff.Update();*/
 
 	}
 }

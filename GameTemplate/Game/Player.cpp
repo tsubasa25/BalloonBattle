@@ -16,11 +16,12 @@ Player::~Player()
 	if (m_IsArrowOn) {
 		DeleteGO(m_skinModelRenderArrow);
 	}
-	GameScene* gameScene = FindGO<GameScene>("gameScene");
-	//gameScene->SetIsAlive(m_playerNum, false);
+
+	//gameScene-	m_gameScene>SetIsAlive(m_playerNum, false);
 	//gameScene->SetPlayerCount(gameScene->GetPlayerCount() - 1);
-	
-	DeleteGO(m_myAir);
+
+	if (m_myAir != nullptr)
+		DeleteGO(m_myAir);
 }
 bool Player::Start()
 {
@@ -60,7 +61,7 @@ bool Player::Start()
 		m_skinModelRender->Init("Assets/modelData/Balloon7.tkm");
 	}
 	
-	m_myAir = NewGO<BalloonAir>(0);
+	m_myAir = NewGO<BalloonAir>(0, "balloonAir");
 	m_myAir->SetParent(this);
 	m_myAir->SetParentNum(m_playerNum);
 
@@ -68,6 +69,7 @@ bool Player::Start()
 
 	m_backGround = FindGO<BackGround>("backGround");
 	m_UIDisplay = FindGO<UIDisplay>("UIdisplay");
+	m_gameScene = FindGO<GameScene>("gameScene");
 
 	//キャラコンの初期化
 	m_charaCon.Init((m_myAirVolume/2), m_position);
@@ -140,8 +142,7 @@ void Player::Update()
 
 	if (m_enemy.size() == 0)
 	{
-		GameScene* gameScene = FindGO<GameScene>("gameScene");
-		gameScene->SetGameState(GAME_STATE_RESULT);
+		m_gameScene->SetGameState(GAME_STATE_RESULT);
 		m_resultScene = NewGO<ResultScene>(0, "resultScene");
 		m_resultScene->SetResultMode(MODE_GAME_SET);
 		m_resultScene->SetWinner(this);
@@ -181,6 +182,7 @@ void Player::Move()//移動
 		PlayerDeath();
 		SoundSource* ss = NewGO<SoundSource>(0);
 		ss->Init(L"Assets/sound/風船が落ちて死んだ音.wav");
+		ss->SetVolume(SOUND_BALLOON_SE_VOLUME);
 		ss->Play(false);
 	}
 
@@ -233,6 +235,7 @@ void Player::HitPlayer()
 				//SEを再生
 				SoundSource* ss = NewGO<SoundSource>(0);
 				ss->Init(L"Assets/sound/風船の跳ねる音.wav");
+				ss->SetVolume(SOUND_BALLOON_SE_VOLUME);
 				ss->Play(false);
 			}
 		}		
@@ -324,6 +327,13 @@ void Player::Tilt()
 //プレイヤーが死亡したときの処理
 void Player::PlayerDeath()
 {
+	Effect soulEff;
+	soulEff.Init(u"Assets/effect/SoulRise.efk");
+	soulEff.SetPosition(m_position);
+	soulEff.SetScale({ 1.0f,1.0f,1.0f });
+	soulEff.Play();
+	soulEff.Update();
+
 	m_stock--;//ストックを減らす
 	//m_UIDisplay->SetPlayerDecStock(m_playerNum);//UIにストックが減ったことを伝える
 	m_UIDisplay->SetPlayerStock(m_stock, m_playerNum);
@@ -355,6 +365,7 @@ void Player::PlayerDeath()
 				m_enemy[i]->m_enemy.erase(it);
 			}
 		}
+		m_myAir->SetAirVolume(INI_AIR_VOLUME);
 		DeleteGO(this);
 	}
 }
@@ -419,6 +430,7 @@ void Player::Respawn()
 
 		m_respawnFlag = false;
 
-		m_canMove = true;
+		if (m_gameScene->GetGameState() == GAME_STATE_BATTLE)
+			m_canMove = true;
 	}
 }

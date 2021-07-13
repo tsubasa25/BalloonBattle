@@ -49,9 +49,9 @@ void TitleScene::Update()
 	if (m_endOn == true)//STARTをおしたとき
 	{
 		m_endCount++;
-		m_optionPos.y += m_endCount;
+		//m_optionPos.y += m_endCount;
 		m_startPos.y += m_endCount;
-		m_exitPos.y += m_endCount;
+		//m_exitPos.y += m_endCount;
 		
 		if (m_endCount > 60)
 		{
@@ -124,14 +124,26 @@ void TitleScene::Update()
 			ss->Play(false);
 		}
 
-		if (m_selectNum == 1 && g_pad[0]->IsTrigger(enButtonA)) {
-			DeleteGO(ss);
-			SoundSource* ss = NewGO<SoundSource>(0);
-			ss->Init(L"Assets/sound/タイトル決定音.wav");
-			ss->SetVolume(SOUND_TITLE_SE_VOLUME);
-			ss->Play(false);
+		if (g_pad[0]->IsTrigger(enButtonA))
+		{
+			if (m_selectNum == 1)
+			{
+				DeleteGO(ss);
+				SoundSource* ss = NewGO<SoundSource>(0);
+				ss->Init(L"Assets/sound/タイトル決定音.wav");
+				ss->SetVolume(SOUND_TITLE_SE_VOLUME);
+				ss->Play(false);
 
-			m_endOn = true;
+				m_endOn = true;
+			}
+			else
+			{
+				//今のところ他を選んでも意味ないので、せめて「ブブーッ」みたいな音を鳴らそう。
+				SoundSource* ss = NewGO<SoundSource>(0);
+				ss->Init(L"Assets/sound/ブブーッ.wav");
+				ss->SetVolume(0.3f);
+				ss->Play(false);
+			}
 		}
 	}
 		m_option_Sprite->SetPosition(m_optionPos);
