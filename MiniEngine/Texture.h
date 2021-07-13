@@ -83,8 +83,9 @@ private:
 	/// <param name="ge12">Dx12版のグラフィックスエンジン</param>
 	/// <param name="device">D3Dデバイス</param>
 	void LoadTextureFromMemory(const char* memory, unsigned int size );
-		
+
 private:
 	ID3D12Resource*	m_texture = nullptr;	//テクスチャ。
 	D3D12_RESOURCE_DESC m_textureDesc;	//テクスチャ情報
+	bool m_isCubmap = false;			//キューブマップにするか？
 };

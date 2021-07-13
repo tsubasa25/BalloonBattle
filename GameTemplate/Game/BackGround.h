@@ -1,5 +1,6 @@
 #pragma once
 #include "WindTurbine.h"
+class Sky;
 class GameScene;
 class Player;
 class GimmickNeedle;
@@ -33,6 +34,8 @@ public:
 	std::wstring GetStageName() { return m_stageName; };
 
 private:
+	Sky* m_sky = nullptr;
+
 	SkinModelRender* m_skinModelRender = nullptr;
 	
 	PhysicsStaticObject m_physicsStaticObject;				//CharaConとの当たり判定に使用する静的物理オブジェクト

@@ -9,8 +9,8 @@ class SkinModelRender:public IGameObject
 public:
 	//モデルの状態
 	enum EModel {
-		eModel,	//画面1に描画されるモデル		
-		eModel_Shadow,	//影を描画する用モデル
+		eModel,	//画面に描画されるモデル		
+		eModel_Shadow,	//影を描画する用モデル		
 		eModel_Num,		//モデルの状態の数
 	};
 	SkinModelRender() :m_position(Vector3::Zero), m_qRot(g_quatIdentity), m_scale(Vector3::One) {}

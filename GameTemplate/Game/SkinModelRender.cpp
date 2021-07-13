@@ -23,19 +23,19 @@ void SkinModelRender::Init(const char* modelPath, const char* skeletonPath, Anim
 	//モデルのファイルパスの指定
 	initData.m_tkmFilePath = modelPath;
 	shadowModelInitData.m_tkmFilePath = modelPath;
-
+	
 	//シェーダーパスの指定
 	initData.m_fxFilePath = "Assets/shader/shadowReceiver.fx";
 	shadowModelInitData.m_fxFilePath = "Assets/shader/shadow.fx";
-
+	
 	//シェーダーの頂点シェーダーのエントリー関数名の指定
 	initData.m_vsEntryPointFunc = "VSMain";
 	shadowModelInitData.m_vsEntryPointFunc = "VSMain";
-
+	
 	//シェーダーのピクセルシェーダーのエントリー関数名の指定
 	initData.m_vsSkinEntryPointFunc = "VSSkinMain";
 	shadowModelInitData.m_vsSkinEntryPointFunc = "VSSkinMain";
-
+	
 	//スケルトンが存在している時はスケルトンを初期化
 	if (skeletonPath != nullptr)
 	{
@@ -46,13 +46,14 @@ void SkinModelRender::Init(const char* modelPath, const char* skeletonPath, Anim
 	//カラーバッファのフォーマットを指定
 	initData.m_colorBufferFormat = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	shadowModelInitData.m_colorBufferFormat = DXGI_FORMAT_R32_FLOAT;
-
+	
 	//モデルデータの上方向の軸を指定
 	initData.m_modelUpAxis = enModelUpAxisZ;
 	shadowModelInitData.m_modelUpAxis = enModelUpAxisZ;
 
+
 	//モデルに影を落とすために影のテクスチャを紐付ける
-	initData.m_expandShaderResoruceView = &PostEffectManager::GetInstance()->GetShadowMap();
+	initData.m_expandShaderResoruceView[0] = &PostEffectManager::GetInstance()->GetShadowMap();
 	
 	//定数バッファをモデルに紐付ける
 	initData.m_expandConstantBufferSize[0] = LightManager::GetInstance()->GetLigDataSize();

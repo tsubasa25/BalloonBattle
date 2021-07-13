@@ -40,7 +40,7 @@ public:
 	{
 		return m_shadowMap.GetRenderTargetTexture();
 	}
-
+	
 	Texture& GetBlurShadowMap()
 	{
 		return m_shadowBlur.GetBokeTexture();
@@ -72,7 +72,7 @@ private:
 	GaussianBlur m_gaussianBlur[4];//ブラー。
 
 	bool m_shadowMode = true;//シャドウが有効か。
-	RenderTarget m_shadowMap;
+	RenderTarget m_shadowMap;	
 	GaussianBlur m_shadowBlur;
 };
 
