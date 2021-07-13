@@ -48,7 +48,6 @@ private:
 
 	//プレイヤーの風船画像
 	SpriteRender* m_playerUI_Sprite[8] = { nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr };
-	
 
 	Vector3 m_cPlayerPos = {-350,250,0};
 	Vector3 m_cStockPos = {-350,-250,0};
@@ -70,8 +69,11 @@ private:
 	SoundSource* m_selectBGM = nullptr;
 	SoundSource* m_selectSE = nullptr;
 
+	FontRender* m_titleBackFont = nullptr;
+
 	enum TitleState
 	{
+		enBackTitle,	//タイトルへ戻るか選択する。
 		enPlayerNum,//プレイヤー人数選択状態
 		enPlayerStock,//プレイヤーストック選択状態
 		enStageSelect//ステージ選択状態

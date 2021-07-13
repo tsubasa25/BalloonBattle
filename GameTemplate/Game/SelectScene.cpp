@@ -4,6 +4,8 @@
 #include "GameScene.h"
 #include "TitleBack.h"
 #include "UIDisplay.h"
+#include "TitleScene.h"
+
 SelectScene::~SelectScene()
 {
 	DeleteGO(m_cPlayer_Sprite);
@@ -15,13 +17,21 @@ SelectScene::~SelectScene()
 	DeleteGO(m_cPlayer_Sprite);
 	DeleteGO(m_cStock_Sprite);
 	DeleteGO(m_cStage_Sprite);
-	DeleteGO(m_okPlayer_Sprite);
-	DeleteGO(m_okStok_Sprite);
+	
+	
 	for (int i = 0; i < 8; i++)
 	{
 		DeleteGO(m_playerUI_Sprite[i]);
 		DeleteGO(m_stageBalloon_Sprite[i/2]);
 	}	
+	if (m_okPlayer_Sprite != nullptr)
+		DeleteGO(m_okPlayer_Sprite);
+	if (m_okStok_Sprite != nullptr)
+		DeleteGO(m_okStok_Sprite);
+	if (m_titleBackFont != nullptr)
+		DeleteGO(m_titleBackFont);
+	if (m_selectBGM != nullptr)
+		DeleteGO(m_selectBGM);
 }
 
 bool SelectScene::Start()
@@ -87,18 +97,43 @@ bool SelectScene::Start()
 	m_selectBGM->Init(L"Assets/sound/マップ選択画面BGM.wav", SoundType::enBGM);
 	m_selectBGM->SetVolume(SOUND_SELECT_BGM_VOLUME);
 	m_selectBGM->Play(true);
+
 	return true;
 }
 
 void SelectScene::Update()
 {
-	if (m_titleState==TitleState::enPlayerNum)
+	if ((m_titleState == TitleState::enBackTitle))
 	{
+		if (g_pad[0]->IsTrigger(enButtonB))
+		{
+			m_titleState = enPlayerNum;
+			DeleteGO(m_titleBackFont);
+		}
+		else if (g_pad[0]->IsTrigger(enButtonA))
+		{
+			DeleteGO(this);
+			NewGO<TitleScene>(0,"titleScene");
+		}
+	}
+	else if (m_titleState == TitleState::enPlayerNum)
+	{
+		if (g_pad[0]->IsTrigger(enButtonB))
+		{
+			m_titleState = enBackTitle;
+			m_titleBackFont = NewGO<FontRender>(1);
+			m_titleBackFont->SetPosition({ -350.0f, 30.0f });
+			m_titleBackFont->SetScale(1.5f);
+			m_titleBackFont->SetShadowFlag(true);
+			m_titleBackFont->SetShadowColor({ Vector4::Black });
+			m_titleBackFont->SetText
+			(L"タイトルへ戻りますか？\n"
+				L"　A はい　　B いいえ");
+		}
 		if (g_pad[0]->IsTrigger(enButtonA))
 		{
 			m_okPlayer_Sprite = NewGO<SpriteRender>(0);
 			m_okPlayer_Sprite->Init("Assets/Image/OK!.dds", 240, 135);
-			m_okPlayer_Sprite->SetScale({ 1.0f, 1.0f, 1.0f });
 			m_okPlayer_Sprite->SetPosition(m_okPlayerPos);
 			m_titleState = enPlayerStock;
 			m_arrowLoopCount = 0;
@@ -236,7 +271,7 @@ void SelectScene::Update()
 		if (g_pad[0]->IsTrigger(enButtonB))
 		{
 			m_titleState = enPlayerNum;
-			m_okPlayer_Sprite->SetScale({ 0.0f, 0.0f, 0.0f });
+			DeleteGO(m_okPlayer_Sprite);
 		}
 		if (g_pad[0]->IsTrigger(enButtonA))
 		{
@@ -255,25 +290,17 @@ void SelectScene::Update()
 			m_playerStock++;//人数を増やす
 			if (m_playerStock > 9)
 			{
-				m_playerStock = 0;
+				m_playerStock = 1;
 			}
-			m_selectSE = NewGO<SoundSource>(0);
-			m_selectSE->Init(L"Assets/sound/選択音.wav");
-			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
-			m_selectSE->Play(false);
 		}
 		if (g_pad[0]->IsTrigger(enButtonDown))
 		{
 
 			m_playerStock--;//人数を減らす
-			if (m_playerStock < 0)
+			if (m_playerStock < 1)
 			{
 				m_playerStock = 9;
 			}
-			m_selectSE = NewGO<SoundSource>(0);
-			m_selectSE->Init(L"Assets/sound/選択音.wav");
-			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
-			m_selectSE->Play(false);
 		}
 		if (g_pad[0]->IsTrigger(enButtonUp) || g_pad[0]->IsTrigger(enButtonDown))
 		{
@@ -339,7 +366,7 @@ void SelectScene::Update()
 		if (g_pad[0]->IsTrigger(enButtonB))
 		{
 			m_titleState = enPlayerStock;
-			m_okStok_Sprite->SetScale({ 0.0f, 0.0f, 0.0f });
+			DeleteGO(m_okStok_Sprite);
 		}
 		if (g_pad[0]->IsTrigger(enButtonA))
 		{	
