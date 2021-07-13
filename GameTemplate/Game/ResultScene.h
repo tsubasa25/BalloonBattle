@@ -25,7 +25,7 @@ private:
 	Player* m_winnerPl = nullptr;
 	FontRender* m_gameSetFontRender = nullptr;
 	int m_gameSetFontTimer = 100;
-	int m_winFontTimer = 200;
+	int m_winFontTimer = 220;
 	Vector3 m_winnerPos = { Vector3::Zero };
 
 	FontRender* m_winFontRender = nullptr;

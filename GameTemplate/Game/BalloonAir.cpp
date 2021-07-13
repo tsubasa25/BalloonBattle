@@ -12,8 +12,6 @@ BalloonAir::~BalloonAir()
 		DeleteGO(m_ssRise);
 	if (m_ssBrake != nullptr)
 		DeleteGO(m_ssBrake);
-	if (m_ssDeath != nullptr)
-		DeleteGO(m_ssDeath);
 }
 
 bool BalloonAir::Start()

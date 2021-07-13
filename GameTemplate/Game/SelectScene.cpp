@@ -292,6 +292,10 @@ void SelectScene::Update()
 			{
 				m_playerStock = 1;
 			}
+			m_selectSE = NewGO<SoundSource>(0);
+			m_selectSE->Init(L"Assets/sound/‘I‘ð‰¹.wav");
+			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_selectSE->Play(false);
 		}
 		if (g_pad[0]->IsTrigger(enButtonDown))
 		{
@@ -301,13 +305,14 @@ void SelectScene::Update()
 			{
 				m_playerStock = 9;
 			}
-		}
-		if (g_pad[0]->IsTrigger(enButtonUp) || g_pad[0]->IsTrigger(enButtonDown))
-		{
 			m_selectSE = NewGO<SoundSource>(0);
 			m_selectSE->Init(L"Assets/sound/‘I‘ð‰¹.wav");
 			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
 			m_selectSE->Play(false);
+		}
+		if (g_pad[0]->IsTrigger(enButtonUp) || g_pad[0]->IsTrigger(enButtonDown))
+		{
+			
 			switch (m_playerStock)
 			{
 			case 0:
@@ -436,10 +441,6 @@ void SelectScene::Update()
 			{
 				m_YNum = 1;
 			}
-			m_selectSE = NewGO<SoundSource>(0);
-			m_selectSE->Init(L"Assets/sound/‘I‘ð‰¹.wav");
-			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
-			m_selectSE->Play(false);
 		}
 		m_selectNum[0][0] = false;
 		m_selectNum[0][1] = false;

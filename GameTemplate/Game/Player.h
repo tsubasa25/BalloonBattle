@@ -3,6 +3,7 @@ class BalloonAir;
 class BackGround;
 class UIDisplay;
 class ResultScene;
+class GameScene;
 
 #include<vector>
 #include "BalloonAir.h"
@@ -63,7 +64,7 @@ private:
 	std::vector<Player*>::iterator it;
 	BackGround* m_backGround = nullptr;
 	UIDisplay* m_UIDisplay = nullptr;
-
+	GameScene* m_gameScene = nullptr;
 	Effect m_breakEff;
 
 	ResultScene* m_resultScene = nullptr;

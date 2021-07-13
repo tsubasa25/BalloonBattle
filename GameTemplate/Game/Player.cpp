@@ -16,11 +16,12 @@ Player::~Player()
 	if (m_IsArrowOn) {
 		DeleteGO(m_skinModelRenderArrow);
 	}
-	GameScene* gameScene = FindGO<GameScene>("gameScene");
-	//gameScene->SetIsAlive(m_playerNum, false);
+
+	//gameScene-	m_gameScene>SetIsAlive(m_playerNum, false);
 	//gameScene->SetPlayerCount(gameScene->GetPlayerCount() - 1);
-	
-	DeleteGO(m_myAir);
+
+	if (m_myAir != nullptr)
+		DeleteGO(m_myAir);
 }
 bool Player::Start()
 {
@@ -60,7 +61,7 @@ bool Player::Start()
 		m_skinModelRender->Init("Assets/modelData/Balloon7.tkm");
 	}
 	
-	m_myAir = NewGO<BalloonAir>(0);
+	m_myAir = NewGO<BalloonAir>(0, "balloonAir");
 	m_myAir->SetParent(this);
 	m_myAir->SetParentNum(m_playerNum);
 
@@ -68,6 +69,7 @@ bool Player::Start()
 
 	m_backGround = FindGO<BackGround>("backGround");
 	m_UIDisplay = FindGO<UIDisplay>("UIdisplay");
+	m_gameScene = FindGO<GameScene>("gameScene");
 
 	//ÉLÉÉÉâÉRÉìÇÃèâä˙âª
 	m_charaCon.Init((m_myAirVolume/2), m_position);
@@ -140,8 +142,7 @@ void Player::Update()
 
 	if (m_enemy.size() == 0)
 	{
-		GameScene* gameScene = FindGO<GameScene>("gameScene");
-		gameScene->SetGameState(GAME_STATE_RESULT);
+		m_gameScene->SetGameState(GAME_STATE_RESULT);
 		m_resultScene = NewGO<ResultScene>(0, "resultScene");
 		m_resultScene->SetResultMode(MODE_GAME_SET);
 		m_resultScene->SetWinner(this);
@@ -459,6 +460,7 @@ void Player::Respawn()
 
 		m_respawnFlag = false;
 
-		m_canMove = true;
+		if (m_gameScene->GetGameState() == GAME_STATE_BATTLE)
+			m_canMove = true;
 	}
 }

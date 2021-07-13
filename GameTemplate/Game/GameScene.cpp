@@ -43,6 +43,7 @@ bool GameScene::Start()
     m_gameStartFontRender->SetPosition({ -100.0f,0.0f });
     m_gameStartFontRender->SetScale(3.0f);
     m_gameStartFontRender->SetShadowFlag(true);
+    m_gameStartFontRender->SetShadowOffset(4.0f);
     m_gameStartFontRender->SetShadowColor({0.0f,0.0f,0.0f,1.0f});
 
     NewGO<GameTimer>(0, "gameTimer");
@@ -138,6 +139,7 @@ void GameScene::LookStage()
         m_stageNameFontRender->SetPosition(m_stageNamePos);
         m_stageNameFontRender->SetScale(1.5f);
         m_stageNameFontRender->SetShadowFlag(true);
+        m_stageNameFontRender->SetShadowOffset(3.0f);
         m_stageNameFontRender->SetShadowColor({0.0f,0.0f,0.0f,1.0f});
     }
     //ステージ名の動き
@@ -204,6 +206,7 @@ void GameScene::Retri()
     m_gameStartFontRender->SetPosition({ -100.0f,0.0f });
     m_gameStartFontRender->SetScale(3.0f);
     m_gameStartFontRender->SetShadowFlag(true);
+    m_gameStartFontRender->SetShadowOffset(4.0f);
     m_gameStartFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
 
     m_gameStartCallTimer = INI_GAME_START_CALL_TIME;

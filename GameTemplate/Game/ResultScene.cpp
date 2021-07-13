@@ -9,6 +9,7 @@
 #include "SelectScene.h"
 #include "TitleBack.h"
 #include "GameTimer.h"
+#include "BalloonAir.h"
 
 ResultScene::~ResultScene()
 {
@@ -28,6 +29,7 @@ bool ResultScene::Start()
 	m_gameSetFontRender->SetPosition({-200.0f,0.0f});
 	m_gameSetFontRender->SetScale(2.0f);
 	m_gameSetFontRender->SetShadowFlag(true);
+	m_gameSetFontRender->SetShadowOffset(3.0f);
 	m_gameSetFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
 
 	if (m_mode == MODE_GAME_SET)
@@ -36,6 +38,11 @@ bool ResultScene::Start()
 		m_gameSetFontRender->SetText(L"TIME  UP");
 	else 
 		m_gameSetFontRender->SetText(L"H O  G E");
+
+	QueryGOs<BalloonAir>("ballloonAir", [this](BalloonAir* ballloonAir)->bool {
+		DeleteGO(ballloonAir);
+		return true;
+		});
 
 
 	//m_mode = MODE_GAME_SET;
@@ -391,9 +398,9 @@ void ResultScene::AddSelectMenuNum(int num)
 	m_selectMenuNum += num;
 	//0`2‚Ü‚Å‚µ‚©‘I‘ð‚Å‚«‚È‚¢B
 	if (m_selectMenuNum > 2)
-		m_selectMenuNum = 2;
-	else if (m_selectMenuNum < 0)
 		m_selectMenuNum = 0;
+	else if (m_selectMenuNum < 0)
+		m_selectMenuNum = 2;
 
 	switch (m_selectMenuNum)
 	{
