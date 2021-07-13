@@ -5,6 +5,7 @@
 #include "UIDisplay.h"
 #include "MenuScene.h"
 #include "SelectScene.h"
+
 TitleScene::~TitleScene()
 {
 	
@@ -16,7 +17,6 @@ TitleScene::~TitleScene()
 }
 bool TitleScene::Start()
 {	
-
 	m_title_Sprite = NewGO<SpriteRender>(2);
 	m_title_Sprite->Init("Assets/Image/titleLogo.dds", 1280, 720);
 
@@ -35,6 +35,12 @@ bool TitleScene::Start()
 	m_option_Sprite->SetScale(BALLOON_SIZE);
 	m_option_Sprite->SetPosition(OPTION_INI_POS);
 
+	//BGMを再生
+	m_titleBGM = NewGO<SoundSource>(0);
+	m_titleBGM->Init(L"Assets/sound/タイトルBGM.wav", SoundType::enBGM);
+	m_titleBGM->SetVolume(SOUND_TITLE_BGM_VOLUME);
+	m_titleBGM->Play(true);
+
 	return true;
 }
 
@@ -49,8 +55,10 @@ void TitleScene::Update()
 		
 		if (m_endCount > 60)
 		{
+			DeleteGO(m_titleBGM);
 			NewGO<SelectScene>(0);
 			DeleteGO(this);
+			DeleteGO(ss);
 		}
 	}
 	else
@@ -100,7 +108,7 @@ void TitleScene::Update()
 			FloatingFlg = false;
 			ss = NewGO<SoundSource>(0);
 			ss->Init(L"Assets/sound/風船の浮遊する音.wav");
-			ss->SetVolume(0.2);
+			ss->SetVolume(SOUND_TITLE_FLOAT_SE_VOLUME);
 			ss->Play(true);
 		}
 
@@ -112,13 +120,15 @@ void TitleScene::Update()
 			}
 			SoundSource* ss = NewGO<SoundSource>(0);
 			ss->Init(L"Assets/sound/選択音.wav");
+			ss->SetVolume(SOUND_TITLE_SE_VOLUME);
 			ss->Play(false);
 		}
 
 		if (m_selectNum == 1 && g_pad[0]->IsTrigger(enButtonA)) {
 			DeleteGO(ss);
 			SoundSource* ss = NewGO<SoundSource>(0);
-			ss->Init(L"Assets/sound/決定音.wav");
+			ss->Init(L"Assets/sound/タイトル決定音.wav");
+			ss->SetVolume(SOUND_TITLE_SE_VOLUME);
 			ss->Play(false);
 
 			m_endOn = true;

@@ -2,6 +2,8 @@
 #include "GameScene.h"
 #include "Player.h"
 #include "BackGround.h"
+#include "GameTimer.h"
+
 GameScene::~GameScene()
 {
     DeleteGO(m_directionLight);
@@ -43,6 +45,8 @@ bool GameScene::Start()
     m_gameStartFontRender->SetShadowFlag(true);
     m_gameStartFontRender->SetShadowColor({0.0f,0.0f,0.0f,1.0f});
 
+    NewGO<GameTimer>(0, "gameTimer");
+
 	return true;
 }
 void GameScene::Update()
@@ -58,6 +62,10 @@ void GameScene::Update()
         break;
 
     case GAME_STATE_BATTLE:
+        Battle();
+        break;
+
+    case GAME_STATE_RESULT:
         break;
 
     default:
@@ -128,7 +136,7 @@ void GameScene::LookStage()
         m_stageNameFontRender->SetText(stageName);
         m_stageNamePos = { -1800.0f,-200.0f };
         m_stageNameFontRender->SetPosition(m_stageNamePos);
-        m_stageNameFontRender->SetScale(1.0f);
+        m_stageNameFontRender->SetScale(1.5f);
         m_stageNameFontRender->SetShadowFlag(true);
         m_stageNameFontRender->SetShadowColor({0.0f,0.0f,0.0f,1.0f});
     }
@@ -165,12 +173,12 @@ void GameScene::GameStartCall()
     if (m_gameStartCallTimer == INI_GAME_START_CALL_TIME)
     {
         m_gameStartFontRender->SetText(L"READY");
-        m_gameStartFontRender->SetPosition({-200.0f, 0.0f});
+        m_gameStartFontRender->SetPosition({-200.0f, 50.0f});
     }
     else if (m_gameStartCallTimer == 50)
     {
         m_gameStartFontRender->SetText(L"GO!!");
-        m_gameStartFontRender->SetPosition({ -150.0f, 0.0f });
+        m_gameStartFontRender->SetPosition({ -150.0f, 50.0f });
     }
     else if(m_gameStartCallTimer <= 0)
     {
@@ -182,6 +190,10 @@ void GameScene::GameStartCall()
         DeleteGO(m_gameStartFontRender);
     }
         m_gameStartCallTimer--;
+}
+
+void GameScene::Battle()
+{
 }
 
 void GameScene::Retri()
@@ -215,4 +227,6 @@ void GameScene::Retri()
             }
         }
     }
+
+    NewGO<GameTimer>(0, "gameTimer");
 }

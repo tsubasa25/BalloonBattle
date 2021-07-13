@@ -13,15 +13,10 @@ TitleBack::~TitleBack()
 	DeleteGO(m_undercloud12_Sprite);
 	DeleteGO(m_undercloud21_Sprite);
 	DeleteGO(m_undercloud22_Sprite);
-
-	DeleteGO(m_titleBGM);
 }
 
 bool TitleBack::Start()
 {
-	titleScene = NewGO<TitleScene>(0,"titleScene");
-
-
 	m_back_Sprite = NewGO<SpriteRender>(0);
 	m_back_Sprite->Init("Assets/Image/back.dds", 1280, 720);
 
@@ -49,12 +44,7 @@ bool TitleBack::Start()
 	m_undercloud02_Sprite->Init("Assets/Image/under_cloud0.dds", 1282, 750);
 	m_undercloud02_Sprite->SetPosition({ m_undercloud02Pos });
 
-	//BGMÇçƒê∂
-	m_titleBGM = NewGO<SoundSource>(0);
-	m_titleBGM->Init(L"Assets/sound/É^ÉCÉgÉãBGM.wav", SoundType::enBGM);
-	m_titleBGM->SetVolume(SOUND_BGM_TITLE_VOLUME);
-	m_titleBGM->Play(true);
-
+	
 	return true;
 }
 

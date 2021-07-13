@@ -35,9 +35,11 @@ public:
 	void SetPlayerDeath(int PldeathNum) { m_PlDeath[PldeathNum] = true; };
 	void SetPlayerDecStock(int PldecstockNum) { m_PlDecStock[PldecstockNum] = true; };
 
+	void SetPlayerStock(int stock, int plNum);
+
 private:
 
-	std::wstring m_stocknum[6] = { {L"x0"},{L"x1"},{L"x2"},{L"x3"},{L"x4"},{L"x5"} };
+	std::wstring m_stocknum[10] = { {L"x0"},{L"x1"},{L"x2"},{L"x3"},{L"x4"},{L"x5"}, {L"x6"},{L"x7"},{L"x8"},{L"x9"} };
 
 	SpriteRender* m_playerUI_Sprite[8] = { nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr };
 

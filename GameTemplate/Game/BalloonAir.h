@@ -11,7 +11,8 @@ namespace
 	const float AIR_COST_RISE_BOOST = 1.2f;	//上昇ブーストしているときに、1フレームで減る空気量
 	const float AIR_COST_BRAKE = 0.2f;	//ブレーキをかけているときに、1フレームで減る空気量
 	const float ADD_BOOST_POWER = 0.05f;	//ブーストで加速するときにかける値
-	const Vector3 RISE_BOOST_POWER = {0.0f, 1.0f, 0.0f };	//ブーストで上昇するときのY方向への力
+	const Vector3 RISE_BOOST_POWER = { 0.0f, 1.0f, 0.0f };	//ブーストで上昇するときのY方向への力
+	const float SOUND_AIR_SE_VOLUME = 0.4f;
 }
 
 class BalloonAir : public IGameObject
@@ -23,6 +24,7 @@ private:
 	SoundSource* ssAccel = nullptr;
 	SoundSource* ssInflate = nullptr;
 	SoundSource* ssRise = nullptr;
+	SoundSource* ssBrake = nullptr;
 	SoundSource* ssDeath = nullptr;
 
 	bool m_inflateSECanPlay = true;
@@ -31,6 +33,8 @@ private:
 	bool m_accelSEStopFlag = false;
 	bool m_riseSECanPlay = true;
 	bool m_riseSEStopFlag = false;
+	bool m_brakeSECanPlay = true;
+	bool m_brakeSEStopFlag = false;
 
 public:
 	bool Start();
@@ -48,5 +52,6 @@ public:
 	void AcceleSEStop() { m_accelSEStopFlag = true; };
 	void RiseSEStop() { m_riseSEStopFlag = true; };
 	void InflateSEStop() { m_riseSEStopFlag = true; };
+	void BrakeSEStop() { m_brakeSEStopFlag = true; };
 };
 

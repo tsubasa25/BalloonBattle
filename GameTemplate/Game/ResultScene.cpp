@@ -6,7 +6,9 @@
 #include "GameScene.h"
 #include "BackGround.h"
 #include "GimmickNeedle.h"
-#include "MenuScene.h"
+#include "SelectScene.h"
+#include "TitleBack.h"
+#include "GameTimer.h"
 
 ResultScene::~ResultScene()
 {
@@ -27,6 +29,11 @@ bool ResultScene::Start()
 	m_gameSetFontRender->SetText(L"GAME SET");
 	m_gameSetFontRender->SetShadowFlag(true);
 	m_gameSetFontRender->SetShadowColor({0.0f,0.0f,0.0f,1.0f});
+
+	/*m_resultBGM = NewGO<SoundSource>(0);
+	m_resultBGM->Init(L"Assets/sound/.wav");
+	m_resultBGM->SetVolume(SOUND_RESULT_BGM_VOLUME);
+	m_resultBGM->Play(true);*/
 
 	m_mode = MODE_GAME_SET;
 
@@ -81,6 +88,10 @@ void ResultScene::GameSet()
 			});
 		QueryGOs<GimmickNeedle>("gimmickNeedle", [this](GimmickNeedle* gimmickNeedle)->bool {
 			DeleteGO(gimmickNeedle);
+			return true;
+			});
+		QueryGOs<GameTimer>("gameTimer", [this](GameTimer* gameTimer)->bool {
+			DeleteGO(gameTimer);
 			return true;
 			});
 
@@ -142,6 +153,10 @@ void ResultScene::Menu()
 
 	if (g_pad[0]->IsTrigger(enButtonA))
 	{	
+		m_resultSE = NewGO<SoundSource>(0);
+		m_resultSE->Init(L"Assets/sound/リザルト決定音.wav");
+		m_resultSE->SetVolume(SOUND_RESULT_SE_VOLUME);
+		m_resultSE->Play(false);
 		if (m_selectMenuNum == 0)
 		{
 			DeleteGO(m_winnerPl);
@@ -165,7 +180,8 @@ void ResultScene::Menu()
 				
 			DeleteGO(m_winnerPl);
 			DeleteGO(this);
-			NewGO<MenuScene>(0, "menuScene");
+			NewGO<TitleBack>(0, "titleBack");
+			NewGO<SelectScene>(0, "selectScene");
 		}
 		else if (m_selectMenuNum == 2)
 		{
@@ -175,6 +191,7 @@ void ResultScene::Menu()
 				
 			DeleteGO(m_winnerPl);
 			DeleteGO(this);
+			NewGO<TitleBack>(0, "titleBack");
 			NewGO<TitleScene>(0, "titleScene");
 		}
 	}
@@ -184,10 +201,20 @@ void ResultScene::SetCursorPos()
 {
 	if (g_pad[0]->IsTrigger(enButtonDown))
 	{
+		m_resultSE = NewGO<SoundSource>(0);
+		m_resultSE->Init(L"Assets/sound/リザルト選択音.wav");
+		m_resultSE->SetVolume(SOUND_RESULT_SE_VOLUME);
+		m_resultSE->Play(false);
+
 		AddSelectMenuNum(1);
 	}
 	else if (g_pad[0]->IsTrigger(enButtonUp))
 	{
+		m_resultSE = NewGO<SoundSource>(0);
+		m_resultSE->Init(L"Assets/sound/リザルト選択音.wav");
+		m_resultSE->SetVolume(SOUND_RESULT_SE_VOLUME);
+		m_resultSE->Play(false);
+
 		AddSelectMenuNum(-1);
 	}
 

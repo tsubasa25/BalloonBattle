@@ -9,7 +9,7 @@ MenuScene::~MenuScene()
 	DeleteGO(m_plCountFontRender);
 	DeleteGO(m_stageSelectFontRender);
 	DeleteGO(m_cursorFontRender);
-	DeleteGO(m_menuBGM);
+	
 }
 
 bool MenuScene::Start()
@@ -48,6 +48,7 @@ void MenuScene::Update()
 	}
 	if (g_pad[0]->IsTrigger(enButtonA))
 	{
+		DeleteGO(m_menuBGM);
 		GameScene* gameScene = NewGO<GameScene>(0, "gameScene");
 		gameScene->SetPlayerCount(m_playerCount);
 		m_backGround = NewGO<BackGround>(0, "backGround");
@@ -63,10 +64,12 @@ void MenuScene::SetSelectNum()
 	if (g_pad[0]->IsTrigger(enButtonDown))
 	{
 		AddSelectNum(1);
+		
 	}
 	else if (g_pad[0]->IsTrigger(enButtonUp))
 	{
 		AddSelectNum(-1);
+		
 	}
 }
 
@@ -99,11 +102,13 @@ void MenuScene::SetPlayerCount()
 	{
 		AddPlayerCount(1);
 		m_plCountFontRender->SetText(L"プレイ人数 : " + std::to_wstring(m_playerCount) + L"人");
+		
 	}
 	else if (g_pad[0]->IsTrigger(enButtonLeft))
 	{
 		AddPlayerCount(-1);
 		m_plCountFontRender->SetText(L"プレイ人数 : " + std::to_wstring(m_playerCount) + L"人");
+		
 	}
 }
 
@@ -124,10 +129,12 @@ void MenuScene::SetStage()
 	if (g_pad[0]->IsTrigger(enButtonRight))
 	{
 		AddStageNum(1);
+		
 	}
 	else if (g_pad[0]->IsTrigger(enButtonLeft))
 	{
 		AddStageNum(-1);
+		
 	}
 
 	//ステージ名を表示

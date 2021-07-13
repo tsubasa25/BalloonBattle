@@ -9,8 +9,6 @@ public:
 	
 	void SetDestroy(bool flag) { m_destroy = flag; }
 private:
-	TitleScene* titleScene;
-
 	SpriteRender* m_back_Sprite;
 	SpriteRender* m_cloud1_Sprite;
 	SpriteRender* m_cloud2_Sprite;
