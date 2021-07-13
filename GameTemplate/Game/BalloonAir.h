@@ -39,6 +39,7 @@ private:
 public:
 	bool Start();
 	void Update();
+	~BalloonAir();
 
 	void SetParent(Player* p) { m_parent = p; };	//e‚Æ‚È‚é•—‘D‚ğİ’èB
 	void SetParentNum(int num) { m_parentNum = num; };

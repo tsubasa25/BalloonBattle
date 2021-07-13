@@ -62,8 +62,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
    /* GameScene*gameScene=NewGO<GameScene>(0,"gameScene");*/   
    /* NewGO<BackGround>(0);*/
 
-    g_camera3D->SetPosition({ 0.0f, 1200.0f, -1800.0f });
-    g_camera3D->SetTarget({ 0,0,-300 });
+    //g_camera3D->SetPosition({ 0.0f, 1200.0f, -1800.0f });
+    //g_camera3D->SetTarget({ 0,0,-300 });
     g_camera3D->SetFar(100000.0f);
     //////////////////////////////////////
     // 初期化を行うコードを書くのはここまで！！！

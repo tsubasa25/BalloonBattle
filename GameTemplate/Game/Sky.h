@@ -13,6 +13,7 @@ public:
 	void Init(const wchar_t* filePath);
 	void Render(RenderContext& rc, Camera* camera)override;
 	void Update()override;
+	void SetPosition(Vector3 pos) { m_position = pos; }
 	void SetRotation(Quaternion rot) { m_qRot = rot; }
 private:
 	Model m_model; //ƒ‚ƒfƒ‹

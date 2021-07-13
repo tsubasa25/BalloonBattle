@@ -1,6 +1,21 @@
 #include "stdafx.h"
 #include "BalloonAir.h"
 #include "Player.h"
+BalloonAir::~BalloonAir()
+{
+	DeleteGO(m_parent);
+	if(ssAccel == nullptr)
+		DeleteGO(ssAccel);
+	if (ssInflate == nullptr)
+		DeleteGO(ssInflate);
+	if (ssRise == nullptr)
+		DeleteGO(ssRise);
+	if (ssBrake == nullptr)
+		DeleteGO(ssBrake);
+	if (ssDeath == nullptr)
+		DeleteGO(ssDeath);
+}
+
 bool BalloonAir::Start()
 {
 	return true;
