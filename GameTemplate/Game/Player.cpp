@@ -135,6 +135,7 @@ void Player::Update()
 		GameScene* gameScene = FindGO<GameScene>("gameScene");
 		gameScene->SetGameState(GAME_STATE_RESULT);
 		m_resultScene = NewGO<ResultScene>(0, "resultScene");
+		m_resultScene->SetResultMode(MODE_GAME_SET);
 		m_resultScene->SetWinner(this);
 		m_canMove = false;
 	}

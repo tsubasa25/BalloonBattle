@@ -92,6 +92,8 @@ public:
 
 	void SetIniPosition(Vector3 pos) { m_position = pos; m_iniPos = pos; }//‰ŠúˆÊ’u‚ðÝ’è
 	void SetPosition(Vector3 pos) { m_skinModelRender->SetPosition(pos); m_position = pos; }
+	void ReturnIniPosition() { SetPosition(m_iniPos); };
+
 	Vector3 GetPosition() { return m_position; }
 
 	void SetScale(Vector3 scale) { m_skinModelRender->SetScale(scale); }//‘å‚«‚³
@@ -131,6 +133,7 @@ public:
 	bool m_IsArrowOn = true;//–îˆó‚ð•\Ž¦‚·‚é‚©
 	bool m_IsAIOn = false;//“G‚ªŽ©•ª‚ß‚ª‚¯‚Ä“Ëi‚µ‚Ä‚­‚é
 	SkinModelRender* m_skinModelRenderArrow = nullptr;
+	void SetArrowScele(Vector3 size) { m_skinModelRenderArrow->SetScale(size); };
 	Quaternion m_rot;
 	Vector3 m_arrowSize = Vector3::One;
 	Vector3 m_oldPos = Vector3::Zero;
