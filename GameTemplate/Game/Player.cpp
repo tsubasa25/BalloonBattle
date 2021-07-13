@@ -80,27 +80,35 @@ bool Player::Start()
 
 	if (GetPlayerNum() == 0) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak00.efk");
+		m_plColor = {Vector4::Red};
 	}
 	else if (GetPlayerNum() == 1) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak01.efk");
+		m_plColor = { Vector4::Blue };
 	}
 	else if (GetPlayerNum() == 2) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak02.efk");
+		m_plColor = { Vector4::Green };
 	}
 	else if (GetPlayerNum() == 3) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak03.efk");
+		m_plColor = { Vector4::Yellow };
 	}
 	else if (GetPlayerNum() == 4) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak04.efk");
+		m_plColor = { Vector4::Orange };
 	}
 	else if (GetPlayerNum() == 5) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak05.efk");
+		m_plColor = { Vector4::Pink };
 	}
 	else if (GetPlayerNum() == 6) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak06.efk");
+		m_plColor = { Vector4::Gray };
 	}
 	else if (GetPlayerNum() == 7) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak07.efk");
+		m_plColor = { Vector4::Purple };
 	}
 
 	SetPosition(m_position);//à íuÇê›íËÇ∑ÇÈ
@@ -135,6 +143,7 @@ void Player::Update()
 		GameScene* gameScene = FindGO<GameScene>("gameScene");
 		gameScene->SetGameState(GAME_STATE_RESULT);
 		m_resultScene = NewGO<ResultScene>(0, "resultScene");
+		m_resultScene->SetResultMode(MODE_GAME_SET);
 		m_resultScene->SetWinner(this);
 		m_canMove = false;
 	}

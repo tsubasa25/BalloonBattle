@@ -24,18 +24,24 @@ bool ResultScene::Start()
 	m_gameScene = FindGO<GameScene>("gameScene");
 
 	m_gameSetFontRender = NewGO<FontRender>(0);
-	m_gameSetFontRender->SetPosition({-200.0f,0.0f});
+	m_gameSetFontRender->SetPosition({-200.0f,50.0f});
 	m_gameSetFontRender->SetScale(2.0f);
-	m_gameSetFontRender->SetText(L"GAME SET");
 	m_gameSetFontRender->SetShadowFlag(true);
-	m_gameSetFontRender->SetShadowColor({0.0f,0.0f,0.0f,1.0f});
+	m_gameSetFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
+
+	if (m_mode == MODE_GAME_SET)
+		m_gameSetFontRender->SetText(L"GAME SET");
+	else if (m_mode == MODE_TIME_UP)
+		m_gameSetFontRender->SetText(L"TIME  UP");
+	else 
+		m_gameSetFontRender->SetText(L"H O  G E");
 
 	/*m_resultBGM = NewGO<SoundSource>(0);
 	m_resultBGM->Init(L"Assets/sound/.wav");
 	m_resultBGM->SetVolume(SOUND_RESULT_BGM_VOLUME);
 	m_resultBGM->Play(true);*/
 
-	m_mode = MODE_GAME_SET;
+	//m_mode = MODE_GAME_SET;
 
 	return true;
 }
@@ -50,12 +56,19 @@ void ResultScene::Update()
 	case MODE_ZOOM_WINNER:
 		ZoomWinner();
 		break;
+	case MODE_TIME_UP:
+		TimeUp();
+		break;
+	case MODE_DRAW:
+		Draw();
+		break;
 	case MODE_MENU:
 		Menu();
 		break;
 	}
 }
 
+//ゲームに決着がついた時の処理
 void ResultScene::GameSet()
 {
 	if (m_gameSetFontTimer > 0)
@@ -72,11 +85,12 @@ void ResultScene::GameSet()
 		m_winFontRender->SetText(L"PLAYER " + std::to_wstring(m_winnerPl->GetPlayerNum() + 1) + L" WIN!!");
 		m_winFontRender->SetPosition({ -300.0f,0.0f });
 		m_winFontRender->SetShadowFlag(true);
-		m_winFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
+		m_winFontRender->SetShadowColor({m_winnerPl->GetPlColor()});
 
 		m_winnerPl->SetPosition(m_winnerPos);
 		m_winnerPl->SetMoveSpeed(Vector3::Zero);
 		m_winnerPl->Tilt();
+		m_winnerPl->SetArrowScele({ 0.0f,0.0f,0.0f });
 
 		QueryGOs<UIDisplay>("UIdisplay", [this](UIDisplay* UIdisplay)->bool {
 			DeleteGO(UIdisplay);
@@ -114,7 +128,7 @@ void ResultScene::ZoomWinner()
 		g_camera3D->SetPosition(m_cameraPos);
 		return;
 	}
-	else if (g_pad[0]->IsTrigger(enButtonA))
+	else if (g_pad[0]->IsTrigger(enButtonA) || m_winFontTimer <= 0)
 	{
 		m_mode = MODE_MENU;
 		DeleteGO(m_winFontRender);
@@ -147,6 +161,112 @@ void ResultScene::ZoomWinner()
 	}
 }
 
+//タイムアップ時の処理
+void ResultScene::TimeUp()
+{
+	if (m_gameSetFontTimer > 0)
+	{
+		m_gameSetFontTimer--;
+		return;
+	}
+	else
+	{
+		m_mode = MODE_DRAW;
+		DeleteGO(m_gameSetFontRender);
+		m_winFontRender = NewGO<FontRender>(0);
+		m_winFontRender->SetScale(2.5f);
+		m_winFontRender->SetText(L"DRAW");
+		m_winFontRender->SetPosition({ 0.0f,-50.0f });
+		m_winFontRender->SetShadowFlag(true);
+		m_winFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
+
+		QueryGOs<UIDisplay>("UIdisplay", [this](UIDisplay* UIdisplay)->bool {
+			DeleteGO(UIdisplay);
+			return true;
+			});
+		QueryGOs<WindTurbine>("windTurbine", [this](WindTurbine* windTurbine)->bool {
+			DeleteGO(windTurbine);
+			return true;
+			});
+		QueryGOs<GimmickNeedle>("gimmickNeedle", [this](GimmickNeedle* gimmickNeedle)->bool {
+			DeleteGO(gimmickNeedle);
+			return true;
+			});
+		QueryGOs<GameTimer>("gameTimer", [this](GameTimer* gameTimer)->bool {
+			DeleteGO(gameTimer);
+			return true;
+			});
+
+		QueryGOs<Player>("player", [this](Player* player)->bool {	
+			player->ReturnIniPosition();
+			player->SetMoveSpeed(Vector3::Zero);
+			player->Tilt();
+			player->SetArrowScele({0.0f,0.0f,0.0f});
+
+			FontRender* plFont = NewGO<FontRender>(1, "plFont");
+			plFont->SetText(L"P" + std::to_wstring(player->GetPlayerNum() + 1));
+			plFont->SetPosition(plFontPos);
+			plFont->SetScale(1.5f);
+			plFont->SetShadowFlag(true);
+			plFont->SetShadowColor(player->GetPlColor());
+
+			plFontPos.x += 80.0f;
+			return true;
+			});
+
+		g_camera3D->SetPosition({ -4000.0f,500.0f,0.0f });
+	}
+}
+
+void ResultScene::Draw()
+{
+	if (m_winFontTimer > 0)
+	{
+		m_winFontTimer--;
+	}
+	Vector3 right = g_camera3D->GetRight();
+	Vector3 cameraPos = g_camera3D->GetPosition();
+	cameraPos += right * 40.0f;
+	g_camera3D->SetPosition(cameraPos);
+		
+	if (g_pad[0]->IsTrigger(enButtonA) || m_winFontTimer <= 0)
+	{
+		m_mode = MODE_MENU;
+		DeleteGO(m_winFontRender);
+
+		QueryGOs<FontRender>("plFont", [this](FontRender* plFont)->bool {
+			DeleteGO(plFont);
+			return true;
+			});
+
+		m_cursorFontRender = NewGO<FontRender>(1);
+		m_cursorFontRender->SetPosition(m_cursorPos);
+		m_cursorFontRender->SetText(L"->");
+		m_cursorFontRender->SetShadowFlag(true);
+		m_cursorFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
+
+		m_retriFontRender = NewGO<FontRender>(1);
+		m_retriFontRender->SetPosition(RETRI_FONT_POS);
+		m_retriFontRender->SetText(L"もう一度遊ぶ。");
+		m_retriFontRender->SetShadowFlag(true);
+		m_retriFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
+
+		m_backMenuFontRender = NewGO<FontRender>(1);
+		m_backMenuFontRender->SetPosition(BACK_MENU_FONT_POS);
+		m_backMenuFontRender->SetText(L"メニューへ戻る。");
+		m_backMenuFontRender->SetShadowFlag(true);
+		m_backMenuFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
+
+		m_backTitleFontRender = NewGO<FontRender>(1);
+		m_backTitleFontRender->SetPosition(BACK_TIRLE_FONT_POS);
+		m_backTitleFontRender->SetText(L"タイトルへ戻る。");
+		m_backTitleFontRender->SetShadowFlag(true);
+		m_backTitleFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
+
+		m_lookStageFlag = true;
+	}
+}
+
 void ResultScene::Menu()
 {
 	SetCursorPos();
@@ -159,7 +279,10 @@ void ResultScene::Menu()
 		m_resultSE->Play(false);
 		if (m_selectMenuNum == 0)
 		{
-			DeleteGO(m_winnerPl);
+			QueryGOs<Player>("player", [this](Player* player)->bool {
+				DeleteGO(player);
+				return true;
+				});
 			
 			m_gameScene->Retri();
 			m_gameScene->SetGameState(1);
@@ -178,7 +301,10 @@ void ResultScene::Menu()
 			
 			DeleteGO(m_BG);
 				
-			DeleteGO(m_winnerPl);
+			QueryGOs<Player>("player", [this](Player* player)->bool {
+				DeleteGO(player);
+				return true;
+				});
 			DeleteGO(this);
 			NewGO<TitleBack>(0, "titleBack");
 			NewGO<SelectScene>(0, "selectScene");
@@ -189,11 +315,22 @@ void ResultScene::Menu()
 
 			DeleteGO(m_BG);
 				
-			DeleteGO(m_winnerPl);
+			QueryGOs<Player>("player", [this](Player* player)->bool {
+				DeleteGO(player);
+				return true;
+				});
 			DeleteGO(this);
 			NewGO<TitleBack>(0, "titleBack");
 			NewGO<TitleScene>(0, "titleScene");
 		}
+	}
+
+	if (m_lookStageFlag == true)
+	{
+		Vector3 right = g_camera3D->GetRight();
+		Vector3 cameraPos = g_camera3D->GetPosition();
+		cameraPos += right * 40.0f;
+		g_camera3D->SetPosition(cameraPos);
 	}
 }
 //カーソルの位置を決める。

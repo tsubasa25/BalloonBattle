@@ -6,7 +6,9 @@ namespace
 {
 	const int MODE_GAME_SET = 1;
 	const int MODE_ZOOM_WINNER = 2;
-	const int MODE_MENU = 3;
+	const int MODE_TIME_UP = 3;
+	const int MODE_DRAW = 4;
+	const int MODE_MENU = 5;
 
 	const Vector2 RESULT_CURSOR_FONT_INI_POS = { -200.0f,30.0f };
 	const Vector2 RETRI_FONT_POS = { -150.0f,30.0f };
@@ -49,6 +51,9 @@ private:
 	SoundSource* m_resultBGM = nullptr;
 	SoundSource* m_resultSE = nullptr;
 
+	Vector2 plFontPos = {-320.0f, 50.0f};
+
+	bool m_lookStageFlag = false;
 public:
 	~ResultScene();
 	bool Start();
@@ -58,11 +63,15 @@ public:
 
 	void GameSet();
 	void ZoomWinner();
+	void TimeUp();
+	void Draw();
 	void Menu();
 
 	void SetCursorPos();
 	void AddSelectMenuNum(int num);
 
 	void SetStageNum(int num) { m_stageNum = num; };
+
+	void SetResultMode(int mode) { m_mode = mode; };
 };
 

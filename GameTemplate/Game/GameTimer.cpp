@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameTimer.h"
 #include "GameScene.h"
+#include "ResultScene.h"
 
 GameTimer::~GameTimer()
 {
@@ -12,16 +13,15 @@ bool GameTimer::Start()
 {
 	m_timer = TIME_LIMIT;
 
-	m_firstPlaceOfTimerSprite = NewGO<SpriteRender>(0);
+	m_firstPlaceOfTimerSprite = NewGO<SpriteRender>(1);
+	SetFirstPlaceOfTimer();
 	m_firstPlaceOfTimerSprite->SetPosition({30.0f, 300.0f, 0.0f});
 
-	m_tenthPlaceOfTimerSprite = NewGO<SpriteRender>(0);
+	m_tenthPlaceOfTimerSprite = NewGO<SpriteRender>(1);
+	SetTenthPlaceOfTimer();
 	m_tenthPlaceOfTimerSprite->SetPosition({ -30.0f, 300.0f, 0.0f });
 	
 	m_gameScene = FindGO<GameScene>("gameScene");
-
-	SetFirstPlaceOfTimer();
-	SetTenthPlaceOfTimer();
 
 	return true;
 }
@@ -33,7 +33,18 @@ void GameTimer::Update()
 		return;
 	}
 
-	if (m_timer > 0.0f)
+	if (m_timer <= 0.0f)
+	{
+		SetFirstPlaceOfTimer();
+		m_gameScene->SetGameState(GAME_STATE_RESULT);
+		ResultScene* result = NewGO<ResultScene>(0, "resultScene");
+		result->SetResultMode(MODE_TIME_UP);
+		QueryGOs<Player>("player", [this](Player* player)->bool {
+			player->SetCanMove(false);
+			return true;
+			});
+	}
+	else
 	{
 		m_timer -= g_gameTime->GetFrameDeltaTime();
 	}

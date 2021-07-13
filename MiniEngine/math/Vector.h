@@ -435,6 +435,15 @@ public:
 	static const Vector4 Black;
 	static const Vector4 Yellow;
 	static const Vector4 Gray;
+
+	//F‚ğ‘‚â‚µ‚Ü‚µ‚½B
+	static const Vector4 Red;
+	static const Vector4 Blue;
+	static const Vector4 Green;
+	static const Vector4 Orange;
+	static const Vector4 Pink;
+	static const Vector4 Purple;
+
 public:
 	/// <summary>
 	/// XMVECTOR‚Ö‚ÌˆÃ–Ù‚ÌŒ^•ÏŠ·B

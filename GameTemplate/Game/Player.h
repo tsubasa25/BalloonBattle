@@ -22,6 +22,7 @@ namespace
 	const float PAI = 3.14159f;//円周率
 	const Vector3 OVER_STAGE_LINE = {4000.0f, -2000.0f, 4000.0f};	//ステージから遠ざかりすぎた時に死亡する距離。
 	const float SOUND_BALLOON_SE_VOLUME = 0.4f;
+
 }
 class Player:public IGameObject
 {
@@ -72,6 +73,8 @@ private:
 	bool m_respawnFlag = false;
 	int m_respawnInterval = 0;
 
+	Vector4 m_plColor = {0.0f,0.0f,0.0f,1.0f};
+
 public:
 	~Player();
 	bool Start();
@@ -92,6 +95,8 @@ public:
 
 	void SetIniPosition(Vector3 pos) { m_position = pos; m_iniPos = pos; }//初期位置を設定
 	void SetPosition(Vector3 pos) { m_skinModelRender->SetPosition(pos); m_position = pos; }
+	void ReturnIniPosition() { SetPosition(m_iniPos); };
+
 	Vector3 GetPosition() { return m_position; }
 
 	void SetScale(Vector3 scale) { m_skinModelRender->SetScale(scale); }//大きさ
@@ -125,12 +130,15 @@ public:
 
 	void Respawn();
 
+	Vector4 GetPlColor() { return m_plColor; };
+
 	//デバッグ用
 	void Debug(int pNum);
 	int m_oldStock = m_stock;
 	bool m_IsArrowOn = true;//矢印を表示するか
 	bool m_IsAIOn = false;//敵が自分めがけて突進してくる
 	SkinModelRender* m_skinModelRenderArrow = nullptr;
+	void SetArrowScele(Vector3 size) { m_skinModelRenderArrow->SetScale(size); };
 	Quaternion m_rot;
 	Vector3 m_arrowSize = Vector3::One;
 	Vector3 m_oldPos = Vector3::Zero;

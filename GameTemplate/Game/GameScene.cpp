@@ -173,7 +173,7 @@ void GameScene::GameStartCall()
     if (m_gameStartCallTimer == INI_GAME_START_CALL_TIME)
     {
         m_gameStartFontRender->SetText(L"READY");
-        m_gameStartFontRender->SetPosition({-200.0f, 50.0f});
+        m_gameStartFontRender->SetPosition({-180.0f, 50.0f});
     }
     else if (m_gameStartCallTimer == 50)
     {
@@ -214,6 +214,7 @@ void GameScene::Retri()
         player[i] = NewGO<Player>(0, "player");
         player[i]->SetPlayerNum(i);//プレイヤー番号を設定
         //player[i]->SetIniPosition({ GetIniPos(i) });//初期位置を設定
+        player[i]->SetPlayerStock(m_stock);
         player[i]->SetPlayerCount(m_playerCount);//プレイヤー人数を設定
 
         //m_IsAlive[i] = true;//生きていることにする
