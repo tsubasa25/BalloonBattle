@@ -3,6 +3,7 @@
 #include "GameScene.h"
 #include "Player.h"
 #include "GimmickNeedle.h"
+#include "Sky.h"
 
 BackGround::~BackGround()
 {
@@ -13,6 +14,10 @@ BackGround::~BackGround()
 }
 bool BackGround::Start()
 {
+
+    m_sky = NewGO<Sky>(0);
+    m_sky->Init();
+
     m_skinModelRender = NewGO<SkinModelRender>(0, "backGround");
     //ステージは影を発生させる
     m_skinModelRender->SetShadowCasterFlag(false);

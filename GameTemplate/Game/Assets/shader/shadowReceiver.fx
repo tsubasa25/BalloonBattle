@@ -86,7 +86,7 @@ Texture2D<float4> g_albedo : register(t0);				//アルベドマップ
 Texture2D<float4> g_shadowMap : register(t10);			//シャドウマップ
 StructuredBuffer<float4x4> g_boneMatrix : register(t3);	//ボーン行列。
 sampler g_sampler : register(s0);	//サンプラステート。
-
+TextureCube<float4> g_skyCubeMap : register(t11);
 ////////////////////////////////////////////////
 // 関数定義。
 ////////////////////////////////////////////////
@@ -96,29 +96,7 @@ sampler g_sampler : register(s0);	//サンプラステート。
 /// </summary>
 SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
 {
-	//SPSIn psIn;
-	//float4x4 m;
-	//
-	//m = mWorld;
-	//psIn.pos = mul(m, vsIn.pos);
-	//
-	//psIn.worldPos = psIn.pos;
-
-	//psIn.pos = mul(mView, psIn.pos);
-	//psIn.pos = mul(mProj, psIn.pos);
-	//psIn.normal = mul(m, vsIn.normal);
-	//psIn.normal = normalize(psIn.normal);
-
-	//psIn.normalInView = mul(mView, psIn.normal);
-
-	//psIn.uv = vsIn.uv;
-
-	//psIn.posInLVP = mul(mLVP,float4(psIn.worldPos, 1.0f));
-	//
-	////本来の比較用の距離はこっち
-	//psIn.posInLVP.z = length(psIn.worldPos - lightCameraPos) / 2000.0f;	
-	//
-	//return psIn;
+	
 	//シャドウレシーバー用の頂点シェーダーを実装。
 	SPSIn psIn;
 	//ここは通常の座標変換
@@ -352,3 +330,15 @@ float4 PSMain(SPSIn psIn) : SV_Target0
 	}
 	return finalColor;
 }
+
+/*!
+ *@brief	空用のシェーダー。
+ */
+float4 PSMain_SkyCube(SPSIn In) : SV_Target0
+{
+	float4 color = g_skyCubeMap.Sample(g_sampler, In.normal);
+	//color.xyz += emissionColor;
+	
+	return color;
+}
+

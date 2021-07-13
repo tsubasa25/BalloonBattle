@@ -311,6 +311,7 @@
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="SelectScene.cpp" />
     <ClCompile Include="SkinModelRender.cpp" />
+    <ClCompile Include="Sky.cpp" />
     <ClCompile Include="SoundEngine.cpp" />
     <ClCompile Include="SoundSource.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
@@ -417,6 +418,7 @@
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="SelectScene.h" />
     <ClInclude Include="SkinModelRender.h" />
+    <ClInclude Include="Sky.h" />
     <ClInclude Include="SoundEngine.h" />
     <ClInclude Include="SoundSource.h" />
     <ClInclude Include="SphereCollider.h" />

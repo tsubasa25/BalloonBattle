@@ -44,12 +44,12 @@ void Model::Init(const ModelInitData& m_initData)
 		m_initData.m_psEntryPointFunc,
 		m_initData.m_expandConstantBuffer,
 		m_initData.m_expandConstantBufferSize,
-		m_initData.m_expandShaderResoruceView,
+		m_initData.m_expandShaderResoruceView[0],
 		m_initData.m_colorBufferFormat
 	);
 
 	UpdateWorldMatrix(g_vec3Zero, g_quatIdentity, g_vec3One);
-	
+
 }
 
 void Model::UpdateWorldMatrix(Vector3 pos, Quaternion rot, Vector3 scale)
