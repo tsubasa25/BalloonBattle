@@ -21,11 +21,11 @@ private:
 	Player* m_parent = nullptr;
 	int m_parentNum = 0;
 	float m_airVolume = 0.0f;//風船の大きさ(幅)
-	SoundSource* ssAccel = nullptr;
-	SoundSource* ssInflate = nullptr;
-	SoundSource* ssRise = nullptr;
-	SoundSource* ssBrake = nullptr;
-	SoundSource* ssDeath = nullptr;
+	SoundSource* m_ssAccel = nullptr;
+	SoundSource* m_ssInflate = nullptr;
+	SoundSource* m_ssRise = nullptr;
+	SoundSource* m_ssBrake = nullptr;
+	SoundSource* m_ssDeath = nullptr;
 
 	bool m_inflateSECanPlay = true;
 	bool m_inflateSEStopFlag = false;
@@ -41,7 +41,7 @@ public:
 	void Update();
 	~BalloonAir();
 
-	void SetParent(Player* p) { m_parent = p; };	//親となる風船を設定。
+	void SetParent(Player* p) { m_parent = p; };//親となる風船を設定。
 	void SetParentNum(int num) { m_parentNum = num; };
 	void Air();	//風船の空気に関する関数
 
