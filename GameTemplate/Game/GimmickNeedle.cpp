@@ -49,17 +49,20 @@ void GimmickNeedle::Update()
 			m_diff.x = plPos.x - m_needleBoardPos.x;
 			m_diff.z = plPos.z - m_needleBoardPos.z;
 
-			//プレイヤーが針の範囲に入っていたら、死ぬ。
-			if (fabsf(m_diff.x) < NEEDLE_BOARD_HALF_SCALE
-				&& fabsf(m_diff.z) < NEEDLE_BOARD_HALF_SCALE
-				&& m_needlePos.y + NEEDLE_HEIGHT > plPos.y	//プレイヤーの位置が針の高さより低いかどうか
-				)
+			if (player->GetCanMove() == true)
 			{
-				player->BreakBalloon();
-				player->PlayerDeath();
-				SoundSource* ss = NewGO<SoundSource>(0);
-				ss->Init(L"Assets/sound/風船の割れる音.wav");
-				ss->Play(false);
+				//プレイヤーが針の範囲に入っていたら、死ぬ。
+				if (fabsf(m_diff.x) < NEEDLE_BOARD_HALF_SCALE
+					&& fabsf(m_diff.z) < NEEDLE_BOARD_HALF_SCALE
+					&& m_needlePos.y + NEEDLE_HEIGHT > plPos.y	//プレイヤーの位置が針の高さより低いかどうか
+					)
+				{
+					player->BreakBalloon();
+					player->PlayerDeath();
+					SoundSource* ss = NewGO<SoundSource>(0);
+					ss->Init(L"Assets/sound/風船の割れる音.wav");
+					ss->Play(false);
+				}
 			}
 
 			return true;

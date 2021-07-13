@@ -1,6 +1,5 @@
 #pragma once
 
-
 class Texture  : public IShaderResource{
 public:
 	/// <summary>
@@ -87,5 +86,5 @@ private:
 private:
 	ID3D12Resource*	m_texture = nullptr;	//テクスチャ。
 	D3D12_RESOURCE_DESC m_textureDesc;	//テクスチャ情報
-	bool m_isCubmap = false;			//キューブマップにするか？
+	bool m_isCubemap = false;			//キューブマップにするか？
 };

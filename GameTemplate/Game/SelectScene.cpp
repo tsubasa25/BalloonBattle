@@ -309,19 +309,22 @@ void SelectScene::Update()
 				break;
 			default:
 				break;
-
+			}					
+		}
+		m_arrowLoopCount++;
+		if (m_arrowLoopCount % m_arrowSwichTime == 0)
+		{
+			if (m_arrowFlag == true) {
+				m_arrowFlag = false;
 			}
-			m_arrowLoopCount++;
-			if (m_arrowLoopCount % m_arrowSwichTime == 0)
-			{
-				if (m_arrowFlag == true)
-					m_arrowFlag = false;
-				else
-					m_arrowFlag = true;
-				if (m_arrowFlag == true)
-					m_arrowStock_Sprite->Init("Assets/Image/selectArrow.dds", 100, 200);
-				else
-					m_arrowStock_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
+			else {
+				m_arrowFlag = true;
+			}
+			if (m_arrowFlag == true) {
+				m_arrowStock_Sprite->Init("Assets/Image/selectArrow.dds", 100, 200);
+			}
+			else {
+				m_arrowStock_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
 			}
 		}
 	}

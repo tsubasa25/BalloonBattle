@@ -16,13 +16,13 @@ bool BackGround::Start()
 {
 
     m_sky = NewGO<Sky>(0);
-    m_sky->Init();
-
+    m_sky->Init(L"Assets/Image/skyMap/sky2.dds");
+    m_sky->SetPosition({ 0,-5000,0 });
+    
     m_skinModelRender = NewGO<SkinModelRender>(0, "backGround");
     //ステージは影を発生させる
     m_skinModelRender->SetShadowCasterFlag(false);
     
-
     switch (m_stageNum)
     {
     case 0://空島ステージ

@@ -6,8 +6,8 @@ namespace
 	const int GAME_STATE_START_CALL = 2;
 	const int GAME_STATE_BATTLE = 3;
 	const int GAME_STATE_RESULT = 4;
-	const Vector3 INI_CAMERA_POS = { 0.0f, 1200.0f, -1800.0f };
-	const Vector3 INI_CAMERA_TARGET_POS = { 0,0,-300 };
+	const Vector3 INI_CAMERA_POS = { 0.0f, 1200.0f, -1900.0f };
+	const Vector3 INI_CAMERA_TARGET_POS = { 0,100,-300 };
 	const int INI_GAME_START_CALL_TIME = 150;
 	const int INI_LOOK_STAGE_TIME = 300;
 }
