@@ -204,5 +204,13 @@ void  BalloonAir::BleedAir(float air)
 		ssDeath->Init(L"Assets/sound/•—‘D‚ÌˆÞ‚ñ‚ÅŽ€‚ñ‚¾‰¹.wav");
 		ssDeath->SetVolume(SOUND_AIR_SE_VOLUME);
 		ssDeath->Play(false);
+
+		Effect soulEff;
+		soulEff.Init(u"Assets/effect/SoulRise.efk");
+		soulEff.SetPosition(m_parent->GetPosition());
+		soulEff.SetScale({ 3.0f,3.0f,3.0f });
+		soulEff.Play();
+		soulEff.Update();
+
 	}
 }
