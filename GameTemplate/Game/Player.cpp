@@ -356,6 +356,13 @@ void Player::Tilt()
 //プレイヤーが死亡したときの処理
 void Player::PlayerDeath()
 {
+	Effect soulEff;
+	soulEff.Init(u"Assets/effect/SoulRise.efk");
+	soulEff.SetPosition(m_position);
+	soulEff.SetScale({ 1.0f,1.0f,1.0f });
+	soulEff.Play();
+	soulEff.Update();
+
 	m_stock--;//ストックを減らす
 	//m_UIDisplay->SetPlayerDecStock(m_playerNum);//UIにストックが減ったことを伝える
 	m_UIDisplay->SetPlayerStock(m_stock, m_playerNum);
@@ -387,6 +394,7 @@ void Player::PlayerDeath()
 				m_enemy[i]->m_enemy.erase(it);
 			}
 		}
+		m_myAir->SetAirVolume(INI_AIR_VOLUME);
 		DeleteGO(this);
 	}
 }
