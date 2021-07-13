@@ -193,7 +193,7 @@ void  BalloonAir::BleedAir(float air)
 		Effect soulEff;
 		soulEff.Init(u"Assets/effect/SoulRise.efk");
 		soulEff.SetPosition(m_parent->GetPosition());
-		soulEff.SetScale({ 1.0f,1.0f,1.0f });
+		soulEff.SetScale({ 3.0f,3.0f,3.0f });
 		soulEff.Play();
 		soulEff.Update();
 
