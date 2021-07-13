@@ -12,6 +12,14 @@ const Vector4 Vector4::Black = { 0.0f, 0.0f, 0.0f, 1.0f };
 const Vector4 Vector4::Yellow = { 1.0f, 1.0f, 0.0f, 1.0f };
 const Vector4 Vector4::Gray = { 0.5f, 0.5f, 0.5f, 1.0f };
 
+//êFÇëùÇ‚ÇµÇ‹ÇµÇΩÅB
+const Vector4 Vector4::Red = { 1.0f, 0.0f,0.0f,1.0f };
+const Vector4 Vector4::Blue = { 0.0f, 0.0f,1.0f,1.0f };
+const Vector4 Vector4::Green  = { 0.0f, 1.0f,0.0f,1.0f };
+const Vector4 Vector4::Orange = { 0.8f, 0.5f,0.0f,1.0f };
+const Vector4 Vector4::Pink	  = { 0.3f, 0.0f,0.3f,0.0f };
+const Vector4 Vector4::Purple = { 0.8f, 0.0f,1.0f,1.0f };
+
 const Vector2 Vector2::Zero   = { 0.0f,  0.0f };
 const Vector3 Vector3::Zero	= {  0.0f,  0.0f,  0.0f };
 const Vector3 Vector3::Right	= {  1.0f,  0.0f,  0.0f };

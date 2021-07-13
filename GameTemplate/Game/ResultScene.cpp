@@ -85,7 +85,7 @@ void ResultScene::GameSet()
 		m_winFontRender->SetText(L"PLAYER " + std::to_wstring(m_winnerPl->GetPlayerNum() + 1) + L" WIN!!");
 		m_winFontRender->SetPosition({ -300.0f,0.0f });
 		m_winFontRender->SetShadowFlag(true);
-		m_winFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
+		m_winFontRender->SetShadowColor({m_winnerPl->GetPlColor()});
 
 		m_winnerPl->SetPosition(m_winnerPos);
 		m_winnerPl->SetMoveSpeed(Vector3::Zero);
@@ -208,7 +208,7 @@ void ResultScene::TimeUp()
 			plFont->SetPosition(plFontPos);
 			plFont->SetScale(1.5f);
 			plFont->SetShadowFlag(true);
-			plFont->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
+			plFont->SetShadowColor(player->GetPlColor());
 
 			plFontPos.x += 80.0f;
 			return true;

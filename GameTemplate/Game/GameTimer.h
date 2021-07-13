@@ -2,7 +2,7 @@
 class GameScene;
 namespace
 {
-	const int TIME_LIMIT = 100;
+	const int TIME_LIMIT = 1;
 }
 
 class GameTimer	: public IGameObject
