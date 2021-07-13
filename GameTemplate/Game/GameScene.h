@@ -10,6 +10,10 @@ namespace
 	const Vector3 INI_CAMERA_TARGET_POS = { 0,100,-300 };
 	const int INI_GAME_START_CALL_TIME = 150;
 	const int INI_LOOK_STAGE_TIME = 300;
+	const Vector3 BUTTON_POS_LA = { -250,-300,0 };
+	const Vector3 BUTTON_POS_LB = { -50,-300,0 };
+	const Vector3 BUTTON_POS_Y = { 125,-300,0 };
+	const Vector3 BUTTON_POS_B = { 250,-300,0 };
 }
 class GameScene:public IGameObject
 {
@@ -45,6 +49,8 @@ private:
 
 	std::wstring m_stageName = {L"Hoge"};
 
+	SpriteRender* m_button_Sprite[4] = { nullptr,nullptr, nullptr, nullptr };
+	Vector3 m_buttonPos[4] = { BUTTON_POS_LA ,BUTTON_POS_LB ,BUTTON_POS_B ,BUTTON_POS_Y };
 public:
 	Vector3 GetIniPos(int i) { return m_iniPos[i]; }
 	void SetPlayerCount(int num) { m_playerCount = num; }

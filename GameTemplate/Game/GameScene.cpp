@@ -47,6 +47,16 @@ bool GameScene::Start()
 
     NewGO<GameTimer>(0, "gameTimer");
 
+    for (int i = 0; i < 4; i++) {
+        m_button_Sprite[i] = NewGO<SpriteRender>(5);
+    }
+    m_button_Sprite[0]->Init("Assets/Image/LA.dds",192,108);
+    m_button_Sprite[1]->Init("Assets/Image/LB.dds", 192, 108);
+    m_button_Sprite[2]->Init("Assets/Image/B.dds", 192, 108);
+    m_button_Sprite[3]->Init("Assets/Image/Y.dds", 192, 108);
+    for (int i = 0; i < 4; i++) {
+        m_button_Sprite[i]->SetPosition(m_buttonPos[i]);
+    }
 	return true;
 }
 void GameScene::Update()

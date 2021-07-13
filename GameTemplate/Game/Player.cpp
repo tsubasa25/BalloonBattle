@@ -261,39 +261,9 @@ Vector3 Player::ReboundSpeed()//モデルの法線から反射する方向を求めて移動方向を決
 	return Dir * -m_moveSpeed.Length();//進行方向に反射する前の勢いをかける
 }
 void Player::Debug(int pNum)//デバッグ用
-{
-	if (pNum == 0) {
-		m_PosX_font->SetPosition({ -500,100 });
-		m_PosY_font->SetPosition({ -500,50 });
-		m_PosZ_font->SetPosition({ -500,0 });
-		m_Size_font->SetPosition({ -500,-50 });
-	}
-	else if(pNum==1){
-		m_PosX_font->SetPosition({ 500,100 });
-		m_PosZ_font->SetPosition({ 500,0 });
-	}
-	m_PosX_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionX())));
-	m_PosY_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionY())));
-	m_PosZ_font->SetText(std::to_wstring(int(m_skinModelRender->GetPositionZ())));
-	m_Size_font->SetText(std::to_wstring(int(m_myAirVolume)));	
-	if (g_pad[pNum]->IsPress(enButtonLB1)) {
-			m_myAirVolume += 1;
-			//m_charaCon.ReInit((m_myAirVolume / 2), m_position);
-
-			//m_charaCon.ReInit((m_myAirVolume / 2),m_position);
-			//m_moveSpeed.y = 0;
-	}
-	if (g_pad[pNum]->IsPress(enButtonRB1)) {
-			m_myAirVolume -= 1;
-			Vector3 Accele = m_moveSpeed;
-			Accele.Normalize();
-			m_moveSpeed += Accele;
-			//m_charaCon.ReInit((m_myAirVolume / 2),m_position);
-	}
-	
-	
-	if (m_playerCount >= 2) {//プレイヤーが二人以上なら
-		if (m_IsAIOn) {
+{		
+	if (m_IsAIOn) {//矢印を表示するか
+		if (m_playerCount >= 2) {//プレイヤーが二人以上なら
 			if (m_playerNum == 0) {//敵が自分めがけて突進してくる
 				Vector3 diff = Vector3::Zero;
 				diff = m_position - m_enemy[0]->m_position;

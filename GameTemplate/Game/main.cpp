@@ -105,7 +105,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 void PreLoad()
 {
-    SkinModelRender::PreLoadModel("Assets/modelData/Balloon0.tkm");
+   /* SkinModelRender::PreLoadModel("Assets/modelData/Balloon0.tkm");
     SkinModelRender::PreLoadModel("Assets/modelData/Balloon1.tkm");
     SkinModelRender::PreLoadModel("Assets/modelData/Balloon2.tkm");
     SkinModelRender::PreLoadModel("Assets/modelData/Balloon3.tkm");
@@ -121,5 +121,5 @@ void PreLoad()
 
     SkinModelRender::PreLoadModel("Assets/modelData/SkyIsland.tkm");
     SkinModelRender::PreLoadModel("Assets/modelData/BuildingStage.tkm");
-    SkinModelRender::PreLoadModel("Assets/modelData/TrapStage.tkm");
+    SkinModelRender::PreLoadModel("Assets/modelData/TrapStage.tkm");*/
 }
