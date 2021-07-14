@@ -7,7 +7,7 @@ BalloonAir::~BalloonAir()
 	//DeleteGO(m_parent);
 
 
-if(m_ssAccel != nullptr)
+	if (m_ssAccel != nullptr)
 		DeleteGO(m_ssAccel);
 	if (m_ssInflate != nullptr)
 		DeleteGO(m_ssInflate);
@@ -15,7 +15,7 @@ if(m_ssAccel != nullptr)
 		DeleteGO(m_ssRise);
 	if (m_ssBrake != nullptr)
 		DeleteGO(m_ssBrake);
-
+}
 bool BalloonAir::Start()
 {
 	return true;
@@ -42,7 +42,7 @@ void BalloonAir::Air()
 			if (m_brakeSECanPlay == true) {
 				m_brakeSECanPlay = false;
 				m_ssBrake = NewGO<SoundSource>(0);
-				m_ssBrake->Init(L"Assets/sound/風船が加速する音.wav");
+				m_ssBrake->Init(L"Assets/sound/ブレーキ音.wav");
 				m_ssBrake->SetVolume(SOUND_AIR_SE_VOLUME);
 				m_ssBrake->Play(true);
 			}
