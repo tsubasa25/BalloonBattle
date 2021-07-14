@@ -68,6 +68,7 @@ private:
 
 	SoundSource* m_selectBGM = nullptr;
 	SoundSource* m_selectSE = nullptr;
+	SoundSource* m_cancelSE = nullptr;
 
 	FontRender* m_titleBackFont = nullptr;
 
