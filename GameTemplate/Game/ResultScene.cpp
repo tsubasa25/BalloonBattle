@@ -16,7 +16,7 @@ ResultScene::~ResultScene()
 	DeleteGO(m_retriFontRender);
 	DeleteGO(m_backMenuFontRender);
 	DeleteGO(m_backTitleFontRender);
-	DeleteGO(m_cursorFontRender);
+	DeleteGO(m_cursorSprite);
 	DeleteGO(m_resultBGM);
 }
 
@@ -153,11 +153,10 @@ void ResultScene::ZoomWinner()
 		m_mode = MODE_MENU;
 		DeleteGO(m_winFontRender);
 
-		m_cursorFontRender = NewGO<FontRender>(1);
-		m_cursorFontRender->SetPosition(m_cursorPos);
-		m_cursorFontRender->SetText(L"->");
-		m_cursorFontRender->SetShadowFlag(true);
-		m_cursorFontRender->SetShadowColor({0.0f,0.0f,0.0f,1.0f});
+		m_cursorSprite = NewGO<SpriteRender>(1);
+		m_cursorSprite->Init("Assets/Image/Cursor.DDS", 64, 28);
+		m_cursorSprite->SetPosition(RESULT_CURSOR_FONT_INI_POS);
+		m_cursorSprite->SetScale({1.0f,1.0f,1.0f});
 
 		m_retriFontRender = NewGO<FontRender>(1);
 		m_retriFontRender->SetPosition(RETRI_FONT_POS);
@@ -172,7 +171,7 @@ void ResultScene::ZoomWinner()
 		m_backMenuFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
 
 		m_backTitleFontRender = NewGO<FontRender>(1);
-		m_backTitleFontRender->SetPosition(BACK_TIRLE_FONT_POS);
+		m_backTitleFontRender->SetPosition(BACK_TITLE_FONT_POS);
 		m_backTitleFontRender->SetText(L"タイトルへ戻る。");
 		m_backTitleFontRender->SetShadowFlag(true);
 		m_backTitleFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
@@ -261,11 +260,10 @@ void ResultScene::Draw()
 			return true;
 			});
 
-		m_cursorFontRender = NewGO<FontRender>(1);
-		m_cursorFontRender->SetPosition(m_cursorPos);
-		m_cursorFontRender->SetText(L"->");
-		m_cursorFontRender->SetShadowFlag(true);
-		m_cursorFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
+		m_cursorSprite = NewGO<SpriteRender>(1);
+		m_cursorSprite->Init("Assets/Image/Cursor.DDS", 64, 28);
+		m_cursorSprite->SetPosition(RESULT_CURSOR_FONT_INI_POS);
+		m_cursorSprite->SetScale({ 1.0f,1.0f,1.0f });
 
 		m_retriFontRender = NewGO<FontRender>(1);
 		m_retriFontRender->SetPosition(RETRI_FONT_POS);
@@ -280,7 +278,7 @@ void ResultScene::Draw()
 		m_backMenuFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
 
 		m_backTitleFontRender = NewGO<FontRender>(1);
-		m_backTitleFontRender->SetPosition(BACK_TIRLE_FONT_POS);
+		m_backTitleFontRender->SetPosition(BACK_TITLE_FONT_POS);
 		m_backTitleFontRender->SetText(L"タイトルへ戻る。");
 		m_backTitleFontRender->SetShadowFlag(true);
 		m_backTitleFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
@@ -390,7 +388,7 @@ void ResultScene::SetCursorPos()
 		m_cursorMoveSpeedX = INI_CURSOR_MOVE_SPEED_X;
 		m_cursorPos.x = RESULT_CURSOR_FONT_INI_POS.x;
 	}
-	m_cursorFontRender->SetPosition(m_cursorPos);
+	m_cursorSprite->SetPosition(m_cursorPos);
 }
 
 //カーソルの位置を上下に移動する。
@@ -406,13 +404,13 @@ void ResultScene::AddSelectMenuNum(int num)
 	switch (m_selectMenuNum)
 	{
 	case 0:
-		m_cursorPos.y = RETRI_FONT_POS.y;
+		m_cursorPos.y = RETRI_FONT_POS.y - 20;
 		break;
 	case 1:
-		m_cursorPos.y = BACK_MENU_FONT_POS.y;
+		m_cursorPos.y = BACK_MENU_FONT_POS.y - 20;
 		break;
 	case 2:
-		m_cursorPos.y = BACK_TIRLE_FONT_POS.y;
+		m_cursorPos.y = BACK_TITLE_FONT_POS.y - 20;
 		break;
 	}
 }
