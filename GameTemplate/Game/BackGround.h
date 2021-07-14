@@ -46,6 +46,9 @@ private:
 	Level m_level;
 
 	Vector3 m_spawnPos[RESPAWN_POSITION_NUM]{Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero,Vector3::Zero, };
+	bool m_canRespawn[RESPAWN_POSITION_NUM]{true,true,true,true,true,true,true,true};
+	int m_canRespawnInterval[RESPAWN_POSITION_NUM]{0,0,0,0,0,0,0,0};
+
 
 	Vector3 m_WTBladesPos = {Vector3::Zero};
 

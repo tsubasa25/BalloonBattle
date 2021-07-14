@@ -177,7 +177,18 @@ bool BackGround::Start()
 }
 void BackGround::Update()
 {
+    for (int i = 0; i < RESPAWN_POSITION_NUM; i++)
+    {
+        if (m_canRespawnInterval[i] > 0)
+        {
+            m_canRespawnInterval[i]--;
 
+        }
+        else
+        {
+            m_canRespawn[i] = true;
+        }
+    }
 }
 
 //リスポーン地点を割り出す関数
@@ -199,7 +210,7 @@ Vector3 BackGround::GetRespawnPosition(int ResPlNum)
     Vector3 ResPos = { Vector3::Zero }; //リスポーン地点
     Vector3 toResPosDis = {Vector3::Zero};  //リスポーン地点からm_enemyMiddlePosへの距離
     Vector3 dis = { Vector3::Zero };    //リスポーン地点候補からm_enemyMiddlePosへの距離
-
+    int resPosNum = -1;
     //リスポーン地点の候補から、m_enemyMiddlePosへの距離が最も遠い場所を割り出す。
     for (int i = 0; i < RESPAWN_POSITION_NUM; i++)
     {
@@ -208,7 +219,23 @@ Vector3 BackGround::GetRespawnPosition(int ResPlNum)
         {
             toResPosDis = dis;
             ResPos = m_spawnPos[i];
+            resPosNum = i;
         }
+    }
+
+    if (m_canRespawn[resPosNum] == true)
+    {
+        m_canRespawn[resPosNum] = false;
+        m_canRespawnInterval[resPosNum] = 100;
+    }
+    else
+    {
+        QueryGOs<Player>("player", [this](Player* player)->bool
+            {
+                if (player->GetPlayerNum() == m_respawnPlayerNum)
+                    player->WaitRespawn();
+                return true;
+            });
     }
 
     //空中からリスポーンするようにする。

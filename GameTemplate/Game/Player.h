@@ -23,7 +23,7 @@ namespace
 	const float PAI = 3.14159f;//円周率
 	const Vector3 OVER_STAGE_LINE = {4000.0f, -2000.0f, 4000.0f};	//ステージから遠ざかりすぎた時に死亡する距離。
 	const float SOUND_BALLOON_SE_VOLUME = 0.4f;
-
+	const int RESPAWN_INTERVAL = 50;
 }
 class Player:public IGameObject
 {
@@ -69,7 +69,7 @@ private:
 	Effect m_hitEff;
 
 	bool m_respawnFlag = false;
-	int m_respawnInterval = 0;
+	int m_respawnCount = 0;
 
 	Vector4 m_plColor = {0.0f,0.0f,0.0f,1.0f};
 
@@ -132,6 +132,7 @@ public:
 	void PlayEffHit();	//プレイヤーの衝突時のエフェクト再生
 
 	void Respawn();
+	void WaitRespawn() { m_respawnCount += RESPAWN_INTERVAL; };
 
 	Vector4 GetPlColor() { return m_plColor; };
 
