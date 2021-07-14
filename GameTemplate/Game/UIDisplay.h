@@ -38,6 +38,12 @@ public:
 	void SetPlayerStock(int stock, int plNum);
 
 	void SetIsDeath(bool flag) { m_isDeath = flag; }
+
+	void SetIsMinus(int pnum) { m_isMinus[pnum] = true; }
+	void SetIsPlus(int pnum) { m_isPlus[pnum] = true; }
+
+	void MinusDisplay(int pnum);
+	void PlusDisplay(int pnum);
 private:
 
 	std::wstring m_stocknum[10] = { {L"x0"},{L"x1"},{L"x2"},{L"x3"},{L"x4"},{L"x5"}, {L"x6"},{L"x7"},{L"x8"},{L"x9"} };
@@ -45,6 +51,10 @@ private:
 	SpriteRender* m_playerUI_Sprite[8] = { nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr };
 
 	SpriteRender* m_playerstock_Sprite[8] = { nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr };
+
+	SpriteRender* m_minusPoint_Sprite[8]= { nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr };
+	SpriteRender* m_plusPoint_Sprite[8] = { nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr };
+
 
 	Vector3 m_playerUI_Pos[8] = {
 	{ PLAYER1UI_POS },
@@ -66,6 +76,26 @@ private:
 	{ PLAYER7STOCK_POS },
 	{ PLAYER8STOCK_POS } };
 
+	Vector3 m_minusPointPos[8] = {
+	{ PLAYER1UI_POS },
+	{ PLAYER2UI_POS },
+	{ PLAYER3UI_POS },
+	{ PLAYER4UI_POS },
+	{ PLAYER5UI_POS },
+	{ PLAYER6UI_POS },
+	{ PLAYER7UI_POS },
+	{ PLAYER8UI_POS } };
+
+	Vector3 m_plusPointPos[8] = {
+	{ PLAYER1UI_POS },
+	{ PLAYER2UI_POS },
+	{ PLAYER3UI_POS },
+	{ PLAYER4UI_POS },
+	{ PLAYER5UI_POS },
+	{ PLAYER6UI_POS },
+	{ PLAYER7UI_POS },
+	{ PLAYER8UI_POS } };
+
 	FontRender* m_playerstock_FontRender[8] = { nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr };
 	
 	int loopcount = 0;
@@ -74,4 +104,8 @@ private:
 	bool m_PlDecStock[8] = { false,false,false,false,false,false,false,false };
 	bool m_PlDeath[8] = { false,false,false,false,false,false,false,false };
 	bool m_isDeath = false;
+	bool m_isMinus[8] = { false,false,false,false,false,false,false,false };
+	bool m_isPlus[8] = { false,false,false,false,false,false,false,false };
+	int m_pointMinusLoop[8] = { 0,0,0,0,0,0,0,0 };
+	int m_pointPlusLoop[8] = { 0,0,0,0,0,0,0,0 };
 };

@@ -16,7 +16,7 @@ bool GimmickNeedle::Start()
 	m_needleBoardModelRender = NewGO<SkinModelRender>(0);
 	m_needleBoardModelRender->Init("Assets/modelData/NeedleBoard.tkm");
 
-	m_needleBoardModelRender->SetShadowCasterFlag(true);
+	m_needleBoardModelRender->SetShadowCasterFlag(false);
 	//針は、板より下の位置で引っ込んでいる。
 	m_needlePos = { m_needleBoardPos.x, m_needleBoardPos.y - NEEDLE_HEIGHT, m_needleBoardPos.z };
 
@@ -46,9 +46,9 @@ void GimmickNeedle::Update()
 		QueryGOs<Player>("player", [this](Player* player)->bool {
 			//プレイヤーと針の位置の距離をとる
 			Vector3 plPos = player->GetPosition();
-			m_diff.x = plPos.x - m_needleBoardPos.x;
-			m_diff.z = plPos.z - m_needleBoardPos.z;
-
+			/*m_diff.x = plPos.x - m_needleBoardPos.x;
+			m_diff.z = plPos.z - m_needleBoardPos.z;*/
+			m_diff = plPos - m_needleBoardPos;
 			if (player->GetCanMove() == true)
 			{
 				//プレイヤーが針の範囲に入っていたら、死ぬ。

@@ -35,10 +35,7 @@ private:
 	int m_playerNum = 0;//プレイヤー番号
 	int m_stock = 3;//ストック
 	int m_playerCount = 0;
-	FontRender* m_PosX_font = NewGO<FontRender>(0);//デバッグ用
-	FontRender* m_PosY_font = NewGO<FontRender>(0);
-	FontRender* m_PosZ_font = NewGO<FontRender>(0);
-	FontRender* m_Size_font = NewGO<FontRender>(0);
+	
 	PointLight* pointLight = NewGO<PointLight>(0);
 	
 	Vector3 m_position = { Vector3::Zero };

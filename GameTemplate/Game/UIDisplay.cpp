@@ -27,6 +27,15 @@ bool UIDisplay::Start()
 			if (player->GetPlayerNum() == i) {				
 				m_playerUI_Sprite[i] = NewGO<SpriteRender>(0);	
 				m_playerstock_Sprite[i] = NewGO<SpriteRender>(0);
+				m_minusPoint_Sprite[i] = NewGO<SpriteRender>(0);
+				m_minusPoint_Sprite[i]->Init("Assets/Image/minus.dds", 100, 100);
+				m_minusPoint_Sprite[i]->SetPosition(m_minusPointPos[i]);
+				m_minusPoint_Sprite[i]->SetScale(Vector3::Zero);
+				m_plusPoint_Sprite[i] = NewGO<SpriteRender>(0);
+				m_plusPoint_Sprite[i]->Init("Assets/Image/plus.dds", 100, 100);
+				m_plusPoint_Sprite[i]->SetPosition(m_plusPointPos[i]);
+				m_plusPoint_Sprite[i]->SetScale(Vector3::Zero);
+				
 				m_playerstock_FontRender[i] = NewGO<FontRender>(0);
 				
 				switch (i)
@@ -113,6 +122,8 @@ void UIDisplay::Update()
 		m_isDeath = false;
 	}
 	for (int i = 0; i < 8; i++) {
+		//PlusDisplay(i);
+		MinusDisplay(i);
 		if (m_PlDecStock[i] == true) {
 			switch (i)
 			{
@@ -492,4 +503,30 @@ void UIDisplay::SetPlayerStock(int stock, int plNum)
 
 	m_PlDecStock[plNum] = true;
 
+}
+void UIDisplay::MinusDisplay(int pnum)
+{	
+	if (m_isMinus[pnum]) {
+		m_pointMinusLoop[pnum]++;
+		m_minusPoint_Sprite[pnum]->SetScale(Vector3::One);
+		if (m_pointMinusLoop[pnum] > 100) {
+			m_isMinus[pnum] = false;
+			m_pointMinusLoop[pnum] = 0;
+			m_minusPoint_Sprite[pnum]->SetScale(Vector3::Zero);
+		}
+	}
+}
+void UIDisplay::PlusDisplay(int pnum)
+{
+	if (m_isPlus[pnum]) {
+		m_pointPlusLoop[pnum]++;
+		m_plusPoint_Sprite[pnum]->Init("Assets/Image/plus.dds", 100, 100);
+		m_plusPoint_Sprite[pnum]->SetPosition(m_plusPointPos[pnum]);
+		m_plusPoint_Sprite[pnum]->SetScale(Vector3::One);
+		if (m_pointPlusLoop[pnum] > 100) {
+			m_isPlus[pnum] = false;
+			m_pointPlusLoop[pnum] = 0;
+			m_plusPoint_Sprite[pnum]->SetScale(Vector3::Zero);
+		}
+	}
 }
