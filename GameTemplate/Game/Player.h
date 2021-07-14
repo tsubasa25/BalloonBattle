@@ -76,6 +76,8 @@ private:
 
 	Vector4 m_plColor = {0.0f,0.0f,0.0f,1.0f};
 
+	int m_hitLastNum = 9;//最後にあたった敵の番号
+	int m_killPoint = 0;
 public:
 	~Player();
 	bool Start();
@@ -122,6 +124,9 @@ public:
 
 	float GetAirVolume() { return m_myAirVolume; };
 	void SetAirVolume(float air) { m_myAirVolume = air; };	//風船の空気の量を設定
+
+	int GetKillPoint() { return m_killPoint; }
+	void AddKillPoint() { m_killPoint++; }
 
 	void Tilt();	//風船の傾きを決める。
 

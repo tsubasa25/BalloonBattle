@@ -46,7 +46,7 @@ bool GameScene::Start()
     m_gameStartFontRender->SetShadowOffset(4.0f);
     m_gameStartFontRender->SetShadowColor({0.0f,0.0f,0.0f,1.0f});
 
-    NewGO<GameTimer>(0, "gameTimer");
+    GameTimer*gameTimer = NewGO<GameTimer>(0, "gameTimer");
 
     for (int i = 0; i < 4; i++) {
         m_button_Sprite[i] = NewGO<SpriteRender>(5);
@@ -77,29 +77,19 @@ void GameScene::Update()
         break;
 
     case GAME_STATE_RESULT:
+        if (m_button_Sprite[0] != nullptr) {
+            for (int i = 0; i < 4; i++)
+            {
+                DeleteGO(m_button_Sprite[i]);
+            }
+        }
         break;
 
     default:
         break;
     }
 
-    if (g_pad[0]->IsPress(enButtonRB1)&&aa==true) {//ƒ‰ƒCƒg‚ÌŽÀŒ±
-        for (int i = 0; i < 10; i++) {
-            pointLight[i] = NewGO<PointLight>(0);
-            pointLight[i]->SetColor({ 10,0,0 });
-            pointLight[i]->SetPosition({ 0,10,0 });
-            pointLight[i]->SetRange(100);
-        }
-        aaNum = 9;
-        aa = false;
-    }
-    if (g_pad[0]->IsPress(enButtonLB1)&& aa==false) {
-        DeleteGO(pointLight[aaNum]);
-        aaNum--;
-        if (aaNum <0) {
-            aa = true;
-        }
-    }
+   
     //if (g_pad[0]->IsTrigger(enButtonX)) {//•œŠˆ
     //    for (int i = 0; i < 8; i++)
     //    {
@@ -122,15 +112,6 @@ void GameScene::Update()
     //        }
     //    }
     //}
-
-    if (g_pad[0]->IsTrigger(enButtonLB2))
-    {
-       /* eff.Play();
-        eff.SetPosition({ 0.0f,50.0f,0.0f });
-        eff.SetScale({30.0f, 30.0f, 30.0f});
-        eff.Update();*/
-    }
-    
 }
 
 void GameScene::LookStage()
@@ -241,6 +222,5 @@ void GameScene::Retri()
             }
         }
     }
-
     NewGO<GameTimer>(0, "gameTimer");
 }

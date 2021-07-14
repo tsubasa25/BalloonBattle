@@ -37,6 +37,7 @@ public:
 
 	void SetPlayerStock(int stock, int plNum);
 
+	void SetIsDeath(bool flag) { m_isDeath = flag; }
 private:
 
 	std::wstring m_stocknum[10] = { {L"x0"},{L"x1"},{L"x2"},{L"x3"},{L"x4"},{L"x5"}, {L"x6"},{L"x7"},{L"x8"},{L"x9"} };
@@ -72,4 +73,5 @@ private:
 	int changeframenum[4] = { 1, 10 , 20, 40 };
 	bool m_PlDecStock[8] = { false,false,false,false,false,false,false,false };
 	bool m_PlDeath[8] = { false,false,false,false,false,false,false,false };
+	bool m_isDeath = false;
 };

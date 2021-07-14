@@ -198,6 +198,7 @@ void ResultScene::TimeUp()
 		m_winFontRender->SetText(L"DRAW");
 		m_winFontRender->SetPosition({ 0.0f,-50.0f });
 		m_winFontRender->SetShadowFlag(true);
+		m_winFontRender->SetShadowOffset(4.0f);
 		m_winFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
 
 		QueryGOs<UIDisplay>("UIdisplay", [this](UIDisplay* UIdisplay)->bool {

@@ -131,7 +131,6 @@ void Player::Update()
 		}
 		return;
 	}
-
 	Move();
 	Tilt();
 	HitWall();
@@ -225,7 +224,7 @@ void Player::HitPlayer()
 			//大きさに比例してふっとばしやすくなる
 			m_enemy[i]->m_moveSpeed = (diff*GetMoveSpeed().Length() * -(m_myAirVolume/ (INI_AIR_VOLUME/ REBOUND_POWER)));//相手に自分の勢いを渡す
 			m_moveSpeed = diff*(tmp.Length() * ((INI_AIR_VOLUME) /m_myAirVolume));//自分は大きさに反比例してふっとばされやすくなる
-		
+
 			m_myAir->BleedAir(m_myAirVolume * 0.1f);
 
 			PlayEffHit();
@@ -238,7 +237,9 @@ void Player::HitPlayer()
 				ss->SetVolume(SOUND_BALLOON_SE_VOLUME);
 				ss->Play(false);
 			}
-		}		
+			//最後にあたった敵の番号を記録する
+			m_hitLastNum = i;
+		}
 	}
 }
 
@@ -327,6 +328,14 @@ void Player::Tilt()
 //プレイヤーが死亡したときの処理
 void Player::PlayerDeath()
 {
+	m_UIDisplay->SetIsDeath(true);
+	//敵が死んでDeleteGOされたときにm_enemyの順番が変わるからおかしくなるかも
+	if (m_hitLastNum < 8) {//誰にもあたってなかったら加算されない
+		if(m_hitLastNum<m_enemy.size())
+			m_enemy[m_hitLastNum]->AddKillPoint();//キルポイントを加算する
+		else
+			m_enemy[m_hitLastNum-1]->AddKillPoint();//キルポイントを加算する
+	}
 	Effect soulEff;
 	soulEff.Init(u"Assets/effect/SoulRise.efk");
 	soulEff.SetPosition(m_position);

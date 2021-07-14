@@ -1,7 +1,7 @@
 #pragma once
 struct DirLigData {
 	Vector3 direction;//ライトの方向
-	float pad0;			 //パディング
+	float directionLigNum;//何番目に作ったか
 	Vector3 color;	 //ライトのカラー
 	float pad1;
 };

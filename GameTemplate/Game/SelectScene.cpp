@@ -289,7 +289,7 @@ void SelectScene::Update()
 			m_okStok_Sprite->Init("Assets/Image/OK!.dds", 240, 135);
 			m_okStok_Sprite->SetPosition(m_okStockPos);
 			m_titleState = enStageSelect;
-			m_arrowPlayer_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
+			m_arrowStock_Sprite->Init("Assets/Image/selectArrowOK.dds", 100, 200);
 			m_selectSE = NewGO<SoundSource>(0);
 			m_selectSE->Init(L"Assets/sound/ƒZƒŒƒNƒgŒˆ’è‰¹.wav");
 			m_selectSE->SetVolume(SOUND_SELECT_SE_VOLUME);
