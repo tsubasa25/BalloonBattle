@@ -353,7 +353,7 @@ void Player::PlayerDeath()
 
 	if (m_stock > 0) {//ストックが残っていたら
 		m_respawnFlag = true;
-		m_respawnInterval = 100;
+		m_respawnInterval = 50;
 
 		m_myAirVolume = INI_AIR_VOLUME;
 		m_myAir->SetAirVolume(INI_AIR_VOLUME);
