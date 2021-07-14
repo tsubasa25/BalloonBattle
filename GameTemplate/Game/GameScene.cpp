@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "BackGround.h"
 #include "GameTimer.h"
+#include "ResultScene.h"
 
 GameScene::~GameScene()
 {
@@ -15,7 +16,9 @@ bool GameScene::Start()
     m_directionLight->SetColor({ 1.0f,1.0f,1.0f });
     m_directionLight->SetDirection({ -1.0f, -1.0f, 0.5f });
 
-    for (int i = 0; i < m_playerCount; i++)//プレイヤーを作る
+    m_iniPlCount = m_playerCount;
+
+    for (int i = 0; i < m_iniPlCount; i++)//プレイヤーを作る
     {
         player[i] = NewGO<Player>(0,"player");
         player[i]->SetPlayerNum(i);//プレイヤー番号を設定
@@ -187,7 +190,12 @@ void GameScene::GameStartCall()
 
 void GameScene::Battle()
 {
-
+    if (m_playerCount <= 0)
+    {
+        SetGameState(GAME_STATE_RESULT);
+        ResultScene* resultScene = NewGO<ResultScene>(0, "resultScene");
+        resultScene->SetResultMode(MODE_GAME_SET);
+    }
 
 }
 
@@ -205,7 +213,9 @@ void GameScene::Retri()
     m_gameStartCallTimer = INI_GAME_START_CALL_TIME;
     m_lookStageTimer = INI_LOOK_STAGE_TIME;
 
-    for (int i = 0; i < m_playerCount; i++)//プレイヤーを作る
+    m_playerCount = m_iniPlCount;
+
+    for (int i = 0; i < m_iniPlCount; i++)//プレイヤーを作る
     {
         player[i] = NewGO<Player>(0, "player");
         player[i]->SetPlayerNum(i);//プレイヤー番号を設定

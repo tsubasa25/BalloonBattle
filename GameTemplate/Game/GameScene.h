@@ -22,6 +22,7 @@ public:
 	bool Start();
 	void Update();
 private:
+	int m_iniPlCount = 0;
 	int m_playerCount = 0;
 	int m_stock = 0;
 

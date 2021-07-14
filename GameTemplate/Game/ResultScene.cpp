@@ -82,20 +82,35 @@ void ResultScene::GameSet()
 	}
 	else
 	{
-		m_mode = MODE_ZOOM_WINNER;
-		DeleteGO(m_gameSetFontRender);
-		m_winFontRender = NewGO<FontRender>(0);
-		m_winFontRender->SetScale(2.0f);
-		m_winFontRender->SetText(L"PLAYER " + std::to_wstring(m_winnerPl->GetPlayerNum() + 1) + L" WIN!!");
-		m_winFontRender->SetPosition({ -300.0f,0.0f });
-		m_winFontRender->SetShadowFlag(true);
-		m_winFontRender->SetShadowOffset(3.0f);
-		m_winFontRender->SetShadowColor({m_winnerPl->GetPlColor()});
+		if (m_winnerPl != nullptr)
+		{
+			m_mode = MODE_ZOOM_WINNER;
+			DeleteGO(m_gameSetFontRender);
+			m_winFontRender = NewGO<FontRender>(0);
+			m_winFontRender->SetScale(2.0f);
+			m_winFontRender->SetText(L"PLAYER " + std::to_wstring(m_winnerPl->GetPlayerNum() + 1) + L" WIN!!");
+			m_winFontRender->SetPosition({ -300.0f,0.0f });
+			m_winFontRender->SetShadowFlag(true);
+			m_winFontRender->SetShadowOffset(3.0f);
+			m_winFontRender->SetShadowColor({ m_winnerPl->GetPlColor() });
 
-		m_winnerPl->SetPosition(m_winnerPos);
-		m_winnerPl->SetMoveSpeed(Vector3::Zero);
-		m_winnerPl->Tilt();
-		m_winnerPl->SetArrowScele({ 0.0f,0.0f,0.0f });
+			m_winnerPl->SetPosition(m_winnerPos);
+			m_winnerPl->SetMoveSpeed(Vector3::Zero);
+			m_winnerPl->Tilt();
+			m_winnerPl->SetArrowScele({ 0.0f,0.0f,0.0f });
+		}
+		else
+		{
+			m_mode = MODE_DRAW;
+			DeleteGO(m_gameSetFontRender);
+			m_winFontRender = NewGO<FontRender>(0);
+			m_winFontRender->SetScale(2.0f);
+			m_winFontRender->SetText(L"DRAW");
+			m_winFontRender->SetPosition({ -70.0f,0.0f });
+			m_winFontRender->SetShadowFlag(true);
+			m_winFontRender->SetShadowOffset(3.0f);
+			m_winFontRender->SetShadowColor({Vector4::Black});
+		}
 
 		QueryGOs<UIDisplay>("UIdisplay", [this](UIDisplay* UIdisplay)->bool {
 			DeleteGO(UIdisplay);

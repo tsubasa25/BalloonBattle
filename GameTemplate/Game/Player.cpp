@@ -14,7 +14,8 @@ Player::~Player()
 	}
 
 	//gameScene-	m_gameScene>SetIsAlive(m_playerNum, false);
-	//gameScene->SetPlayerCount(gameScene->GetPlayerCount() - 1);
+	if (m_gameScene != nullptr)
+		m_gameScene->SetPlayerCount(m_gameScene->GetPlayerCount() - 1);
 
 	if (m_myAir != nullptr)
 		DeleteGO(m_myAir);
