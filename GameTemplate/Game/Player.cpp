@@ -8,10 +8,6 @@
 Player::~Player()
 {
 	DeleteGO(m_skinModelRender);
-	DeleteGO(m_PosX_font);
-	DeleteGO(m_PosY_font);
-	DeleteGO(m_PosZ_font);
-	DeleteGO(m_Size_font);
 	DeleteGO(pointLight);
 	if (m_IsArrowOn) {
 		DeleteGO(m_skinModelRenderArrow);
@@ -239,6 +235,7 @@ void Player::HitPlayer()
 			}
 			//最後にあたった敵の番号を記録する
 			m_hitLastNum = i;
+			m_enemy[i]->m_hitLastNum = i;
 		}
 	}
 }
@@ -330,12 +327,16 @@ void Player::PlayerDeath()
 {
 	m_UIDisplay->SetIsDeath(true);
 	//敵が死んでDeleteGOされたときにm_enemyの順番が変わるからおかしくなるかも
-	if (m_hitLastNum < 8) {//誰にもあたってなかったら加算されない
-		if(m_hitLastNum<m_enemy.size())
-			m_enemy[m_hitLastNum]->AddKillPoint();//キルポイントを加算する
-		else
-			m_enemy[m_hitLastNum-1]->AddKillPoint();//キルポイントを加算する
-	}
+	//if (m_hitLastNum < 8) {//誰にもあたってなかったら加算されない
+	//	if (m_hitLastNum < m_enemy.size())
+	//	{
+	//		m_enemy[m_hitLastNum]->AddKillPoint();//キルポイントを加算する
+	//		m_UIDisplay->SetIsMinus(m_playerNum);
+	//		m_UIDisplay->SetIsPlus(m_enemy[m_hitLastNum]->GetPlayerNum());
+	//		
+	//	}
+	//}
+	m_UIDisplay->SetIsMinus(m_playerNum);
 	Effect soulEff;
 	soulEff.Init(u"Assets/effect/SoulRise.efk");
 	soulEff.SetPosition(m_position);
@@ -353,7 +354,7 @@ void Player::PlayerDeath()
 
 	if (m_stock > 0) {//ストックが残っていたら
 		m_respawnFlag = true;
-		m_respawnInterval = 100;
+		m_respawnInterval = 50;
 
 		m_myAirVolume = INI_AIR_VOLUME;
 		m_myAir->SetAirVolume(INI_AIR_VOLUME);

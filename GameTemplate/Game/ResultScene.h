@@ -10,10 +10,10 @@ namespace
 	const int MODE_DRAW = 4;
 	const int MODE_MENU = 5;
 
-	const Vector2 RESULT_CURSOR_FONT_INI_POS = { -200.0f,30.0f };
+	const Vector3 RESULT_CURSOR_FONT_INI_POS = { -200.0f,10.0f, 0.0f };
 	const Vector2 RETRI_FONT_POS = { -150.0f,30.0f };
 	const Vector2 BACK_MENU_FONT_POS = { -150.0f,-30.0f };
-	const Vector2 BACK_TIRLE_FONT_POS = { -150.0f, -90.0f };
+	const Vector2 BACK_TITLE_FONT_POS = { -150.0f, -90.0f };
 	const float INI_CURSOR_MOVE_SPEED_X = 2.0f;
 	const float SOUND_RESULT_SE_VOLUME = 0.6f;
 	const float SOUND_RESULT_BGM_VOLUME = 0.3f;
@@ -35,9 +35,9 @@ private:
 	Vector3 m_cameraPos = { 0.0f, 300.0f, -10000.0f };
 	float m_cameraMoveSpeed = 1.0f;
 
-	Vector2 m_cursorPos = { RESULT_CURSOR_FONT_INI_POS };
+	Vector3 m_cursorPos = { RESULT_CURSOR_FONT_INI_POS };
 	float m_cursorMoveSpeedX = INI_CURSOR_MOVE_SPEED_X;
-	FontRender* m_cursorFontRender = nullptr;
+	SpriteRender* m_cursorSprite = nullptr;
 
 	FontRender* m_retriFontRender = nullptr;
 	FontRender* m_backMenuFontRender = nullptr;

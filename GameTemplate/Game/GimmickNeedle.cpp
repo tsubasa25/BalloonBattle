@@ -46,9 +46,9 @@ void GimmickNeedle::Update()
 		QueryGOs<Player>("player", [this](Player* player)->bool {
 			//プレイヤーと針の位置の距離をとる
 			Vector3 plPos = player->GetPosition();
-			m_diff.x = plPos.x - m_needleBoardPos.x;
-			m_diff.z = plPos.z - m_needleBoardPos.z;
-
+			/*m_diff.x = plPos.x - m_needleBoardPos.x;
+			m_diff.z = plPos.z - m_needleBoardPos.z;*/
+			m_diff = plPos - m_needleBoardPos;
 			if (player->GetCanMove() == true)
 			{
 				//プレイヤーが針の範囲に入っていたら、死ぬ。
