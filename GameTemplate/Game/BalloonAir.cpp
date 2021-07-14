@@ -5,16 +5,17 @@
 BalloonAir::~BalloonAir()
 {
 	DeleteGO(m_parent);
-if(ssAccel != nullptr)
-		DeleteGO(ssAccel);
-	if (ssInflate != nullptr)
-		DeleteGO(ssInflate);
-	if (ssRise != nullptr)
-		DeleteGO(ssRise);
-	if (ssBrake != nullptr)
-		DeleteGO(ssBrake);
-	if (ssDeath != nullptr)
-		DeleteGO(ssDeath);}
+	if(m_ssAccel != nullptr)
+		DeleteGO(m_ssAccel);
+	if (m_ssInflate != nullptr)
+		DeleteGO(m_ssInflate);
+	if (m_ssRise != nullptr)
+		DeleteGO(m_ssRise);
+	if (m_ssBrake != nullptr)
+		DeleteGO(m_ssBrake);
+	if (m_ssDeath != nullptr)
+		DeleteGO(m_ssDeath);
+}
 
 bool BalloonAir::Start()
 {

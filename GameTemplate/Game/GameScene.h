@@ -39,7 +39,6 @@ private:
 
 	FontRender* m_gameStartFontRender = nullptr;
 	int m_gameSceneState = 0;
-
 	int m_gameStartCallTimer = INI_GAME_START_CALL_TIME;
 	int m_lookStageTimer = INI_LOOK_STAGE_TIME;
 	FontRender* m_stageNameFontRender = nullptr;
