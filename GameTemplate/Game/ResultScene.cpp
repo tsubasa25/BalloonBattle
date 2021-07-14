@@ -39,8 +39,8 @@ bool ResultScene::Start()
 	else 
 		m_gameSetFontRender->SetText(L"H O  G E");
 
-	QueryGOs<BalloonAir>("ballloonAir", [this](BalloonAir* ballloonAir)->bool {
-		DeleteGO(ballloonAir);
+	QueryGOs<BalloonAir>("balloonAir", [this](BalloonAir* balloonAir)->bool {
+		DeleteGO(balloonAir);
 		return true;
 		});
 
@@ -153,7 +153,7 @@ void ResultScene::ZoomWinner()
 		m_mode = MODE_MENU;
 		DeleteGO(m_winFontRender);
 
-		m_cursorSprite = NewGO<SpriteRender>(1);
+		m_cursorSprite = NewGO<SpriteRender>(3);
 		m_cursorSprite->Init("Assets/Image/Cursor.DDS", 64, 28);
 		m_cursorSprite->SetPosition(RESULT_CURSOR_FONT_INI_POS);
 		m_cursorSprite->SetScale({1.0f,1.0f,1.0f});
@@ -170,7 +170,7 @@ void ResultScene::ZoomWinner()
 		m_backMenuFontRender->SetShadowFlag(true);
 		m_backMenuFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
 
-		m_backTitleFontRender = NewGO<FontRender>(1);
+		m_backTitleFontRender = NewGO<FontRender>(3);
 		m_backTitleFontRender->SetPosition(BACK_TITLE_FONT_POS);
 		m_backTitleFontRender->SetText(L"タイトルへ戻る。");
 		m_backTitleFontRender->SetShadowFlag(true);
@@ -260,7 +260,7 @@ void ResultScene::Draw()
 			return true;
 			});
 
-		m_cursorSprite = NewGO<SpriteRender>(1);
+		m_cursorSprite = NewGO<SpriteRender>(3);
 		m_cursorSprite->Init("Assets/Image/Cursor.DDS", 64, 28);
 		m_cursorSprite->SetPosition(RESULT_CURSOR_FONT_INI_POS);
 		m_cursorSprite->SetScale({ 1.0f,1.0f,1.0f });
