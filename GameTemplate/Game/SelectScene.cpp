@@ -120,6 +120,11 @@ void SelectScene::Update()
 	{
 		if (g_pad[0]->IsTrigger(enButtonB))
 		{
+			m_cancelSE = NewGO<SoundSource>(0);
+			m_cancelSE->Init(L"Assets/sound/キャンセル音.wav");
+			m_cancelSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_cancelSE->Play(false);
+
 			m_titleState = enBackTitle;
 			m_titleBackFont = NewGO<FontRender>(1);
 			m_titleBackFont->SetPosition({ -350.0f, 30.0f });
@@ -270,6 +275,11 @@ void SelectScene::Update()
 	{
 		if (g_pad[0]->IsTrigger(enButtonB))
 		{
+			m_cancelSE = NewGO<SoundSource>(0);
+			m_cancelSE->Init(L"Assets/sound/キャンセル音.wav");
+			m_cancelSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_cancelSE->Play(false);
+
 			m_titleState = enPlayerNum;
 			DeleteGO(m_okPlayer_Sprite);
 		}
@@ -370,6 +380,11 @@ void SelectScene::Update()
 	{
 		if (g_pad[0]->IsTrigger(enButtonB))
 		{
+			m_cancelSE = NewGO<SoundSource>(0);
+			m_cancelSE->Init(L"Assets/sound/キャンセル音.wav");
+			m_cancelSE->SetVolume(SOUND_SELECT_SE_VOLUME);
+			m_cancelSE->Play(false);
+
 			m_titleState = enPlayerStock;
 			DeleteGO(m_okStok_Sprite);
 		}
