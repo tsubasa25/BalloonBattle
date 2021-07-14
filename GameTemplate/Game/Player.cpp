@@ -354,7 +354,7 @@ void Player::PlayerDeath()
 
 	if (m_stock > 0) {//ストックが残っていたら
 		m_respawnFlag = true;
-		m_respawnInterval = 50;
+		m_respawnCount = RESPAWN_INTERVAL;
 
 		m_myAirVolume = INI_AIR_VOLUME;
 		m_myAir->SetAirVolume(INI_AIR_VOLUME);
@@ -421,16 +421,21 @@ void Player::PlayEffHit()
 
 void Player::Respawn()
 {
-	m_respawnInterval--;
+	
+	if (m_respawnCount == RESPAWN_INTERVAL)
+	{
+		//サイズを小さくして見えなくする。
+		m_skinModelRender->SetScale({ Vector3::Zero });
+		m_charaCon.ReInit((m_myAirVolume / 2), m_position);
+		m_skinModelRenderArrow->SetScale({ Vector3::Zero });
+	}
 
-	//サイズを小さくして見えなくする。
-	m_skinModelRender->SetScale({ Vector3::Zero });
-	m_charaCon.ReInit((m_myAirVolume / 2), m_position);
-	m_skinModelRenderArrow->SetScale({ Vector3::Zero });
-
-	if (m_respawnInterval <= 0)
+	if (m_respawnCount == 1)
 	{
 		m_resPos = m_backGround->GetRespawnPosition(m_playerNum);
+	}
+	if (m_respawnCount <= 0)
+	{	
 		m_moveSpeed = { Vector3::Zero };//スピードをゼロにする
 		m_charaCon.SetPosition(m_resPos);	//キャラコンに座標を設定
 		SetPosition(m_resPos);	//初期座標に飛ばす。
@@ -443,4 +448,6 @@ void Player::Respawn()
 		if (m_gameScene->GetGameState() == GAME_STATE_BATTLE)
 			m_canMove = true;
 	}
+
+	m_respawnCount--;
 }
