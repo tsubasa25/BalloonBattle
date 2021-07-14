@@ -187,6 +187,8 @@ void GameScene::GameStartCall()
 
 void GameScene::Battle()
 {
+
+
 }
 
 void GameScene::Retri()
