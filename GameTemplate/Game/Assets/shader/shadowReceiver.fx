@@ -107,10 +107,11 @@ SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
 	psIn.pos = mul(mView, worldPos);
 	psIn.pos = mul(mProj, psIn.pos);
 	psIn.uv = vsIn.uv;
+	psIn.normal = mul(mWorld, vsIn.normal);
 
 	//ここからライトビュースクリーン空間での座標を計算している。
 	psIn.posInLVP = mul(mLVP, worldPos);
-	psIn.normal = mul(mWorld, vsIn.normal);
+	
 	return psIn;
 }
 
@@ -315,7 +316,7 @@ float4 PSMain(SPSIn psIn) : SV_Target0
 	shadowMapUV += 0.5f;
 
 	float zInLVP = psIn.posInLVP.z / psIn.posInLVP.w;
-
+	
 	if (shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
 		&& shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f)
 	{
@@ -325,9 +326,9 @@ float4 PSMain(SPSIn psIn) : SV_Target0
 		if (zInLVP > zInShadowMap)
 		{
 			// 遮蔽されている
-			finalColor.xyz *= 0.5f;
+			finalColor.xyz *= 0.5f;			
 		}
-	}
+	}	
 	return finalColor;
 }
 
@@ -336,6 +337,7 @@ float4 PSMain(SPSIn psIn) : SV_Target0
  */
 float4 PSMain_SkyCube(SPSIn In) : SV_Target0
 {
+
 	float4 color = g_skyCubeMap.Sample(g_sampler, In.normal);
 	//color.xyz += emissionColor;
 	

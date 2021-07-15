@@ -14,7 +14,6 @@ BackGround::~BackGround()
 }
 bool BackGround::Start()
 {
-
     m_sky = NewGO<Sky>(0);
     m_sky->Init(L"Assets/Image/skyMap/sky2.dds");
     m_sky->SetPosition({ 0,-5000,0 });

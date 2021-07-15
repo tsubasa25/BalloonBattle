@@ -78,7 +78,6 @@ void GameScene::Update()
     case GAME_STATE_BATTLE:
         Battle();
         break;
-
     case GAME_STATE_RESULT:
         if (m_button_Sprite[0] != nullptr) {
             for (int i = 0; i < 4; i++)
