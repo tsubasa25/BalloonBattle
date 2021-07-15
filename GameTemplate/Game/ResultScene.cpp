@@ -13,7 +13,12 @@
 
 ResultScene::~ResultScene()
 {
-	DeleteGO(m_retriFontRender);
+	if (m_selectMenuNum == 0)
+	{
+		BackGround* backGround = NewGO<BackGround>(0, "backGround");
+		backGround->SetStageNum(m_stageNum);
+	}
+	//DeleteGO(m_retriFontRender);
 	DeleteGO(m_backMenuFontRender);
 	DeleteGO(m_backTitleFontRender);
 	DeleteGO(m_cursorSprite);
@@ -99,6 +104,7 @@ void ResultScene::GameSet()
 			m_winnerPl->Tilt();
 			m_winnerPl->SetArrowScele({ 0.0f,0.0f,0.0f });
 		}
+		//ドローの時
 		else
 		{
 			m_mode = MODE_DRAW;
@@ -173,11 +179,11 @@ void ResultScene::ZoomWinner()
 		m_cursorSprite->SetPosition(RESULT_CURSOR_FONT_INI_POS);
 		m_cursorSprite->SetScale({1.0f,1.0f,1.0f});
 
-		m_retriFontRender = NewGO<FontRender>(1);
+		/*m_retriFontRender = NewGO<FontRender>(1);
 		m_retriFontRender->SetPosition(RETRI_FONT_POS);
 		m_retriFontRender->SetText(L"もう一度遊ぶ。");
 		m_retriFontRender->SetShadowFlag(true);
-		m_retriFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
+		m_retriFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });*/
 
 		m_backMenuFontRender = NewGO<FontRender>(1);
 		m_backMenuFontRender->SetPosition(BACK_MENU_FONT_POS);
@@ -278,13 +284,12 @@ void ResultScene::Draw()
 		m_cursorSprite = NewGO<SpriteRender>(3);
 		m_cursorSprite->Init("Assets/Image/Cursor.DDS", 64, 28);
 		m_cursorSprite->SetPosition(RESULT_CURSOR_FONT_INI_POS);
-		m_cursorSprite->SetScale({ 1.0f,1.0f,1.0f });
 
-		m_retriFontRender = NewGO<FontRender>(1);
+		/*m_retriFontRender = NewGO<FontRender>(1);
 		m_retriFontRender->SetPosition(RETRI_FONT_POS);
 		m_retriFontRender->SetText(L"もう一度遊ぶ。");
 		m_retriFontRender->SetShadowFlag(true);
-		m_retriFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });
+		m_retriFontRender->SetShadowColor({ 0.0f,0.0f,0.0f,1.0f });*/
 
 		m_backMenuFontRender = NewGO<FontRender>(1);
 		m_backMenuFontRender->SetPosition(BACK_MENU_FONT_POS);
@@ -313,20 +318,21 @@ void ResultScene::Menu()
 		m_resultSE->SetVolume(SOUND_RESULT_SE_VOLUME);
 		m_resultSE->Play(false);
 		if (m_selectMenuNum == 0)
-		{
-			QueryGOs<Player>("player", [this](Player* player)->bool {
-				DeleteGO(player);
-				return true;
-				});
-			
+		{			
 			m_gameScene->Retri();
-			m_gameScene->SetGameState(1);
+			m_gameScene->SetGameState(GAME_STATE_LOOK_STAGE);
+			m_gameScene->PlayerDelete();
 			m_stageNum = m_BG->GetStageNum();
-			m_BG->Retri();
+			//m_BG->Retri();
 			DeleteGO(m_BG);
 				
-			BackGround* backGround = NewGO<BackGround>(0, "backGround");
-			backGround->SetStageNum(m_stageNum);
+			/*QueryGOs<Player>("player", [this](Player* player)->bool {
+				if (player != nullptr)
+					DeleteGO(player);
+				return true;
+				});*/
+
+			
 			NewGO<UIDisplay>(0, "UIdisplay");
 			DeleteGO(this);
 		}
@@ -346,7 +352,7 @@ void ResultScene::Menu()
 		}
 		else if (m_selectMenuNum == 2)
 		{
-				DeleteGO(m_gameScene);
+			DeleteGO(m_gameScene);
 
 			DeleteGO(m_BG);
 				
@@ -412,8 +418,8 @@ void ResultScene::AddSelectMenuNum(int num)
 	m_selectMenuNum += num;
 	//0～2までしか選択できない。
 	if (m_selectMenuNum > 2)
-		m_selectMenuNum = 0;
-	else if (m_selectMenuNum < 0)
+		m_selectMenuNum = 1;
+	else if (m_selectMenuNum < 1)
 		m_selectMenuNum = 2;
 
 	switch (m_selectMenuNum)

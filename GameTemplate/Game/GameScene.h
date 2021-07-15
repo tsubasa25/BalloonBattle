@@ -24,9 +24,11 @@ public:
 private:
 	int m_iniPlCount = 0;
 	int m_playerCount = 0;
+	int m_alivePlCount = 0;
+
 	int m_stock = 0;
 
-	Player* player[8] = { nullptr,nullptr, nullptr, nullptr,nullptr,nullptr, nullptr, nullptr };
+	Player* m_player[8] = { nullptr,nullptr, nullptr, nullptr,nullptr,nullptr, nullptr, nullptr };
 	Vector3 m_iniPos[8] = { {-600,50,600} ,{600,50,600} ,{-600,50,-600} ,{600,50,-600},	{-400,50,400} ,{400,50,400} ,{-400,50,-400} ,{400,50,-400} };//èâä˙à íu
 	PointLight* pointLight[10] = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
 	
@@ -52,6 +54,9 @@ private:
 
 	SpriteRender* m_button_Sprite[4] = { nullptr,nullptr, nullptr, nullptr };
 	Vector3 m_buttonPos[4] = { BUTTON_POS_LA ,BUTTON_POS_LB ,BUTTON_POS_B ,BUTTON_POS_Y };
+
+	bool m_isResult = false;
+
 public:
 	Vector3 GetIniPos(int i) { return m_iniPos[i]; }
 	void SetPlayerCount(int num) { m_playerCount = num; }
@@ -68,5 +73,7 @@ public:
 	void Retri();
 	void SetGameState(int num) { m_gameSceneState = num; };
 	int GetGameState() { return m_gameSceneState; };
+
+	void PlayerDelete();
 };
 

@@ -36,7 +36,7 @@ private:
 	int m_stock = 3;//ストック
 	int m_playerCount = 0;
 	
-	PointLight* pointLight = NewGO<PointLight>(0);
+	//PointLight* pointLight = NewGO<PointLight>(0);
 	
 	Vector3 m_position = { Vector3::Zero };
 	Vector3 m_iniPos= { Vector3::Zero };
@@ -143,7 +143,7 @@ public:
 	bool m_IsAIOn = false;//敵が自分めがけて突進してくる
 	SkinModelRender* m_skinModelRenderArrow = nullptr;
 	void SetArrowScele(Vector3 size) { m_skinModelRenderArrow->SetScale(size); };
-	Quaternion m_rot;
+	Quaternion m_rot=Quaternion::Identity;
 	Vector3 m_arrowSize = Vector3::One;
 	Vector3 m_oldPos = Vector3::Zero;
 };
