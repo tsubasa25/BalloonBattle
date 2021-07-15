@@ -8,17 +8,16 @@
 Player::~Player()
 {
 	DeleteGO(m_skinModelRender);
-	DeleteGO(pointLight);
+	//DeleteGO(pointLight);
+
 	if (m_IsArrowOn) {
 		DeleteGO(m_skinModelRenderArrow);
 	}
 
 	//gameScene-	m_gameScene>SetIsAlive(m_playerNum, false);
-	if (m_gameScene != nullptr)
-		m_gameScene->SetPlayerCount(m_gameScene->GetPlayerCount() - 1);
+	//m_gameScene->SetPlayerCount(m_gameScene->GetPlayerCount() - 1);
 
-	if (m_myAir != nullptr)
-		DeleteGO(m_myAir);
+	DeleteGO(m_myAir);
 }
 bool Player::Start()
 {
@@ -71,11 +70,11 @@ bool Player::Start()
 	//キャラコンの初期化
 	m_charaCon.Init((m_myAirVolume/2), m_position);
 
-	pointLight->SetColor(POINTLIGHT_COLOR);
-	pointLight->SetRange(POINTLIGHT_RANGE);
-	m_lightPos = m_position;
-	m_lightPos.y += m_myAirVolume;
-	pointLight->SetPosition({ m_lightPos });
+	//pointLight->SetColor(POINTLIGHT_COLOR);
+	//pointLight->SetRange(POINTLIGHT_RANGE);
+	//m_lightPos = m_position;
+	//m_lightPos.y += m_myAirVolume;
+	//pointLight->SetPosition({ m_lightPos });
 
 	if (GetPlayerNum() == 0) {
 		m_breakEff.Init(u"Assets/effect/BalloonBreak00.efk");
@@ -112,7 +111,7 @@ bool Player::Start()
 
 	SetPosition(m_position);//位置を設定する
 	SetScale({ m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE,m_myAirVolume / BALLOON_SIZE_BASE, });
-	m_charaCon.ReInit((m_myAirVolume / 2), m_position);
+	//m_charaCon.ReInit((m_myAirVolume / 2), m_position);
 
 	m_hitEff.Init(u"Assets/effect/HitEff.efk");
 
@@ -192,7 +191,7 @@ void Player::Move()//移動
 	SetPosition(m_position);//位置を設定する
 	m_lightPos = m_position;
 	m_lightPos.y += m_myAirVolume;
-	pointLight->SetPosition({ m_lightPos });
+	//pointLight->SetPosition({ m_lightPos });
 }
 
 void Player::HitWall()//壁にあたったとき
@@ -256,7 +255,7 @@ Vector3 Player::ReboundSpeed()//モデルの法線から反射する方向を求めて移動方向を決
 	//法線の外積と進行方向の内積を取る
 	float naisei = hitNormalCross.Dot(Dir);
 
-	Quaternion rot;
+	Quaternion rot= Quaternion::Identity;
 	rot.SetRotation(Vector3::AxisY, naisei * 2);//外積と進行方向の角度の差を二倍した分
 	rot.Apply(Dir);//進行方向を回転させる
 
@@ -326,18 +325,22 @@ void Player::Tilt()
 //プレイヤーが死亡したときの処理
 void Player::PlayerDeath()
 {
-	m_UIDisplay->SetIsDeath(true);
-	//敵が死んでDeleteGOされたときにm_enemyの順番が変わるからおかしくなるかも
-	//if (m_hitLastNum < 8) {//誰にもあたってなかったら加算されない
-	//	if (m_hitLastNum < m_enemy.size())
-	//	{
-	//		m_enemy[m_hitLastNum]->AddKillPoint();//キルポイントを加算する
-	//		m_UIDisplay->SetIsMinus(m_playerNum);
-	//		m_UIDisplay->SetIsPlus(m_enemy[m_hitLastNum]->GetPlayerNum());
-	//		
-	//	}
-	//}
-	m_UIDisplay->SetIsMinus(m_playerNum);
+	UIDisplay* UIdisplay = FindGO<UIDisplay>("UIdisplay");
+	if (UIdisplay != nullptr)
+	{
+		UIdisplay->SetIsDeath(true);
+		//敵が死んでDeleteGOされたときにm_enemyの順番が変わるからおかしくなるかも
+		//if (m_hitLastNum < 8) {//誰にもあたってなかったら加算されない
+		//	if (m_hitLastNum < m_enemy.size())
+		//	{
+		//		m_enemy[m_hitLastNum]->AddKillPoint();//キルポイントを加算する
+		//		m_UIDisplay->SetIsMinus(m_playerNum);
+		//		m_UIDisplay->SetIsPlus(m_enemy[m_hitLastNum]->GetPlayerNum());
+		//		
+		//	}
+		//}
+		UIdisplay->SetIsMinus(m_playerNum);
+	}
 	Effect soulEff;
 	soulEff.Init(u"Assets/effect/SoulRise.efk");
 	soulEff.SetPosition(m_position);
@@ -403,7 +406,7 @@ void Player::PlayEffHit()
 	if (front.z < 0) {
 		angle *= -1;
 	}
-	Quaternion qRot;
+	Quaternion qRot=Quaternion::Identity;
 	qRot.SetRotation(Vector3::AxisY, angle);
 	m_hitEff.SetRotation(qRot);
 
@@ -427,7 +430,7 @@ void Player::Respawn()
 	{
 		//サイズを小さくして見えなくする。
 		m_skinModelRender->SetScale({ Vector3::Zero });
-		m_charaCon.ReInit((m_myAirVolume / 2), m_position);
+		m_charaCon.ReInit(0.0f, m_position);
 		m_skinModelRenderArrow->SetScale({ Vector3::Zero });
 	}
 

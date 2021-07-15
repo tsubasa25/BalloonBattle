@@ -26,9 +26,7 @@ bool BackGround::Start()
     if (m_stageNum == 3)
     {
         //ƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ‚ß‚é
-        int randNum = 0;
-        randNum = rand() % 3;
-        m_stageNum = randNum;
+        m_stageNum = rand() % 3;
     }
 
     switch (m_stageNum)

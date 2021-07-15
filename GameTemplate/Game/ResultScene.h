@@ -10,7 +10,7 @@ namespace
 	const int MODE_DRAW = 4;
 	const int MODE_MENU = 5;
 
-	const Vector3 RESULT_CURSOR_FONT_INI_POS = { -200.0f,10.0f, 0.0f };
+	const Vector3 RESULT_CURSOR_FONT_INI_POS = { -200.0f,-50.0f, 0.0f };
 	const Vector2 RETRI_FONT_POS = { -150.0f,30.0f };
 	const Vector2 BACK_MENU_FONT_POS = { -150.0f,-30.0f };
 	const Vector2 BACK_TITLE_FONT_POS = { -150.0f, -90.0f };
@@ -39,10 +39,10 @@ private:
 	float m_cursorMoveSpeedX = INI_CURSOR_MOVE_SPEED_X;
 	SpriteRender* m_cursorSprite = nullptr;
 
-	FontRender* m_retriFontRender = nullptr;
+	//FontRender* m_retriFontRender = nullptr;
 	FontRender* m_backMenuFontRender = nullptr;
 	FontRender* m_backTitleFontRender = nullptr;
-	int m_selectMenuNum = 0;
+	int m_selectMenuNum = 1;
 
 	int m_stageNum = 0;
 

@@ -20,19 +20,19 @@ bool GameScene::Start()
 
     for (int i = 0; i < m_iniPlCount; i++)//プレイヤーを作る
     {
-        player[i] = NewGO<Player>(0,"player");
-        player[i]->SetPlayerNum(i);//プレイヤー番号を設定
+        m_player[i] = NewGO<Player>(0,"player");
+        m_player[i]->SetPlayerNum(i);//プレイヤー番号を設定
         //player[i]->SetIniPosition({ GetIniPos(i) });//初期位置を設定
-        player[i]->SetPlayerCount(m_playerCount);//プレイヤー人数を設定
-        player[i]->SetPlayerStock(m_stock);
+        m_player[i]->SetPlayerCount(m_playerCount);//プレイヤー人数を設定
+        m_player[i]->SetPlayerStock(m_stock);
         m_IsAlive[i] = true;//生きていることにする
     }
     for (int i = 0; i < m_playerCount; i++)//敵を入れる
     {
         for (int j = 0; j < m_playerCount; j++)
         {
-            if (player[i]->GetPlayerNum() != player[j]->GetPlayerNum()) {//自分を入れないようにする
-                player[i]->SetEnemyData(player[j]);//敵情報を入れる
+            if (m_player[i]->GetPlayerNum() != m_player[j]->GetPlayerNum()) {//自分を入れないようにする
+                m_player[i]->SetEnemyData(m_player[j]);//敵情報を入れる
             }
         }
     }
@@ -77,14 +77,19 @@ void GameScene::Update()
 
     case GAME_STATE_BATTLE:
         Battle();
+        m_isResult = false;
         break;
 
     case GAME_STATE_RESULT:
-        if (m_button_Sprite[0] != nullptr) {
+        if (m_isResult == false) {
             for (int i = 0; i < 4; i++)
             {
-                DeleteGO(m_button_Sprite[i]);
+                if (m_button_Sprite[i] != nullptr)
+                {
+                    DeleteGO(m_button_Sprite[i]);
+                }
             }
+            m_isResult = true;
         }
         break;
 
@@ -190,7 +195,12 @@ void GameScene::GameStartCall()
 
 void GameScene::Battle()
 {
-    if (m_playerCount <= 0)
+    m_alivePlCount = 0;
+    QueryGOs<Player>("player", [this](Player* player)->bool {
+        m_alivePlCount++;
+        return true;
+        });
+    if (m_alivePlCount == 0)
     {
         SetGameState(GAME_STATE_RESULT);
         ResultScene* resultScene = NewGO<ResultScene>(0, "resultScene");
@@ -217,11 +227,11 @@ void GameScene::Retri()
 
     for (int i = 0; i < m_iniPlCount; i++)//プレイヤーを作る
     {
-        player[i] = NewGO<Player>(0, "player");
-        player[i]->SetPlayerNum(i);//プレイヤー番号を設定
+        m_player[i] = NewGO<Player>(0, "player");
+        m_player[i]->SetPlayerNum(i);//プレイヤー番号を設定
         //player[i]->SetIniPosition({ GetIniPos(i) });//初期位置を設定
-        player[i]->SetPlayerStock(m_stock);
-        player[i]->SetPlayerCount(m_playerCount);//プレイヤー人数を設定
+        m_player[i]->SetPlayerStock(m_stock);
+        m_player[i]->SetPlayerCount(m_playerCount);//プレイヤー人数を設定
 
         //m_IsAlive[i] = true;//生きていることにする
     }
@@ -229,10 +239,30 @@ void GameScene::Retri()
     {
         for (int j = 0; j < m_playerCount; j++)
         {
-            if (player[i]->GetPlayerNum() != player[j]->GetPlayerNum()) {//自分を入れないようにする
-                player[i]->SetEnemyData(player[j]);//敵情報を入れる
+            if (m_player[i]->GetPlayerNum() != m_player[j]->GetPlayerNum()) {//自分を入れないようにする
+                m_player[i]->SetEnemyData(m_player[j]);//敵情報を入れる
             }
         }
     }
     NewGO<GameTimer>(0, "gameTimer");
+
+    for (int i = 0; i < 4; i++) {
+        m_button_Sprite[i] = NewGO<SpriteRender>(5);
+    }
+    m_button_Sprite[0]->Init("Assets/Image/LA.dds", 192, 108);
+    m_button_Sprite[1]->Init("Assets/Image/LB.dds", 192, 108);
+    m_button_Sprite[2]->Init("Assets/Image/B.dds", 192, 108);
+    m_button_Sprite[3]->Init("Assets/Image/Y.dds", 192, 108);
+    for (int i = 0; i < 4; i++) {
+        m_button_Sprite[i]->SetPosition(m_buttonPos[i]);
+    }
 }
+
+void GameScene::PlayerDelete() 
+{
+    for (int i = 0; i < m_iniPlCount; i++)
+    {   
+        if (m_player[i] != nullptr)
+            DeleteGO(m_player[i]);
+    }
+};
