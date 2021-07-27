@@ -14,6 +14,8 @@ namespace
 	const Vector3 BUTTON_POS_LB = { -50,-300,0 };
 	const Vector3 BUTTON_POS_Y = { 125,-300,0 };
 	const Vector3 BUTTON_POS_B = { 250,-300,0 };
+	const int PLAYER_COUNT = 8;
+	const int IMAGE_COUNT = 4;
 }
 class GameScene:public IGameObject
 {
@@ -28,11 +30,10 @@ private:
 
 	int m_stock = 0;
 
-	Player* m_player[8] = { nullptr,nullptr, nullptr, nullptr,nullptr,nullptr, nullptr, nullptr };
-	Vector3 m_iniPos[8] = { {-600,50,600} ,{600,50,600} ,{-600,50,-600} ,{600,50,-600},	{-400,50,400} ,{400,50,400} ,{-400,50,-400} ,{400,50,-400} };//初期位置
-	PointLight* pointLight[10] = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
+	Player* m_player[PLAYER_COUNT] = { nullptr,nullptr, nullptr, nullptr,nullptr,nullptr, nullptr, nullptr };
+	Vector3 m_iniPos[PLAYER_COUNT] = { {Vector3::Zero }, { Vector3::Zero }, { Vector3::Zero}, { Vector3::Zero }, { Vector3::Zero }, {Vector3::Zero }, { Vector3::Zero }, { Vector3::Zero }};//初期位置
 	
-	bool m_IsAlive[8] = { false,false,false,false,false,false,false,false };//生存確認
+	bool m_IsAlive[PLAYER_COUNT] = { false,false,false,false,false,false,false,false };//生存確認
 	//ライト実験用
 	bool aa = true;
 	int aaNum = 0;
@@ -52,8 +53,8 @@ private:
 
 	std::wstring m_stageName = {L"Hoge"};
 
-	SpriteRender* m_button_Sprite[4] = { nullptr,nullptr, nullptr, nullptr };
-	Vector3 m_buttonPos[4] = { BUTTON_POS_LA ,BUTTON_POS_LB ,BUTTON_POS_B ,BUTTON_POS_Y };
+	SpriteRender* m_button_Sprite[IMAGE_COUNT] = { nullptr,nullptr, nullptr, nullptr };
+	Vector3 m_buttonPos[IMAGE_COUNT] = { BUTTON_POS_LA ,BUTTON_POS_LB ,BUTTON_POS_B ,BUTTON_POS_Y };
 
 	bool m_isResult = false;
 
@@ -70,10 +71,12 @@ public:
 	void SetStock(int num) { m_stock = num; }
 	int GetStock() { return m_stock; }	
 
-	void Retri();
+	void SetIniPosition();
 	void SetGameState(int num) { m_gameSceneState = num; };
 	int GetGameState() { return m_gameSceneState; };
 
-	void PlayerDelete();
+	int GetIniPlayerCount() { return m_iniPlCount; }
+
+	
 };
 

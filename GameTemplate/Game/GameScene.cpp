@@ -203,12 +203,12 @@ void GameScene::Battle()
     {
         SetGameState(GAME_STATE_RESULT);
         ResultScene* resultScene = NewGO<ResultScene>(0, "resultScene");
-        resultScene->SetResultMode(MODE_GAME_SET);
+        resultScene->SetResultMode(resultScene->GetEnGameSet());
     }
 
 }
 
-void GameScene::Retri()
+void GameScene::SetIniPosition()
 {
     m_gameSceneState = GAME_STATE_LOOK_STAGE;
 
@@ -256,12 +256,3 @@ void GameScene::Retri()
         m_button_Sprite[i]->SetPosition(m_buttonPos[i]);
     }
 }
-
-void GameScene::PlayerDelete() 
-{
-    for (int i = 0; i < m_iniPlCount; i++)
-    {   
-        if (m_player[i] != nullptr)
-            DeleteGO(m_player[i]);
-    }
-};

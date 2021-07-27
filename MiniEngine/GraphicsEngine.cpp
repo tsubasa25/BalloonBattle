@@ -61,14 +61,17 @@ void GraphicsEngine::WaitDraw()
 	{
 		m_fence->SetEventOnCompletion(fence, m_fenceEvent);
 		WaitForSingleObject(m_fenceEvent, INFINITE);
-	}
+	}	
 }
 bool GraphicsEngine::Init(HWND hwnd, UINT frameBufferWidth, UINT frameBufferHeight)
 {
 	//
 	g_graphicsEngine = this;
-
-	
+	auto hdc = GetDC(hwnd);
+	auto rate = GetDeviceCaps(hdc, VREFRESH);
+	if (rate >= 120) {
+		m_vsyncInterbal = 2;
+	}
 
 
 	m_frameBufferWidth = frameBufferWidth;
@@ -479,7 +482,7 @@ void GraphicsEngine::EndRender()
 	m_swapChain->Present(0, 0);
 #else
 	// Present the frame.
-	m_swapChain->Present(1, 0);
+	m_swapChain->Present(m_vsyncInterbal, 0);
 #endif
 	m_directXTKGfxMemroy->GarbageCollect();
 	//•`‰æŠ®—¹‘Ò‚¿B

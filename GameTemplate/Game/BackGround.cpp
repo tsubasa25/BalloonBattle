@@ -11,6 +11,11 @@ BackGround::~BackGround()
     DeleteGO(m_map1BGM);
     DeleteGO(m_map2BGM);
     DeleteGO(m_map3BGM);
+    DeleteGO(m_sky);
+}
+BackGround::BackGround()
+{
+    
 }
 bool BackGround::Start()
 {
@@ -137,38 +142,7 @@ bool BackGround::Start()
 
             return false;
     });
-        QueryGOs<Player>("player", [this](Player* player)->bool {
-            switch (player->GetPlayerNum())
-            {
-            case 0:
-                player->SetIniPosition(m_spawnPos[0]);
-                break;
-            case 1:
-                player->SetIniPosition(m_spawnPos[1]);
-                break;
-            case 2:
-                player->SetIniPosition(m_spawnPos[2]);
-                break;
-            case 3:
-                player->SetIniPosition(m_spawnPos[3]);
-                break;
-            case 4:
-                player->SetIniPosition(m_spawnPos[4]);
-                break;
-            case 5:
-                player->SetIniPosition(m_spawnPos[5]);
-                break;
-            case 6:
-                player->SetIniPosition(m_spawnPos[6]);
-                break;
-            case 7:
-                player->SetIniPosition(m_spawnPos[7]);
-                break;
-            default:
-                break;
-            }
-        return true;
-        });
+    SetIniPosition();
 
 	return true;
 }
@@ -179,7 +153,6 @@ void BackGround::Update()
         if (m_canRespawnInterval[i] > 0)
         {
             m_canRespawnInterval[i]--;
-
         }
         else
         {
@@ -241,7 +214,7 @@ Vector3 BackGround::GetRespawnPosition(int ResPlNum)
     return ResPos;
 }
 
-void BackGround::Retri()
+void BackGround::SetIniPosition()
 {
     QueryGOs<Player>("player", [this](Player* player)->bool {
         switch (player->GetPlayerNum())

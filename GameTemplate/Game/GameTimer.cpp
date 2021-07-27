@@ -37,8 +37,8 @@ void GameTimer::Update()
 	{
 		SetFirstPlaceOfTimer();
 		m_gameScene->SetGameState(GAME_STATE_RESULT);
-		ResultScene* result = NewGO<ResultScene>(0, "resultScene");
-		result->SetResultMode(MODE_TIME_UP);
+		ResultScene* resultScene = NewGO<ResultScene>(0, "resultScene");
+		resultScene->SetResultMode(resultScene->GetEnTimeUp());
 		QueryGOs<Player>("player", [this](Player* player)->bool {
 			player->SetCanMove(false);
 			return true;

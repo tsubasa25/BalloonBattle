@@ -46,7 +46,7 @@ bool TitleScene::Start()
 
 void TitleScene::Update()
 {
-	if (m_endOn == true)//START‚ð‚¨‚µ‚½‚Æ‚«
+	if (m_isEnd == true)//START‚ð‚¨‚µ‚½‚Æ‚«
 	{
 		m_endCount++;
 		//m_optionPos.y += m_endCount;
@@ -134,7 +134,7 @@ void TitleScene::Update()
 				ss->SetVolume(SOUND_TITLE_SE_VOLUME);
 				ss->Play(false);
 
-				m_endOn = true;
+				m_isEnd = true;
 			}
 			else
 			{

@@ -21,7 +21,7 @@ namespace
 	const float GRAVITY_SPEED = 0.7f;//落下スピード
 	const float GRAVITY_INDEX = 2.0f;//落下スピードにかける指数
 	const float PAI = 3.14159f;//円周率
-	const Vector3 OVER_STAGE_LINE = {4000.0f, -2000.0f, 4000.0f};	//ステージから遠ざかりすぎた時に死亡する距離。
+	const Vector3 OVER_STAGE_LINE = { 4000.0f, -2000.0f, 4000.0f };	//ステージから遠ざかりすぎた時に死亡する距離。
 	const float SOUND_BALLOON_SE_VOLUME = 0.4f;
 	const int RESPAWN_INTERVAL = 50;
 }
@@ -53,7 +53,7 @@ private:
 	bool m_enemyHit = false;//敵とあたったとき		
 
 	BalloonAir* m_myAir = nullptr;
-
+	
 	float m_myAirVolume = INI_AIR_VOLUME;
 
 	Quaternion m_playerRot = {0.0f,0.0f,0.0f,0.0f};
@@ -70,21 +70,38 @@ private:
 
 	bool m_respawnFlag = false;
 	int m_respawnCount = 0;
-
 	Vector4 m_plColor = {0.0f,0.0f,0.0f,1.0f};
 
 	int m_hitLastNum = 9;//最後にあたった敵の番号
 	int m_killPoint = 0;
+
+	//デバッグ用
+	
+	int m_oldStock = m_stock;
+	bool m_isArrowOn = true;//矢印を表示するか
+	bool m_isAIOn = false;//敵が自分めがけて突進してくる
+	SkinModelRender* m_skinModelRenderArrow = nullptr;
+	
+	Quaternion m_rot = Quaternion::Identity;
+	Vector3 m_arrowSize = Vector3::One;
+	Vector3 m_oldPos = Vector3::Zero;
 public:
 	~Player();
 	bool Start();
 	void Update();
-
+	
 	void SetCanMove(bool can) { m_canMove = can; };
 	bool GetCanMove() { return m_canMove; };
-
-	void SetPlayerNum(int num) { m_playerNum = num; }//プレイヤー番号を設定する
-	int GetPlayerNum() { return m_playerNum; }//プレイヤー番号を入手する
+	/// <summary>
+	/// プレイヤー番号を設定する
+	/// </summary>
+	/// <param name="num"></param>
+	void SetPlayerNum(int num) { m_playerNum = num; }
+	/// <summary>
+	/// プレイヤー番号を取得する
+	/// </summary>
+	/// <returns></returns>
+	int GetPlayerNum() { return m_playerNum; }
 	
 	void SetPlayerStock(int num) { m_stock = num; }
 	int GetPlayerStock() { return m_stock; }//プレイヤーのストック数を入手する
@@ -138,13 +155,8 @@ public:
 
 	//デバッグ用
 	void Debug(int pNum);
-	int m_oldStock = m_stock;
-	bool m_IsArrowOn = true;//矢印を表示するか
-	bool m_IsAIOn = false;//敵が自分めがけて突進してくる
-	SkinModelRender* m_skinModelRenderArrow = nullptr;
+	
 	void SetArrowScele(Vector3 size) { m_skinModelRenderArrow->SetScale(size); };
-	Quaternion m_rot=Quaternion::Identity;
-	Vector3 m_arrowSize = Vector3::One;
-	Vector3 m_oldPos = Vector3::Zero;
+	
 };
 

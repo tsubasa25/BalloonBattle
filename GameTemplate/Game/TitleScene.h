@@ -25,21 +25,19 @@ private:
 	SpriteRender* m_option_Sprite;
 	SpriteRender* m_exit_Sprite;
 	
-	Vector3 m_exitPos = { -300,-200,0 };
-	Vector3 m_startPos = { 0,-200,0 };
-	Vector3 m_optionPos = { 300,-200,0 };
+	Vector3 m_exitPos = { EXIT_INI_POS };
+	Vector3 m_startPos = { START_INI_POS };
+	Vector3 m_optionPos = { OPTION_INI_POS };
 	
 	SoundSource* ss = nullptr;
 	SoundSource* m_titleBGM = nullptr;
 	
-	int m_selectNum = 1;
-	float m_selectLoopCount = 0;
+	int m_selectNum = 1;			//選択している番号
+	float m_selectLoopCount = 0;	//sin用ループカウント
 
-	bool FloatingFlg = true;
+	bool FloatingFlg = true;		//音を鳴らすためのフラグ
 
-	int m_playerCount = 2;
-
-	bool m_endOn = false;
-	int m_endCount = 0;
+	bool m_isEnd = false;			//STARTを押したとき	
+	int m_endCount = 0;				//風船が上に行くようのループカウント
 };
 

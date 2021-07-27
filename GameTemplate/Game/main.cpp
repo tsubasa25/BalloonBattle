@@ -12,8 +12,8 @@ namespace
     const Vector3 LIGHTCAMERA_UP = { 1.0f,0.0f,0.0f };
     const float LIGHTCAMERA_WIDTH = 2000.0f;
     const float LIGHTCAMERA_HEIGHT = 2000.0f;
+    const int CAMERA_FAR = 100000;
 }
-void PreLoad();
 
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数
@@ -35,10 +35,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     LightManager::GetInstance()->SetLightCameraPosition(LIGHTCAMERA_POSITION);
     LightManager::GetInstance()->SetLightCameraTarget(LIGHTCAMERA_TARGET);
     LightManager::GetInstance()->SetLightCameraUp(LIGHTCAMERA_UP);
-    LightManager::GetInstance()->SetLightCameraUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Perspective); //enUpdateProjMatrixFunc_Ortho
-   /* LightManager::GetInstance()->SetLightCameraWidth(LIGHTCAMERA_WIDTH);
-    LightManager::GetInstance()->SetLightCameraHeight(LIGHTCAMERA_HEIGHT);*/
-
+    LightManager::GetInstance()->SetLightCameraUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Perspective);
+   
     //リソースマネージャのインスタンスを作成
     ResourceBankManager::CreateInstance();
 
@@ -56,15 +54,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     //FPS固定用ストップウォッチ
     Stopwatch stopwatch;
 
-    PreLoad();
-    TitleScene* titleScene = NewGO<TitleScene>(0, "titleScene");
-    TitleBack* titleBack = NewGO<TitleBack>(0, "titleBack");
-   /* GameScene*gameScene=NewGO<GameScene>(0,"gameScene");*/   
-   /* NewGO<BackGround>(0);*/
-
-    //g_camera3D->SetPosition({ 0.0f, 1200.0f, -1800.0f });
-    //g_camera3D->SetTarget({ 0,0,-300 });
-    g_camera3D->SetFar(100000.0f);
+    TitleScene* titleScene = NewGO<TitleScene>(0, "titleScene");//タイトルロゴ・START
+    TitleBack* titleBack = NewGO<TitleBack>(0, "titleBack");//動く背景
+  
+    g_camera3D->SetFar(CAMERA_FAR);
     //////////////////////////////////////
     // 初期化を行うコードを書くのはここまで！！！
     //////////////////////////////////////
@@ -101,25 +94,4 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
         g_engine->EndFrame();
     }
     return 0;
-}
-
-void PreLoad()
-{
-   /* SkinModelRender::PreLoadModel("Assets/modelData/Balloon0.tkm");
-    SkinModelRender::PreLoadModel("Assets/modelData/Balloon1.tkm");
-    SkinModelRender::PreLoadModel("Assets/modelData/Balloon2.tkm");
-    SkinModelRender::PreLoadModel("Assets/modelData/Balloon3.tkm");
-    SkinModelRender::PreLoadModel("Assets/modelData/Balloon4.tkm");
-    SkinModelRender::PreLoadModel("Assets/modelData/Balloon5.tkm"); 
-    SkinModelRender::PreLoadModel("Assets/modelData/Balloon6.tkm");
-    SkinModelRender::PreLoadModel("Assets/modelData/Balloon7.tkm");
-
-    SkinModelRender::PreLoadModel("Assets/modelData/Needle.tkm");
-    SkinModelRender::PreLoadModel("Assets/modelData/NeedleBoard.tkm");
-    SkinModelRender::PreLoadModel("Assets/modelData/WindTurbineBase.tkm");
-    SkinModelRender::PreLoadModel("Assets/modelData/WindTurbineBlades.tkm");
-
-    SkinModelRender::PreLoadModel("Assets/modelData/SkyIsland.tkm");
-    SkinModelRender::PreLoadModel("Assets/modelData/BuildingStage.tkm");
-    SkinModelRender::PreLoadModel("Assets/modelData/TrapStage.tkm");*/
 }

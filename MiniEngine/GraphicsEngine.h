@@ -308,6 +308,7 @@ private:
 	raytracing::Engine m_raytracingEngine;		//レイトレエンジン。
 	NullTextureMaps m_nullTextureMaps;			//ヌルテクスチャマップ。
 	FontEngine m_fontEngine;					//フォントエンジン。
+	int m_vsyncInterbal = 1;					//垂直同期を待つ回数。
 	public:
 	std::unique_ptr<DirectX::GraphicsMemory> m_directXTKGfxMemroy;	//DirectXTKのグラフィックメモリシステム。
 };

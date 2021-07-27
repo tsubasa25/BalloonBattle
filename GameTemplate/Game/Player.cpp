@@ -10,7 +10,7 @@ Player::~Player()
 	DeleteGO(m_skinModelRender);
 	//DeleteGO(pointLight);
 
-	if (m_IsArrowOn) {
+	if (m_isArrowOn) {
 		DeleteGO(m_skinModelRenderArrow);
 	}
 
@@ -139,7 +139,7 @@ void Player::Update()
 	{
 		m_gameScene->SetGameState(GAME_STATE_RESULT);
 		m_resultScene = NewGO<ResultScene>(0, "resultScene");
-		m_resultScene->SetResultMode(MODE_GAME_SET);
+		m_resultScene->SetResultMode(m_resultScene->GetEnGameSet());
 		m_resultScene->SetWinner(this);
 		m_canMove = false;
 	}
@@ -263,7 +263,7 @@ Vector3 Player::ReboundSpeed()//モデルの法線から反射する方向を求めて移動方向を決
 }
 void Player::Debug(int pNum)//デバッグ用
 {		
-	if (m_IsAIOn) {//矢印を表示するか
+	if (m_isAIOn) {//矢印を表示するか
 		if (m_playerCount >= 2) {//プレイヤーが二人以上なら
 			if (m_playerNum == 0) {//敵が自分めがけて突進してくる
 				Vector3 diff = Vector3::Zero;
@@ -280,7 +280,7 @@ void Player::Debug(int pNum)//デバッグ用
 			}
 		}
 	}
-	if (m_IsArrowOn) {//矢印を表示するかどうか
+	if (m_isArrowOn) {//矢印を表示するかどうか
 		//移動ベクトルを可視化する
 		Vector3 Dir = m_moveSpeed;
 		Dir.y = 0;

@@ -22,6 +22,7 @@ private:
 	int m_stageNum = 0;
 public:
 	~BackGround();
+	BackGround();
 	bool Start();
 	void Update();
 
@@ -30,7 +31,7 @@ public:
 	int GetStageNum() { return m_stageNum; };
 	Vector3 GetWTBladesPos() { return m_WTBladesPos; };
 	//Vector3 GetIniSpawnPosition();
-	void Retri();
+	void SetIniPosition();
 	std::wstring GetStageName() { return m_stageName; };
 
 private:
