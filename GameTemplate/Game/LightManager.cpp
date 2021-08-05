@@ -1,4 +1,5 @@
 #include "stdafx.h"
 #include "LightManager.h"
-
-LightManager* LightManager::m_instance = nullptr;
+namespace nsBalloon {
+	LightManager* LightManager::m_instance = nullptr;
+}

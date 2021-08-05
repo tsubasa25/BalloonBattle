@@ -1,4 +1,5 @@
 #include "stdafx.h"
 #include "ResourceBankManager.h"
-
-ResourceBankManager* ResourceBankManager::m_instance = nullptr;
+namespace nsBalloon {
+	ResourceBankManager* ResourceBankManager::m_instance = nullptr;
+}

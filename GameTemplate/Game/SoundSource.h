@@ -5,12 +5,13 @@
 #pragma once
 
 #include "WaveFile.h"
-
-enum SoundType
-{
-	enBGM,//BGM
-	enSE//効果音
-};
+#include "NameKey.h"
+namespace nsBalloon {
+	enum SoundType
+	{
+		enBGM,//BGM
+		enSE//効果音
+	};
 
 
 	/*!
@@ -287,3 +288,4 @@ enum SoundType
 		SoundType m_soundType;//音のタイプ(BGM,SE等)
 		float m_baseVolume = 1.0f;//音のタイプに共通してボリュームに掛け合わせる基礎値
 	};
+}

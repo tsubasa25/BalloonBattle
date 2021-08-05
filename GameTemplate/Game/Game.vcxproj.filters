@@ -284,9 +284,6 @@
     <ClCompile Include="WaveFile.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SoundEngine.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="WaveFileBank.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -325,6 +322,15 @@
     </ClCompile>
     <ClCompile Include="Sky.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceMode.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGroundForRace.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEngine.cpp">
+      <Filter>ソース ファイル\prefab</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -580,9 +586,6 @@
     <ClInclude Include="CUtil.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SoundEngine.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="WaveFileBank.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -627,6 +630,15 @@
     </ClInclude>
     <ClInclude Include="Sky.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceMode.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGroundForRace.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEngine.h">
+      <Filter>ヘッダー ファイル\prefab</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

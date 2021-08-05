@@ -292,6 +292,7 @@
     <ClCompile Include="..\..\MiniEngine\tkFile\TksFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\VertexBuffer.cpp" />
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="BackGroundForRace.cpp" />
     <ClCompile Include="BalloonAir.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="FontRender.cpp" />
@@ -308,6 +309,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="PostEffectManager.cpp" />
+    <ClCompile Include="RaceMode.cpp" />
     <ClCompile Include="ResourceBankManager.cpp" />
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="SelectScene.cpp" />
@@ -399,6 +401,7 @@
     <ClInclude Include="..\..\MiniEngine\tkFile\TksFile.h" />
     <ClInclude Include="..\..\MiniEngine\VertexBuffer.h" />
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="BackGroundForRace.h" />
     <ClInclude Include="BalloonAir.h" />
     <ClInclude Include="CUtil.h" />
     <ClInclude Include="DirectionLight.h" />
@@ -416,6 +419,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="PostEffectManager.h" />
+    <ClInclude Include="RaceMode.h" />
     <ClInclude Include="ResourceBankManager.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="SelectScene.h" />

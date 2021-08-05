@@ -1,8 +1,7 @@
 #pragma once
 #include "tklFile.h"
 #include "MapChipRender.h"
-
-
+namespace nsBalloon {
 	class Level
 	{
 	private:
@@ -28,4 +27,4 @@
 		bool m_isInited = false;						//初期化が完了したか?
 		std::list<MapChipRender*> m_mapChipRenderPtrs;	//レベルに存在するマップチップのリスト
 	};
-
+}

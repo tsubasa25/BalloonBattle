@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "MapChipRender.h"
 #include "Level.h"
-
+namespace nsBalloon {
 	MapChipRender::MapChipRender()
 	{
 
@@ -33,3 +33,4 @@
 		//‰e(—\’è)
 
 	}
+}

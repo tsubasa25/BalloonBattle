@@ -7,7 +7,7 @@
 #include "SoundEngine.h"
 
 
-
+namespace nsBalloon {
 	SoundSource::SoundSource()
 	{
 		memset(m_emitterAzimuths, 0, sizeof(m_emitterAzimuths));
@@ -304,4 +304,4 @@
 			m_lastFramePosition = m_position;
 		}
 	}
-
+}

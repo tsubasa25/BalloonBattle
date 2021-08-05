@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Model.h"
 #include "Material.h"
-
+#include "../GameTemplate/Game/ResourceBankManager.h"
 void Model::Init(const ModelInitData& m_initData)
 {
 	MY_ASSERT(
@@ -27,14 +27,14 @@ void Model::Init(const ModelInitData& m_initData)
 	}
 	
 	m_modelUpAxis = m_initData.m_modelUpAxis;
-	m_tkmFile = ResourceBankManager::GetInstance()->GetTkmFileFromBank(m_initData.m_tkmFilePath);
+	m_tkmFile = nsBalloon::ResourceBankManager::GetInstance()->GetTkmFileFromBank(m_initData.m_tkmFilePath);
 
 	if (m_tkmFile == nullptr)
 	{
 		//–¢“o˜^
 		m_tkmFile = new TkmFile;
 		m_tkmFile->Load(m_initData.m_tkmFilePath);
-		ResourceBankManager::GetInstance()->RegistTkmFileToBank(m_initData.m_tkmFilePath, m_tkmFile);
+		nsBalloon::ResourceBankManager::GetInstance()->RegistTkmFileToBank(m_initData.m_tkmFilePath, m_tkmFile);
 	}
 	m_meshParts.InitFromTkmFile(
 		*m_tkmFile,

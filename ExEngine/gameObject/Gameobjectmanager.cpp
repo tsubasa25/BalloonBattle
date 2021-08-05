@@ -52,27 +52,27 @@ void GameObjectManager::ExecuteRender(RenderContext& rc)
 
 	//TODO:暫定処理、フラグ含め別の形にしたい
 	//影を先に描いてからモデルに描いた影を描き足すので先にシャドウマップをつくる。
-	PostEffectManager::GetInstance()->ShadowRender(rc);
+	nsBalloon::PostEffectManager::GetInstance()->ShadowRender(rc);
 
 	//shadow
-	if (PostEffectManager::GetInstance()->GetShadowFlag())
+	if (nsBalloon::PostEffectManager::GetInstance()->GetShadowFlag())
 	{
 		rc.SetStep(RenderContext::eStep_RenderShadowMap);
 		//ShadowRenderでビューポートを設定しているのでここでビューポート設定しなくてOK(たぶん)
 		for (auto& goList : m_gameObjectListArray) {
 			for (auto& go : goList) {
-				go->RenderWrapper(rc, LightManager::GetInstance()->GetLightCamera());
+				go->RenderWrapper(rc, nsBalloon::LightManager::GetInstance()->GetLightCamera());
 			}
 		}
 	}
-	PostEffectManager::GetInstance()->EndShadowRender(rc);
+	nsBalloon::PostEffectManager::GetInstance()->EndShadowRender(rc);
 
 	//ポストエフェクト用。Render前の処理
-	PostEffectManager::GetInstance()->BeforeRender(rc);
+	nsBalloon::PostEffectManager::GetInstance()->BeforeRender(rc);
 	
 	rc.SetStep(RenderContext::eStep_Render);
 	
-	LightManager::GetInstance()->UpdateEyePos();
+	nsBalloon::LightManager::GetInstance()->UpdateEyePos();
 	//g_camera3D->SetAspect(1);
 	for (auto& goList : m_gameObjectListArray) {
 		for (auto& go : goList) {
@@ -100,7 +100,7 @@ void GameObjectManager::ExecuteRender(RenderContext& rc)
 		}
 	}
 	//ポストエフェクト用。Render後の処理
-	PostEffectManager::GetInstance()->AfterRender(rc);
+	nsBalloon::PostEffectManager::GetInstance()->AfterRender(rc);
 }
 
 void GameObjectManager::ExecutePostRender(RenderContext& rc)

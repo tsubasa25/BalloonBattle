@@ -3,6 +3,7 @@
 #include "tkFile/TkmFile.h"
 #include "MeshParts.h"
 #include "Skeleton.h"
+#include <MiniEngine.h>
 
 class IShaderResource;
 

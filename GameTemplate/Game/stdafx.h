@@ -28,3 +28,5 @@
 #include "time/Stopwatch.h"
 #include "time/GameTime.h"
 #include "NameKey.h"
+
+const int PLAYER_MAX_COUNT = 8;
