@@ -5,6 +5,7 @@ namespace nsBalloon {
 	class GameScene;
 	class Player;
 	class GimmickNeedle;
+	class MoveRiver;
 
 	class BackGround :public IGameObject
 	{
@@ -24,6 +25,8 @@ namespace nsBalloon {
 
 	private:
 		Sky* m_sky = nullptr;
+
+		MoveRiver* m_moveRiver = nullptr;
 
 		SkinModelRender* m_skinModelRender = nullptr;
 

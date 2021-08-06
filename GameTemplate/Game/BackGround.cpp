@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "GimmickNeedle.h"
 #include "Sky.h"
+#include "MoveRiver.h"
 namespace nsBalloon {
     namespace nsBGConstant
     {
@@ -21,6 +22,7 @@ namespace nsBalloon {
         DeleteGO(m_map2BGM);
         DeleteGO(m_map3BGM);
         DeleteGO(m_sky);
+        DeleteGO(m_moveRiver);
     }
 
     bool BackGround::Start()
@@ -48,6 +50,7 @@ namespace nsBalloon {
             m_map1BGM->SetVolume(nsBGConstant::SOUND_MAP_BGM_VOLUME);
             m_map1BGM->Play(true);
             m_skinModelRender->Init("Assets/modelData/SkyIsland.tkm");
+            m_moveRiver = NewGO<MoveRiver>(1);
             break;
         case 1://ビルステージ
             m_stageName = nsBGConstant::STAGE_ONE_NAME;

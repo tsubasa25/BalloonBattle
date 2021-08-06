@@ -60,8 +60,6 @@
 
         //nsBalloon::RaceMode* raceMode = NewGO<nsBalloon::RaceMode>(0, "raceMode");
 
-
-
         g_camera3D->SetFar(CAMERA_FAR);
         //////////////////////////////////////
         // 初期化を行うコードを書くのはここまで！！！
