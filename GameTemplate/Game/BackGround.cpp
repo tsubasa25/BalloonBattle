@@ -5,15 +5,11 @@
 #include "GimmickNeedle.h"
 #include "Sky.h"
 #include "MoveRiver.h"
+#include "WindTurbine.h"
+#include "TileStage.h"
+
 namespace nsBalloon {
-    namespace nsBGConstant
-    {
-        const float RESPAWN_POSITION_HEIGHT = 800.0f;	//リスポーンするときにプレイヤーが降りてくる高さ。
-        const std::wstring STAGE_ZERO_NAME = { L"SkyIsLand Stage" };
-        const std::wstring STAGE_ONE_NAME = { L"Building Stage" };
-        const std::wstring STAGE_TWO_NAME = { L"Trap Stage" };
-        const float SOUND_MAP_BGM_VOLUME = 0.2f;
-    }
+   
 
     BackGround::~BackGround()
     {
@@ -38,7 +34,12 @@ namespace nsBalloon {
         if (m_stageNum == 3)
         {
             //ランダムで決める
-            m_stageNum = rand() % 3;
+            //m_stageNum = rand() % 3;テスト
+            //後で直すから！
+            
+            TileStage* tileStage = NewGO<TileStage>(0);
+
+            //////////////////////////////////////////////////////////////////////////////////////
         }
 
         switch (m_stageNum)
@@ -72,7 +73,8 @@ namespace nsBalloon {
             break;
         }
 
-        //ステージのモデルの静的物理モデルを作成        
+        //ステージのモデルの静的物理モデルを作成     
+        if(m_stageNum<3)
         m_physicsStaticObject.CreateFromModel(m_skinModelRender->GetModel(), m_skinModelRender->GetModel().GetWorldMatrix());
 
 

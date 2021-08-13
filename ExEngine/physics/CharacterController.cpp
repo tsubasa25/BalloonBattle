@@ -265,7 +265,7 @@ const Vector3& CharacterController::Execute(Vector3& moveSpeed, float deltaTime)
 			//endPos.y -= 100.0f;
 			//////////////////////kinoto
 			//’i·‚©‚ç—‰º‚µ‚½‚Æ‚«uŠÔˆÚ“®‚·‚é‚Ì‚Å’²®‚µ‚½
-			endPos.y -= 1.0f;
+			endPos.y -= 100.0f;
 		}
 		end.setOrigin(btVector3(endPos.x, endPos.y, endPos.z));
 		SweepResultGround callback;

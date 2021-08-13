@@ -21,9 +21,11 @@ namespace nsBalloon {
 	void BalloonAir::Update()
 	{
 		if (m_parent->GetCanMove() == false)
+		{
 			return;
+		}
 		Air();
-		m_parent->SetAirVolume(m_airVolume);
+		m_parent->SetAirVolume(m_airVolume);//親風船に空気量を渡す
 	}
 	void BalloonAir::Air()
 	{
@@ -100,13 +102,17 @@ namespace nsBalloon {
 			BleedAir(LStickTilt.Length() * AIR_COST_MOVE);
 
 			//Aボタンが押されたら、空気を噴射して一気に加速。
-			if (g_pad[m_parentNum]->IsPress(enButtonA))
+			m_boostIntervalcount++;
+			if (g_pad[m_parentNum]->IsPress(enButtonA))//&& m_boostIntervalcount> BOOST_INTERVAL
 			{
+				m_boostIntervalcount = 0;
 				Vector3 boostSpeed = m_parent->GetMoveSpeed();
 				boostSpeed.y = 0.0f;
 
 				boostSpeed.x *= ADD_BOOST_POWER;
 				boostSpeed.z *= ADD_BOOST_POWER;
+				//boostSpeed.x += APLAY_BOOST_POWER;
+				//boostSpeed.z += APLAY_BOOST_POWER;
 
 				m_parent->AddMoveSpeed(boostSpeed);
 
@@ -128,6 +134,7 @@ namespace nsBalloon {
 					m_ssAccel->Play(true);
 				}
 			}
+
 		}
 		if (!g_pad[m_parentNum]->IsPress(enButtonA))
 		{

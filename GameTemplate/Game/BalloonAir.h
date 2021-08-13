@@ -8,13 +8,15 @@ namespace nsBalloon {
 		const int MAX_AIR_VOLUME = 500;	//風船の空気の量の最大量
 		const int MIN_AIR_VOLUME = 30;	//風船の空気の量の最小量
 		const float BRAKE_POWER = 0.1f;	//ブレーキを行った際にm_moveSpeedにかける値
-		const float AIR_COST_MOVE = 0.02f;	//Lスティックを倒して移動しているときに、1フレームで減る空気量
+		const float AIR_COST_MOVE = 0.01f;	//Lスティックを倒して移動しているときに、1フレームで減る空気量
 		const float AIR_COST_BOOST = 1.0f;	//水平ブーストしているときに、1フレームで減る空気量
 		const float AIR_COST_RISE_BOOST = 1.2f;	//上昇ブーストしているときに、1フレームで減る空気量
 		const float AIR_COST_BRAKE = 0.2f;	//ブレーキをかけているときに、1フレームで減る空気量
 		const float ADD_BOOST_POWER = 0.05f;	//ブーストで加速するときにかける値
+		const float APLAY_BOOST_POWER = 10.f;//ブーストで加速するときに足す値
 		const Vector3 RISE_BOOST_POWER = { 0.0f, 1.0f, 0.0f };	//ブーストで上昇するときのY方向への力
 		const float SOUND_AIR_SE_VOLUME = 0.4f;
+		const int BOOST_INTERVAL = 50;
 	}
 
 	class BalloonAir : public IGameObject
@@ -22,6 +24,7 @@ namespace nsBalloon {
 	private:
 		Player* m_parent = nullptr;
 		int m_parentNum = 0;
+		int m_boostIntervalcount = 0;
 		float m_airVolume = 0.0f;//風船の大きさ(幅)
 		SoundSource* m_ssAccel = nullptr;
 		SoundSource* m_ssInflate = nullptr;

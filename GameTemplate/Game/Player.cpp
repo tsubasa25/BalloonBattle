@@ -47,6 +47,7 @@ namespace nsBalloon {
 		m_charaCon.Init((m_myAirVolume / 2), m_position);
 
 		//todo char16_t版のsprntfを利用して。 
+		//16_t版がない！？
 		if (GetPlayerNum() == 0) {
 			m_breakEff.Init(u"Assets/effect/BalloonBreak00.efk");
 			m_plColor = { Vector4::Red };
@@ -118,8 +119,9 @@ namespace nsBalloon {
 	Vector3 Player::Decele(Vector3 speed)//減速
 	{
 		if (speed.LengthSq() > 0.0f) {
-			//return speedVec*-0.02;
-			return speed * -m_myAirVolume / 2 / nsPlConstant::DESELE_VOLUME;
+			float SizeCoefficient = (m_myAirVolume / nsPlConstant::INI_AIR_VOLUME);//大きさ係数			
+			//return speed * -m_myAirVolume / 2 / nsPlConstant::DESELE_VOLUME;
+			return (speed / nsPlConstant::DESELE_VOLUME)*-SizeCoefficient;
 		}
 		else {
 			return Vector3::Zero;
@@ -142,8 +144,8 @@ namespace nsBalloon {
 			|| fabsf(m_position.x) > nsPlConstant::OVER_STAGE_LINE.x
 			|| fabsf(m_position.z) > nsPlConstant::OVER_STAGE_LINE.z	//ステージから大きく離れたら。
 			) {
-			PlayerDeath();
-			SoundSource* ss = NewGO<SoundSource>(0);
+			PlayerDeath();//プレイヤーを殺す
+			SoundSource* ss = NewGO<SoundSource>(0);//効果音
 			ss->Init(L"Assets/sound/風船が落ちて死んだ音.wav");
 			ss->SetVolume(nsPlConstant::SOUND_BALLOON_SE_VOLUME);
 			ss->Play(false);

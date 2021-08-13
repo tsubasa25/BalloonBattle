@@ -16,7 +16,7 @@ namespace nsBalloon {
 		const float BALLOON_SIZE_BASE = 100;	//風船の大きさの基本値
 		const Vector3 POINTLIGHT_COLOR = { 10,10,10 };//ポイントライトの色
 		const int POINTLIGHT_RANGE = 200;//ポイントライトの影響範囲
-		const int DESELE_VOLUME = 3500;//減速させる大きさを調整する値
+		const int DESELE_VOLUME = 50;//減速させる大きさを調整する値
 		const float GRAVITY_SPEED = 0.7f;//落下スピード
 		const float GRAVITY_INDEX = 2.0f;//落下スピードにかける指数
 		const float PAI = 3.14159f;//円周率

@@ -24,6 +24,8 @@ namespace nsBalloon {
 		Quaternion m_rotZ = { 0.0f,0.0f,0.0f, 0.0f };
 		SkinModelRender* m_WTBaseModelRender = nullptr;//支柱
 		SkinModelRender* m_WTBladesModelRender = nullptr;//ブレード
+		PhysicsStaticObject m_physicsStaticObject;				//CharaConとの当たり判定に使用する静的物理オブジェクト
+
 		Vector3 m_position = { Vector3::Zero };//位置
 
 

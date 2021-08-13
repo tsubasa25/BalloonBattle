@@ -1,12 +1,20 @@
 #pragma once
-#include "WindTurbine.h"
 namespace nsBalloon {
+	namespace nsBGConstant
+	{
+		const float RESPAWN_POSITION_HEIGHT = 800.0f;	//リスポーンするときにプレイヤーが降りてくる高さ。
+		const std::wstring STAGE_ZERO_NAME = { L"SkyIsLand Stage" };
+		const std::wstring STAGE_ONE_NAME = { L"Building Stage" };
+		const std::wstring STAGE_TWO_NAME = { L"Trap Stage" };
+		const float SOUND_MAP_BGM_VOLUME = 0.2f;
+	}
 	class Sky;
 	class GameScene;
 	class Player;
 	class GimmickNeedle;
 	class MoveRiver;
-
+	class WindTurbine;
+	
 	class BackGround :public IGameObject
 	{
 

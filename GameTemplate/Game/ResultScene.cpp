@@ -10,6 +10,7 @@
 #include "TitleBack.h"
 #include "GameTimer.h"
 #include "BalloonAir.h"
+#include "WindTurbine.h"
 namespace nsBalloon {
 
 	ResultScene::~ResultScene()
