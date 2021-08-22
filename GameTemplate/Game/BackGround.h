@@ -6,6 +6,8 @@ namespace nsBalloon {
 		const std::wstring STAGE_ZERO_NAME = { L"SkyIsLand Stage" };
 		const std::wstring STAGE_ONE_NAME = { L"Building Stage" };
 		const std::wstring STAGE_TWO_NAME = { L"Trap Stage" };
+		const std::wstring STAGE_THREE_NAME = { L"Tile Stage" };
+
 		const float SOUND_MAP_BGM_VOLUME = 0.2f;
 	}
 	class Sky;

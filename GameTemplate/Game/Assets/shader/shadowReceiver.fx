@@ -310,11 +310,11 @@ float4 PSMain(SPSIn psIn) : SV_Target0
 	finalColor *= albedoColor;
 
 	//影
-
 	float2 shadowMapUV = psIn.posInLVP.xy / psIn.posInLVP.w;
 	shadowMapUV *= float2(0.5f, -0.5f);
 	shadowMapUV += 0.5f;
 
+	//ライトビュースクリーン空間でのZ値を計算する
 	float zInLVP = psIn.posInLVP.z / psIn.posInLVP.w;
 	
 	if (shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
@@ -326,7 +326,7 @@ float4 PSMain(SPSIn psIn) : SV_Target0
 		if (zInLVP > zInShadowMap)
 		{
 			// 遮蔽されている
-			finalColor.xyz *= 0.5f;			
+			finalColor.xyz *= 0.5f;
 		}
 	}	
 	return finalColor;

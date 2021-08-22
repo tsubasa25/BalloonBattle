@@ -70,8 +70,8 @@ namespace nsBalloon {
 			//シャドウマップの作成。
 			float clearColor[4] = { 1.0f,1.0f,1.0f,1.0f };
 			m_shadowMap.Create(
-				1024,
-				1024,
+				2048,
+				2048,
 				1,
 				1,
 				DXGI_FORMAT_R32_FLOAT,
@@ -102,8 +102,8 @@ namespace nsBalloon {
 			D3D12_RECT shadowRect;
 			shadowRect.left = 0;
 			shadowRect.top = 0;
-			shadowRect.right = 1024;
-			shadowRect.bottom = 1024;
+			shadowRect.right = 2048;
+			shadowRect.bottom = 2048;
 			rc.SetScissorRect(shadowRect);
 		}
 	}

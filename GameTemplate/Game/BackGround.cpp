@@ -30,18 +30,7 @@ namespace nsBalloon {
         m_skinModelRender = NewGO<SkinModelRender>(0, "backGround");
         //ステージは影を発生させる
         m_skinModelRender->SetShadowCasterFlag(false);
-
-        if (m_stageNum == 3)
-        {
-            //ランダムで決める
-            //m_stageNum = rand() % 3;テスト
-            //後で直すから！
-            
-            TileStage* tileStage = NewGO<TileStage>(0);
-
-            //////////////////////////////////////////////////////////////////////////////////////
-        }
-
+        TileStage* tileStage = nullptr;
         switch (m_stageNum)
         {
         case 0://空島ステージ
@@ -68,6 +57,14 @@ namespace nsBalloon {
             m_map3BGM->SetVolume(nsBGConstant::SOUND_MAP_BGM_VOLUME);
             m_map3BGM->Play(true);
             m_skinModelRender->Init("Assets/modelData/TrapStage.tkm");
+            break;
+        case 3://タイルステージ
+            m_stageName = nsBGConstant::STAGE_THREE_NAME;
+            m_map3BGM = NewGO<SoundSource>(0, "mapBGM");
+            m_map3BGM->Init(L"Assets/sound/TileStageBGM.wav", SoundType::enBGM);
+            m_map3BGM->SetVolume(nsBGConstant::SOUND_MAP_BGM_VOLUME);
+            m_map3BGM->Play(true);
+            tileStage = NewGO<TileStage>(0);
             break;
         default:
             break;

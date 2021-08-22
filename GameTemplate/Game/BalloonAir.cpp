@@ -159,7 +159,7 @@ namespace nsBalloon {
 			if (!g_pad[m_parentNum]->IsPress(enButtonA))
 			{
 				Effect boostEff;
-				boostEff.Init(u"Assets/effect/BoostRiseEff.efk");
+				boostEff.Init(u"Assets/effect/BoostRiseEff.efk");				
 				boostEff.Play();
 				boostEff.SetPosition(m_parent->GetPosition());
 				Quaternion effQRot;

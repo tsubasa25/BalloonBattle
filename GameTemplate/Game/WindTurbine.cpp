@@ -35,9 +35,7 @@ namespace nsBalloon {
 	}
 
 	void WindTurbine::Update()
-	{
-		m_position.x += 0.1f;
-		m_WTBaseModelRender->SetPosition(m_position);
+	{				
 		if (m_gameScene->GetGameState() != nsGSConstant::GAME_STATE_BATTLE)
 			WTMoveTimer = 0;
 
