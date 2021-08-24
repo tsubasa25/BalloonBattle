@@ -44,7 +44,6 @@ namespace nsBalloon {
 			float pad;
 			Vector3 lightCameraDirection;//ƒ‰ƒCƒgƒJƒƒ‰‚ÌŒü‚«
 		};
-
 		LigCameraDatas m_ligCameraData;
 		int m_ligCameraDataSize = sizeof(m_ligCameraData);
 

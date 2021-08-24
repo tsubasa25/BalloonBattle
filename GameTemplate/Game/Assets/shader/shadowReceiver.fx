@@ -110,7 +110,7 @@ SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
 	psIn.normal = mul(mWorld, vsIn.normal);
 
 	//ここからライトビュースクリーン空間での座標を計算している。
-	psIn.posInLVP = mul(mLVP, worldPos);
+	psIn.posInLVP = mul(mLVP, float4(psIn.worldPos,1.0f));
 	
 	return psIn;
 }

@@ -8,6 +8,7 @@ namespace nsBalloon {
 		const float SOUND_METEOR_SE_VOLUME = 1.f;
 		const float DANGERLIGHT_POS_Y = 100.f;		
 		const float DANGERLIGHT_RANGE = 300.f;
+		const Vector3 DANGERLIGHT_SCALE = { 0.5f,0.5f,0.5f };
 		const Vector3 COLOR_RED = { 255.f,0.f,0.f };
 		const float SOUND_DANGER_SE_VOLUME = 0.3f;
 	}
@@ -40,6 +41,6 @@ namespace nsBalloon {
 		int m_tileCrashNum=0;
 
 		int m_flashingLoopCount = 0;
-		bool m_isLightOn = false;
+		bool m_isMeteorOn = false;
 	};
 }

@@ -404,7 +404,6 @@ namespace nsBalloon {
 			m_charaCon.ReInit(0.0f, m_position);
 			m_skinModelRenderArrow->SetScale({ Vector3::Zero });
 		}
-
 		if (m_respawnCount == 1)
 		{
 			m_resPos = m_backGround->GetRespawnPosition(m_playerNum);

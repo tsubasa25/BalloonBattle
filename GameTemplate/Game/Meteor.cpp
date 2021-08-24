@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Meteor.h"
+#include "Player.h"
 namespace nsBalloon {
 	Meteor::~Meteor()
 	{
@@ -36,7 +37,20 @@ namespace nsBalloon {
 			DeleteGO(this);
 		}
 		if (m_position.y == 0.f) {
-			
+			//プレイヤーを探す
+			QueryGOs<Player>("player", [this](Player* player)->bool {
+				//プレイヤーと針の位置の距離をとる				
+				Vector3 diff = player->GetPosition() - m_position;
+				if (diff.Length() < 50.f)
+				{
+					player->BreakBalloon();
+					player->PlayerDeath();
+					SoundSource* ss = NewGO<SoundSource>(0);
+					ss->Init(L"Assets/sound/風船の割れる音.wav");
+					ss->Play(false);
+				}
+				return true;
+				});
 		}
 		m_position -= m_diffVec;
 		m_position.y -= nsMConstant::LANDING_SPEED;
