@@ -9,8 +9,8 @@
     namespace
     {
         const Vector3 LIGHTCAMERA_POSITION = { 0.0f, 4000.0f,0.0f };
-        const Vector3 LIGHTCAMERA_TARGET = { 0,0,0 };
-        const Vector3 LIGHTCAMERA_UP = { 1.0f,0.0f,0.0f };
+        const Vector3 LIGHTCAMERA_TARGET = { 0.f,1.f,0.f };
+        const Vector3 LIGHTCAMERA_UP = { 1.f,0.f,0.f };
         const float LIGHTCAMERA_WIDTH = 4000.0f;//2000
         const float LIGHTCAMERA_HEIGHT = 4000.0f;
         const int CAMERA_FAR = 100000;
@@ -37,7 +37,7 @@
         nsBalloon::LightManager::GetInstance()->SetLightCameraTarget(LIGHTCAMERA_TARGET);
         nsBalloon::LightManager::GetInstance()->SetLightCameraUp(LIGHTCAMERA_UP);
         nsBalloon::LightManager::GetInstance()->SetLightCameraUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Perspective);
-
+        
         //リソースマネージャのインスタンスを作成
         nsBalloon::ResourceBankManager::CreateInstance();
 

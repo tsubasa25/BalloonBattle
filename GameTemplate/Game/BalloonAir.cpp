@@ -147,7 +147,7 @@ namespace nsBalloon {
 			m_accelSECanPlay = true;
 		}
 
-		if (g_pad[m_parentNum]->IsPress(enButtonY))
+		if (g_pad[m_parentNum]->IsPress(enButtonY))//ã•ûŒü‚É‹ó‹C•¬ŽË
 		{
 
 			m_parent->AddMoveSpeed(RISE_BOOST_POWER);

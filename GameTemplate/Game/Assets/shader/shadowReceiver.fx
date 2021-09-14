@@ -323,12 +323,12 @@ float4 PSMain(SPSIn psIn) : SV_Target0
 		// シャドウマップに描き込まれているZ値と比較する
 		// 計算したUV座標を使って、シャドウマップから深度値をサンプリング
 		float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).r;
-		if (zInLVP > zInShadowMap)
+		if (zInLVP > zInShadowMap + 0.0000001f)
 		{
 			// 遮蔽されている
 			finalColor.xyz *= 0.5f;
 		}
-	}	
+	}
 	return finalColor;
 }
 

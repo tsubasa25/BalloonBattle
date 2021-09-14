@@ -87,7 +87,6 @@ namespace nsBalloon {
 		copyToBufferSpriteInitData.m_height = 720;
 		copyToBufferSpriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
 		m_copyToFrameBufferSprite.Init(copyToBufferSpriteInitData);
-
 	}
 
 	void PostEffectManager::ShadowRender(RenderContext& rc)

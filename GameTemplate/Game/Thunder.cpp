@@ -17,12 +17,12 @@ namespace nsBalloon {
 	void Thunder::Update()
 	{
 		m_loopCount++;			
-		if (m_loopCount > nsTConstant::DELAY_COUNT)
+		if (m_loopCount == nsTConstant::DELAY_COUNT)
 		{
 			QueryGOs<Player>("player", [this](Player* player)->bool {
 				//プレイヤーと針の位置の距離をとる
 				Vector3 diff = player->GetPosition() - m_position;
-				if (diff.Length() < 150.f)
+				if (diff.Length() < 300.f)//雷に当たればバルーンは即死
 				{
 					player->BreakBalloon();
 					player->PlayerDeath();

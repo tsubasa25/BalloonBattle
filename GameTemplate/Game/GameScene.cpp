@@ -14,8 +14,8 @@ namespace nsBalloon {
         m_directionLight = nullptr;
         m_directionLight = NewGO<DirectionLight>(0);
         m_directionLight->SetColor({ 0.5f,0.5f,0.5f }); 
-        m_directionLight->SetDirection({ 0.0f, -1.0f, 0.0f });
-
+        m_directionLight->SetDirection({Vector3::Down });
+        
         m_iniPlCount = m_playerCount;
 
         for (int i = 0; i < m_iniPlCount; i++)//ƒvƒŒƒCƒ„[‚ðì‚é

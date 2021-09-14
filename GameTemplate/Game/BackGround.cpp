@@ -8,8 +8,7 @@
 #include "WindTurbine.h"
 #include "TileStage.h"
 
-namespace nsBalloon {
-   
+namespace nsBalloon {   
 
     BackGround::~BackGround()
     {
